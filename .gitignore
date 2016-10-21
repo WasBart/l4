@@ -1,0 +1,16 @@
+# android studio project files
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+
+# mac stuff
+.DS_Store
+
+# ignore the build (binaries)
+/build
+/captures
+.externalNativeBuild
+
+

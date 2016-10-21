@@ -1,0 +1,5 @@
+# everything in build except the final apk's (pushed by git-lfs!)
+/build/generated
+/build/intermediates
+/build/tmp
+/build/outputs/logs

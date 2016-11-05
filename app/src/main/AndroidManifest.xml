@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="at.ac.tuwien.ims.uemultimediatemplate">
+    package="at.ac.tuwien.policenauts.l4">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        android:theme="@style/AppTheme"
+        android:name=".android.GameApplication">
+        <activity android:name=".android.GameActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".android.IntroActivity" />
+        <activity android:name=".android.MenuActivity" />
+        <activity android:name=".android.ScoreActivity"></activity>
     </application>
 
 </manifest>

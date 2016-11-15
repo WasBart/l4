@@ -16,12 +16,22 @@ public class GameLoop implements Runnable {
     private final Game game;
     private boolean running = false;
 
+    /**
+     * Initialize the gameloop object.
+     *
+     * @param holder Owner of the game surface
+     * @param view The actual surface view
+     * @param game Reference to global game object
+     */
     public GameLoop(SurfaceHolder holder, GameSurfaceView view, Game game) {
         this.holder = holder;
         this.view = view;
         this.game = game;
     }
 
+    /**
+     * The actual game loop, running as separate thread.
+     */
     @Override
     public void run() {
         Canvas canvas = null;
@@ -43,6 +53,11 @@ public class GameLoop implements Runnable {
         }
     }
 
+    /**
+     * Enable/disable running flag. Effectively stops the game loop.
+     *
+     * @param running Mark the game loop as running or not
+     */
     public void setRunning(boolean running) {
         this.running = running;
     }

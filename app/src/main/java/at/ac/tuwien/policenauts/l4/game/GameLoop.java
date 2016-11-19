@@ -59,8 +59,15 @@ public class GameLoop implements Runnable {
     public void run() {
         Canvas canvas = null;
         running = true;
+        float old_time = (float) System.nanoTime() / 1000000;
 
         while (running) {
+
+            //Calculate delta_time
+            float cur_time =  (float) System.nanoTime() / 1000000;
+            float delta_time = cur_time - old_time;
+            old_time = cur_time;
+
             // Lock canvas, since we're in a separate thread, and render
             canvas = null;
             try {

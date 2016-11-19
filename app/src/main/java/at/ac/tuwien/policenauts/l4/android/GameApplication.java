@@ -15,7 +15,7 @@ public class GameApplication extends Application {
         super.onCreate();
 
         // Create new game instance
-        game = new Game();
+        game = new Game(this);
     }
 
     /**

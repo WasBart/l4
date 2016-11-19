@@ -18,7 +18,7 @@
         </activity>
         <activity android:name=".android.IntroActivity" />
         <activity android:name=".android.MenuActivity" />
-        <activity android:name=".android.ScoreActivity"></activity>
+        <activity android:name=".android.ScoreActivity" />
     </application>
 
 </manifest>

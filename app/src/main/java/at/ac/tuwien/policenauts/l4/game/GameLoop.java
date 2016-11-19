@@ -34,25 +34,6 @@ public class GameLoop implements Runnable {
     }
 
     /**
-     * Updates the game logic.
-     *
-     * @param tpf time per frame used to update.
-     */
-    public void updateGame(float tpf) {
-
-    }
-
-
-    /**
-     * Calculate the time per frame for frame independency needs.
-     *
-     * @return time per frame
-     */
-    public float getTimePerFrame() {
-        return 0f;
-    }
-
-    /**
      * The actual game loop, running as separate thread.
      */
     @Override

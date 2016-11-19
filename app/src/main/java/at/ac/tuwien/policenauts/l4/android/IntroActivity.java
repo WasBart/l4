@@ -8,7 +8,7 @@ import at.ac.tuwien.policenauts.l4.R;
 /**
  * Activity responsible for displaying an intro video.
  *
- * @author: Wassily Bartuska
+ * @author Wassily Bartuska
  */
 public class IntroActivity extends AppCompatActivity {
 

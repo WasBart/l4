@@ -21,6 +21,13 @@ class LevelLoader {
         return null;
     }
 
+    /**
+     * Parse a level file (top level) and create segments/game objects.
+     *
+     * @param parser The XML parser for the specified resource
+     * @throws XmlPullParserException if there was an exception during parsing
+     * @throws IOException if there was an exception while reading the resource file
+     */
     public void readLevel(XmlPullParser parser) throws XmlPullParserException, IOException {
         // Make sure the xml file starts with a level tag
         parser.require(XmlPullParser.START_TAG, null, "level");

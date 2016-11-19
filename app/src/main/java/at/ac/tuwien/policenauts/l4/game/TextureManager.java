@@ -16,10 +16,6 @@ import at.ac.tuwien.policenauts.l4.R;
  * @author Michael Pucher
  */
 class TextureManager {
-    enum TextureManagerState {
-        LOADED, NOT_LOADED
-    }
-
     /**
      * Initialize the texture manager with a context.
      *
@@ -93,32 +89,17 @@ class TextureManager {
      * Remove all textures from memory and reset texture counter.
      */
     void unloadTextures() {
-        // Don't unload anything if no textures have been loaded
-        if (state == TextureManagerState.NOT_LOADED)
-            return;
-
         // Reset all arrays
         spriteSheets = null;
         spriteFrameWidth = null;
         spriteFrameHeight = null;
         textures = null;
         textureSrcRect = null;
-        state = TextureManagerState.NOT_LOADED;
-    }
-
-    /**
-     * Retrieve state of the texture manager.
-     *
-     * @return LOADED if textures are currently loaded, NOT_LOADED otherwise
-     */
-    TextureManagerState getState() {
-        return state;
     }
 
     // Private members
     private static final String TAG = "TextureManager";
     private final Context context;
-    private TextureManagerState state = TextureManagerState.NOT_LOADED;
 
     // Store class for dynamic resource loading through reflection
     private final Class res = R.drawable.class;

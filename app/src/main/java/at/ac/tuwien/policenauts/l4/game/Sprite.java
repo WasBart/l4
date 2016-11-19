@@ -25,9 +25,9 @@ class Sprite {
     /**
      * Update the frame, according to delta from game loop.
      *
-     * @param delta Delta value from the game loop
+     * @param tpf Time per frame (in milliseconds) from the game loop
      */
-    public void update(float delta) {
+    public void update(float tpf) {
         this.delta += delta;
         if (this.delta > 1) {
             this.delta = 0.0f;

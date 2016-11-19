@@ -7,6 +7,8 @@ import at.ac.tuwien.policenauts.l4.R;
 
 /**
  * Activity responsible for displaying the main menu.
+ *
+ * @author Michael Pucher
  */
 public class MenuActivity extends AppCompatActivity {
 

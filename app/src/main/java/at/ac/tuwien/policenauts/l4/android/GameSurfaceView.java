@@ -13,6 +13,8 @@ import at.ac.tuwien.policenauts.l4.game.GameLoop;
 /**
  * The surface view located on the game activity,
  * start and hold the game loop.
+ *
+ * @author: Wassily Bartuska
  */
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
     private Game game;

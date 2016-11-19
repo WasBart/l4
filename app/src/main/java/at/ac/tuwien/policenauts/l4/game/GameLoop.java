@@ -10,6 +10,8 @@ import at.ac.tuwien.policenauts.l4.android.GameSurfaceView;
  * Run the gameloop and make sure to update/render the game logic
  * in the process. Seperate class from Game, allows keeping the
  * view and holder variables final.
+ *
+ * @author Wassily Bartuska
  */
 public class GameLoop implements Runnable {
     private final String TAG = "GameLoop";
@@ -32,6 +34,25 @@ public class GameLoop implements Runnable {
     }
 
     /**
+     * Updates the game logic.
+     *
+     * @param tpf time per frame used to update.
+     */
+    public void updateGame(float tpf) {
+
+    }
+
+
+    /**
+     * Calculate the time per frame for frame independency needs.
+     *
+     * @return time per frame
+     */
+    public float getTimePerFrame() {
+        return 0f;
+    }
+
+    /**
      * The actual game loop, running as separate thread.
      */
     @Override
@@ -45,8 +66,10 @@ public class GameLoop implements Runnable {
             try {
                 canvas = holder.lockCanvas();
                 synchronized (holder) {
-                    if (canvas != null)
-                        view.draw(canvas);
+                    if (canvas != null) {
+                        view.onDraw(canvas);
+                        //view.draw(canvas);
+                    }
                 }
             } finally {
                 if (canvas != null)

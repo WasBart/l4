@@ -7,9 +7,16 @@ import at.ac.tuwien.policenauts.l4.R;
 
 /**
  * The actual game runs on this activity.
+ *
+ * @author Wassily Bartuska
  */
 public class GameActivity extends AppCompatActivity {
 
+    /**
+     * Invoked when an instance of the class is created.
+     *
+     * @param savedInstanceState Bundle object passed to this method.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

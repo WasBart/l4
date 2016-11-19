@@ -1,6 +1,7 @@
 package at.ac.tuwien.policenauts.l4.game;
 
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 import at.ac.tuwien.policenauts.l4.android.GameSurfaceView;
@@ -11,6 +12,7 @@ import at.ac.tuwien.policenauts.l4.android.GameSurfaceView;
  * view and holder variables final.
  */
 public class GameLoop implements Runnable {
+    private final String TAG = "GameLoop";
     private final SurfaceHolder holder;
     private final GameSurfaceView view;
     private final Game game;

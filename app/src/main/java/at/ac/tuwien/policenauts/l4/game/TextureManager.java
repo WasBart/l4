@@ -3,6 +3,8 @@ package at.ac.tuwien.policenauts.l4.game;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
 
@@ -26,6 +28,15 @@ class TextureManager {
     }
 
     /**
+     * Assign a canvas to the texture manager for drawing.
+     *
+     * @param canvas Canvas to be assigned (needs to be locked by calling thread)
+     */
+    void setCanvas(Canvas canvas) {
+        this.canvas = canvas;
+    }
+
+    /**
      * Load a list of sprites and a list of textures from the resources.
      *
      * @param sprites A list of sprite resource names
@@ -40,7 +51,7 @@ class TextureManager {
             // Initialize data structures
             spriteSheets = new Bitmap[sprites.size()];
             spriteFrameWidth = new int[sprites.size()];
-            spriteFrameHeight = new int[sprites.size()];
+            spriteFrameRects = new Rect[sprites.size()];
 
             // Load each sprite
             for (int i = 0; i < sprites.size(); i++) {
@@ -56,7 +67,8 @@ class TextureManager {
                 // Load bitmap and store it
                 spriteSheets[i] = BitmapFactory.decodeResource(context.getResources(), drawableId);
                 spriteFrameWidth[i] = spriteSheets[i].getWidth() / spriteFrameCount.get(i);
-                spriteFrameHeight[i] = spriteSheets[i].getHeight();
+                spriteFrameRects[i] = new Rect(0, 0, spriteFrameWidth[i],
+                        spriteSheets[i].getHeight());
             }
         }
 
@@ -86,13 +98,36 @@ class TextureManager {
     }
 
     /**
+     * Draw a sprite from a spritesheet.
+     *
+     * @param index Texture index of the sprite
+     * @param frame Frame index in the sprite animation cycle
+     * @param rect Target rectangle for bitmap drawing
+     */
+    void drawSprite(Sprite sprite, Rect rect) {
+        Rect src = spriteFrameRects[sprite.textureId];
+        src.offsetTo(sprite.currentFrame * spriteFrameWidth[sprite.textureId], 0);
+        canvas.drawBitmap(spriteSheets[sprite.textureId], src, rect, defaultPaint);
+    }
+
+    /**
+     * Draw a stored texture.
+     *
+     * @param index Texture index
+     * @param rect Target rectangle for bitmap drawing
+     */
+    void drawTexture(int index, Rect rect) {
+        canvas.drawBitmap(textures[index], textureSrcRect[index], rect, defaultPaint);
+    }
+
+    /**
      * Remove all textures from memory and reset texture counter.
      */
     void unloadTextures() {
         // Reset all arrays
         spriteSheets = null;
         spriteFrameWidth = null;
-        spriteFrameHeight = null;
+        spriteFrameRects = null;
         textures = null;
         textureSrcRect = null;
     }
@@ -107,9 +142,13 @@ class TextureManager {
     // Sprite storage
     private Bitmap[] spriteSheets = null;
     private int[] spriteFrameWidth = null;
-    private int[] spriteFrameHeight = null;
+    private Rect[] spriteFrameRects = null;
 
     // Texture storage
     private Bitmap[] textures = null;
     private Rect[] textureSrcRect = null;
+
+    // Information needed for drawing
+    private final Paint defaultPaint = new Paint();
+    private Canvas canvas = null;
 }

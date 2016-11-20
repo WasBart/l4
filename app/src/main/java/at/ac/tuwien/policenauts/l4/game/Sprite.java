@@ -6,9 +6,11 @@ package at.ac.tuwien.policenauts.l4.game;
  * @author Michael Pucher
  */
 class Sprite {
-    private final int textureId;
+    final int textureId;
+    int currentFrame = 0;
+
     private final int frameCount;
-    private int currentFrame = 0;
+    private final float frameDuration;
     private float delta = 0.0f;
 
     /**
@@ -16,10 +18,12 @@ class Sprite {
      *
      * @param textureId Id in the texture manager
      * @param frameCount The number of frames on the spritesheet
+     * @param duration Duration of one cycle in millisecond
      */
-    public Sprite(int textureId, int frameCount) {
+    public Sprite(int textureId, int frameCount, int duration) {
         this.textureId = textureId;
         this.frameCount = frameCount;
+        this.frameDuration = duration / (float) frameCount;
     }
 
     /**
@@ -28,9 +32,9 @@ class Sprite {
      * @param tpf Time per frame (in milliseconds) from the game loop
      */
     public void update(float tpf) {
-        this.delta += delta;
-        if (this.delta > 1) {
-            this.delta = 0.0f;
+        delta += tpf;
+        if (delta > frameDuration) {
+            delta = 0.0f;
 
             // Update frame
             currentFrame = (currentFrame + 1) % frameCount;

@@ -100,8 +100,7 @@ class TextureManager {
     /**
      * Draw a sprite from a spritesheet.
      *
-     * @param index Texture index of the sprite
-     * @param frame Frame index in the sprite animation cycle
+     * @param sprite Sprite to be drawn on the canvas
      * @param rect Target rectangle for bitmap drawing
      */
     void drawSprite(Sprite sprite, Rect rect) {

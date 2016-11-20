@@ -44,10 +44,14 @@ public class GameLoop implements Runnable {
 
         while (running) {
 
-            //Calculate delta_time
+            //Calculate delta_time in ms
             float cur_time =  (float) System.nanoTime() / 1000000;
             float delta_time = cur_time - old_time;
             old_time = cur_time;
+
+            //Calculate frames per second
+            float fps = 1 / delta_time * 1000;
+
 
             // Lock canvas, since we're in a separate thread, and render
             canvas = null;
@@ -55,6 +59,7 @@ public class GameLoop implements Runnable {
                 canvas = holder.lockCanvas();
                 synchronized (holder) {
                     if (canvas != null) {
+                        game.setFps(fps);
                         view.onDraw(canvas);
                         //view.draw(canvas);
                     }

@@ -18,6 +18,7 @@ import at.ac.tuwien.policenauts.l4.android.GameSurfaceView;
 public class Game {
     private final Context context;
     private TextureManager textureManager = null;
+    private float fps;
 
     /**
      * Initialize game object with application context.
@@ -48,5 +49,16 @@ public class Game {
 
         canvas.drawRect(canvas.getWidth()/2-40, canvas.getHeight()/2-40,
                 canvas.getWidth()/2+40, canvas.getHeight()/2+40, paint);
+
+        Paint textP = new Paint();
+        textP.setColor(Color.GREEN);
+        textP.setTextAlign(Paint.Align.RIGHT);
+
+        String fpsText = "frames per second: " + fps;
+        canvas.drawText(fpsText, 0, fpsText.length()-1, (canvas.getWidth()/10) * 9, canvas.getHeight()/10, textP);
+    }
+
+    public void setFps(float fps) {
+        this.fps = fps;
     }
 }

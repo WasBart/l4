@@ -58,6 +58,11 @@ public class Game {
         canvas.drawText(fpsText, 0, fpsText.length()-1, (canvas.getWidth()/10) * 9, canvas.getHeight()/10, textP);
     }
 
+    /**
+     * Standard setter method for the frames per second.
+     *
+     * @param fps Value to be set.
+     */
     public void setFps(float fps) {
         this.fps = fps;
     }

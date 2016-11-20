@@ -21,6 +21,12 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     private GameLoop gameLoop;
     private Thread gameThread;
 
+    /**
+     * Initialize gameSurfaceView object with context and attributeSet.
+     *
+     * @param context Application context
+     * @param attributeSet set of attributes
+     */
     public GameSurfaceView(Context context, AttributeSet attributeSet) {
         // Initialize surface view component (code from game programming lecture)
         super(context, attributeSet);
@@ -28,6 +34,11 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         setFocusable(true);
     }
 
+    /**
+     * Invoked when an instance of this class is created.
+     *
+     * @param surfaceHolder holder of the surface object
+     */
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         // Get global game state from application context
@@ -40,11 +51,24 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         gameThread.start();
     }
 
+    /**
+     * Invoked when an instance of this class is changed.
+     *
+     * @param surfaceHolder holder of the surface object
+     * @param i new pixel format of the surface
+     * @param i1 new width of the surface
+     * @param i2 new height of the surface
+     */
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-        // TODO: What is this actually good for?
+
     }
 
+    /**
+     * Invoked when an instance of this class is destroyed.
+     *
+     * @param surfaceHolder holder of the surface object
+     */
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         gameLoop.setRunning(false);
@@ -55,6 +79,11 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         }
     }
 
+    /**
+     * Invoked when an instance of this class is drawn.
+     *
+     * @param canvas medium used for drawing
+     */
     @Override
     public void onDraw(Canvas canvas) {
         game.render(canvas);

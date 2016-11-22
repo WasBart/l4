@@ -8,5 +8,14 @@ import java.util.List;
  * @author Michael Pucher
  */
 class Level {
-    private List<Segment> segments;
+    private final List<Segment> segments;
+
+    /**
+     * Initialize a level.
+     *
+     * @param segments The segments of a level
+     */
+    Level(List<Segment> segments) {
+        this.segments = segments;
+    }
 }

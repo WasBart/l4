@@ -6,4 +6,14 @@ package at.ac.tuwien.policenauts.l4.game;
  * @author Michael Pucher
  */
 class Segment {
+    private final int backgroundTexture;
+
+    /**
+     * Initialize a segment of a level.
+     *
+     * @param backgroundTexture
+     */
+    Segment(int backgroundTexture) {
+        this.backgroundTexture = backgroundTexture;
+    }
 }

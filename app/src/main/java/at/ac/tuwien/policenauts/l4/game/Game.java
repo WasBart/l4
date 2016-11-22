@@ -4,8 +4,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.SurfaceHolder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import at.ac.tuwien.policenauts.l4.android.GameSurfaceView;
 
@@ -18,6 +22,7 @@ import at.ac.tuwien.policenauts.l4.android.GameSurfaceView;
 public class Game {
     private final Context context;
     private TextureManager textureManager = null;
+    private Sprite sprite = new Sprite(0, 10, 600);
 
     /**
      * Initialize game object with application context.
@@ -33,6 +38,20 @@ public class Game {
      */
     public void initialize() {
         textureManager = new TextureManager(context);
+        List<String> sprites = new ArrayList<>(1);
+        sprites.add("testsprite_10");
+        List<Integer> frameCounts = new ArrayList<>(1);
+        frameCounts.add(10);
+        textureManager.loadTextures(sprites, frameCounts, null);
+    }
+
+    /**
+     * Update the game logic.
+     *
+     * @param tpf Time per frame in milliseconds
+     */
+    void updateLogic(float tpf) {
+        sprite.update(tpf);
     }
 
     /**
@@ -41,12 +60,14 @@ public class Game {
      * @param canvas Drawing canvas
      */
     public void render(Canvas canvas) {
-        canvas.drawColor(Color.BLUE);
+        textureManager.setCanvas(canvas);
+        canvas.drawColor(Color.BLACK);
 
         Paint paint = new Paint();
         paint.setColor(Color.RED);
 
         canvas.drawRect(canvas.getWidth()/2-40, canvas.getHeight()/2-40,
                 canvas.getWidth()/2+40, canvas.getHeight()/2+40, paint);
+        textureManager.drawSprite(sprite, new Rect(0, 0, 80, 120));
     }
 }

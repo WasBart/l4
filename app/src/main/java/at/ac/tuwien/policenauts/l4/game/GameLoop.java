@@ -49,6 +49,8 @@ public class GameLoop implements Runnable {
             float delta_time = cur_time - old_time;
             old_time = cur_time;
 
+            game.updateLogic(delta_time);
+
             // Lock canvas, since we're in a separate thread, and render
             canvas = null;
             try {

@@ -16,7 +16,6 @@ import at.ac.tuwien.policenauts.l4.android.GameSurfaceView;
 public class GameLoop implements Runnable {
     private final String TAG = "GameLoop";
     private final SurfaceHolder holder;
-    private final GameSurfaceView view;
     private final Game game;
     private boolean running = false;
 
@@ -24,12 +23,10 @@ public class GameLoop implements Runnable {
      * Initialize the gameloop object.
      *
      * @param holder Owner of the game surface
-     * @param view The actual surface view
      * @param game Reference to global game object
      */
-    public GameLoop(SurfaceHolder holder, GameSurfaceView view, Game game) {
+    public GameLoop(SurfaceHolder holder, Game game) {
         this.holder = holder;
-        this.view = view;
         this.game = game;
     }
 
@@ -41,28 +38,25 @@ public class GameLoop implements Runnable {
         Canvas canvas = null;
         running = true;
         float old_time = (float) System.nanoTime() / 1000000;
+        float cur_time;
+        float delta_time;
 
         while (running) {
 
-            //Calculate delta_time in ms
-            float cur_time =  (float) System.nanoTime() / 1000000;
-            float delta_time = cur_time - old_time;
+            //Calculate delta_time
+            cur_time =  (float) System.nanoTime() / 1000000;
+            delta_time = cur_time - old_time;
             old_time = cur_time;
 
-            //Calculate frames per second
-            float fps = 1 / delta_time * 1000;
-
+            game.updateLogic(delta_time);
 
             // Lock canvas, since we're in a separate thread, and render
             canvas = null;
             try {
                 canvas = holder.lockCanvas();
                 synchronized (holder) {
-                    if (canvas != null) {
-                        game.setFps(fps);
-                        view.onDraw(canvas);
-                        //view.draw(canvas);
-                    }
+                    if (canvas != null)
+                        game.render(canvas);
                 }
             } finally {
                 if (canvas != null)

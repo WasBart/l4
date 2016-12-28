@@ -20,7 +20,7 @@ class Sprite {
      * @param frameCount The number of frames on the spritesheet
      * @param duration Duration of one cycle in millisecond
      */
-    public Sprite(int textureId, int frameCount, int duration) {
+    Sprite(int textureId, int frameCount, int duration) {
         this.textureId = textureId;
         this.frameCount = frameCount;
         this.frameDuration = duration / (float) frameCount;
@@ -31,7 +31,7 @@ class Sprite {
      *
      * @param tpf Time per frame (in milliseconds) from the game loop
      */
-    public void update(float tpf) {
+    void update(float tpf) {
         delta += tpf;
         if (delta > frameDuration) {
             delta = 0.0f;
@@ -39,5 +39,12 @@ class Sprite {
             // Update frame
             currentFrame = (currentFrame + 1) % frameCount;
         }
+    }
+
+    /**
+     * Reset the sprite animation.
+     */
+    void reset() {
+        delta = 0.0f;
     }
 }

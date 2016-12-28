@@ -22,6 +22,7 @@ import at.ac.tuwien.policenauts.l4.android.GameSurfaceView;
 public class Game {
     private final Context context;
     private TextureManager textureManager = null;
+    private LevelLoader levelLoader = null;
     private Sprite sprite = new Sprite(0, 10, 600);
 
     /**
@@ -37,7 +38,9 @@ public class Game {
      * Initialize all important resource managers.
      */
     public void initialize() {
+        // Initialize resource managers
         textureManager = new TextureManager(context);
+        levelLoader = new LevelLoader(context, textureManager);
         List<String> sprites = new ArrayList<>(1);
         sprites.add("testsprite_10");
         List<Integer> frameCounts = new ArrayList<>(1);

@@ -41,12 +41,14 @@ public class GameLoop implements Runnable {
         Canvas canvas = null;
         running = true;
         float old_time = (float) System.nanoTime() / 1000000;
+        float cur_time;
+        float delta_time;
 
         while (running) {
 
             //Calculate delta_time
-            float cur_time =  (float) System.nanoTime() / 1000000;
-            float delta_time = cur_time - old_time;
+            cur_time =  (float) System.nanoTime() / 1000000;
+            delta_time = cur_time - old_time;
             old_time = cur_time;
 
             game.updateLogic(delta_time);
@@ -56,10 +58,8 @@ public class GameLoop implements Runnable {
             try {
                 canvas = holder.lockCanvas();
                 synchronized (holder) {
-                    if (canvas != null) {
-                        view.onDraw(canvas);
-                        //view.draw(canvas);
-                    }
+                    if (canvas != null)
+                        game.render(canvas);
                 }
             } finally {
                 if (canvas != null)

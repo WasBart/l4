@@ -1,11 +1,16 @@
 package at.ac.tuwien.policenauts.l4.game;
 
+import android.content.Context;
+import android.util.Log;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import at.ac.tuwien.policenauts.l4.R;
 
 /**
  * Load a level from a specified xml file.
@@ -14,13 +19,53 @@ import java.util.List;
  */
 class LevelLoader {
     /**
+     * Initialize the level loader with the application context.
+     *
+     * @param context Application context
+     * @param textureManager Texture manager of this application
+     */
+    LevelLoader(Context context, TextureManager textureManager) {
+        this.context = context;
+        this.textureManager = textureManager;
+    }
+
+    /**
      * Load a level, identified by a name.
      *
      * @param level The name/identifier of a level
      * @return A level object with complete information about the level
      */
-    public Level loadLevel(String level) {
-        return null;
+    Level loadLevel(String level) {
+        // Get the level resource ID
+        int resId;
+        try {
+            resId = res.getField(level).getInt(null);
+        } catch (Exception ex) {
+            Log.e(TAG, "Could not get resource ID of " + level, ex);
+            return null;
+        }
+
+        // Open the xml file and parse the level
+        try {
+            readLevel(context.getResources().getXml(resId));
+        } catch (Exception ex) {
+            Log.e(TAG, "Could not load the level " + level, ex);
+            return null;
+        }
+
+        // Use the state to create the level object
+        Level levelObject = new Level(new ArrayList<>(segments));
+
+        // Use the texture manager to load sprites and textures
+        textureManager.loadTextures(sprites, spritesFrameCount, textures);
+
+        // Clear the state
+        sprites.clear();
+        spritesFrameCount.clear();
+        textures.clear();
+        sounds.clear();
+        backgroundMusic.clear();
+        return levelObject;
     }
 
     /**
@@ -51,7 +96,7 @@ class LevelLoader {
                     sprites(parser);
                     break;
                 case "background-music":
-                    backgroundMusic(parser);
+                    readBackgroundMusic(parser);
                     break;
                 case "sounds":
                     sounds(parser);
@@ -93,15 +138,135 @@ class LevelLoader {
             // Check if keyword is any of the top level words
             switch (parser.getName()) {
                 case "asteroid":
-                    skipTag(parser);
+                    segment.getObjects().add(readAsteroid(parser));
                     break;
                 case "collectible":
-                    skipTag(parser);
+                    segment.getObjects().add(readAsteroid(parser));
                     break;
                 default:
                     skipTag(parser);
             }
         }
+    }
+
+    /**
+     * Read an asteroid from the level file
+     *
+     * @param parser The parser with the input level stream
+     * @throws XmlPullParserException if there was an exception during parsing
+     * @throws IOException if there was an exception while reading the resource file
+     */
+    private NonPlayerObject readAsteroid(XmlPullParser parser) throws XmlPullParserException,
+            IOException {
+        // Make sure the xml file starts with a level tag
+        parser.require(XmlPullParser.START_TAG, null, "asteroid");
+
+        // Find the type of the asteroid
+        String type = parser.getAttributeValue(null, "type");
+        int spriteId = 0;
+        int collisionSound = 0;
+        int xPosition = 0;
+        int yPosition = 0;
+
+        // Loop till end tag
+        while (parser.next() != XmlPullParser.END_TAG) {
+            if (parser.getEventType() != XmlPullParser.START_TAG)
+                continue;
+
+            // Check if keyword is any of the top level words
+            switch (parser.getName()) {
+                case "sprite":
+                    try {
+                        spriteId = Integer.parseInt(parser.getAttributeValue(null, "id"));
+                        parser.next();
+                    } catch (NumberFormatException ex) {
+                        throw new IOException("Could not parse sprite-id");
+                    }
+                    break;
+                case "collision":
+                    try {
+                        collisionSound = Integer.parseInt(parser.getAttributeValue(null, "sound"));
+                        parser.next();
+                    } catch (NumberFormatException ex) {
+                        throw new IOException("Could not parse collision sound");
+                    }
+                    break;
+                case "position":
+                    try {
+                        xPosition = Integer.parseInt(parser.getAttributeValue(null, "x"));
+                        yPosition = Integer.parseInt(parser.getAttributeValue(null, "y"));
+                        parser.next();
+                    } catch (NumberFormatException ex) {
+                        throw new IOException("Could not parse position");
+                    }
+                    break;
+                default:
+                    skipTag(parser);
+            }
+        }
+
+        // Build object from the given information
+        return null;
+    }
+
+    /**
+     * Read a collectible from the level file
+     *
+     * @param parser The parser with the input level stream
+     * @throws XmlPullParserException if there was an exception during parsing
+     * @throws IOException if there was an exception while reading the resource file
+     */
+    private NonPlayerObject readCollectible(XmlPullParser parser) throws XmlPullParserException,
+            IOException {
+        // Make sure the xml file starts with a level tag
+        parser.require(XmlPullParser.START_TAG, null, "collectible");
+
+        // Find the type of the asteroid
+        String type = parser.getAttributeValue(null, "type");
+        int spriteId = 0;
+        int collisionSound = 0;
+        int xPosition = 0;
+        int yPosition = 0;
+
+        // Loop till end tag
+        while (parser.next() != XmlPullParser.END_TAG) {
+            if (parser.getEventType() != XmlPullParser.START_TAG)
+                continue;
+
+            // Check if keyword is any of the top level words
+            switch (parser.getName()) {
+                case "sprite":
+                    try {
+                        spriteId = Integer.parseInt(parser.getAttributeValue(null, "id"));
+                        parser.next();
+                    } catch (NumberFormatException ex) {
+                        throw new IOException("Could not parse sprite-id");
+                    }
+                    break;
+                case "collision":
+                    try {
+                        collisionSound = Integer.parseInt(parser.getAttributeValue(null, "sound"));
+                        parser.next();
+                    } catch (NumberFormatException ex) {
+                        throw new IOException("Could not parse collision sound");
+                    }
+                    break;
+                case "position":
+                    try {
+                        xPosition = Integer.parseInt(parser.getAttributeValue(null, "x"));
+                        yPosition = Integer.parseInt(parser.getAttributeValue(null, "y"));
+                        parser.next();
+                    } catch (NumberFormatException ex) {
+                        throw new IOException("Could not parse position");
+                    }
+                    break;
+                default:
+                    skipTag(parser);
+            }
+        }
+
+        // Build object from the given information
+        return null;
     }
 
     /**
@@ -133,7 +298,8 @@ class LevelLoader {
      * @throws XmlPullParserException if there was an exception during parsing
      * @throws IOException if there was an exception while reading the resource file
      */
-    private void backgroundMusic(XmlPullParser parser) throws XmlPullParserException, IOException {
+    private void readBackgroundMusic(XmlPullParser parser) throws XmlPullParserException,
+            IOException {
         parser.require(XmlPullParser.START_TAG, null, "background-music");
 
         // Loop till end tag
@@ -228,11 +394,19 @@ class LevelLoader {
         }
     }
 
+    // Private members
+    private static final String TAG = "LevelLoader";
+    private final Context context;
+    private final TextureManager textureManager;
+
+    // Store class for dynamic resource loading through reflection
+    private final Class res = R.xml.class;
+
     // State needed for parsing
-    private List<String> sprites = new ArrayList<>();
-    private List<Integer> spritesFrameCount = new ArrayList<>();
-    private List<String> textures = new ArrayList<>();
-    private List<String> sounds = new ArrayList<>();
-    private List<String> backgroundMusic = new ArrayList<>();
-    private List<Segment> segments = new ArrayList<>();
+    private final List<String> sprites = new ArrayList<>();
+    private final List<Integer> spritesFrameCount = new ArrayList<>();
+    private final List<String> textures = new ArrayList<>();
+    private final List<String> sounds = new ArrayList<>();
+    private final List<String> backgroundMusic = new ArrayList<>();
+    private final List<Segment> segments = new ArrayList<>();
 }

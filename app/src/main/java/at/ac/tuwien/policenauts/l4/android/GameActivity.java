@@ -29,7 +29,7 @@ public class GameActivity extends AppCompatActivity {
 
         //Set volume for AM
         aM.setStreamVolume(AudioManager.STREAM_MUSIC,
-                aM.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
+                aM.getStreamVolume(AudioManager.STREAM_MUSIC), 0);
 
         // Initialize game
         ((GameApplication) getApplicationContext()).getGame().initialize();

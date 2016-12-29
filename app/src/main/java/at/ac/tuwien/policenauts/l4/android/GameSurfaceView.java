@@ -46,7 +46,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         game = applicationContext.getGame();
 
         // Initialize game and start the gameloop in a separate thread
-        gameLoop = new GameLoop(surfaceHolder, this, applicationContext.getGame());
+        gameLoop = new GameLoop(surfaceHolder, applicationContext.getGame());
         gameThread = new Thread(gameLoop);
         gameThread.start();
     }

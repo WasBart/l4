@@ -51,7 +51,6 @@ public class Game {
      * @param tpf Time per frame in milliseconds
      */
     void updateLogic(float tpf) {
-       // sprite.update(tpf);
         fps = 1 / tpf * 1000;
     }
 

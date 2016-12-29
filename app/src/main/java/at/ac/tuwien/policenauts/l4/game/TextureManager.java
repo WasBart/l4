@@ -13,7 +13,7 @@ import java.util.List;
 import at.ac.tuwien.policenauts.l4.R;
 
 /**
- * Load and store textures for reuse accross objects.
+ * Load and store textures for reuse across objects.
  *
  * @author Michael Pucher
  */

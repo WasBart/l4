@@ -22,6 +22,7 @@ import at.ac.tuwien.policenauts.l4.android.GameSurfaceView;
 public class Game {
     private final Context context;
     private TextureManager textureManager = null;
+    private SoundManager soundManager = null;
     private LevelLoader levelLoader = null;
     private float fps;
 
@@ -40,6 +41,7 @@ public class Game {
     public void initialize() {
         // Initialize resource managers
         textureManager = new TextureManager(context);
+        soundManager = new SoundManager(context);
         levelLoader = new LevelLoader(context, textureManager);
     }
 
@@ -49,7 +51,7 @@ public class Game {
      * @param tpf Time per frame in milliseconds
      */
     void updateLogic(float tpf) {
-        sprite.update(tpf);
+       // sprite.update(tpf);
         fps = 1 / tpf * 1000;
     }
 
@@ -74,5 +76,18 @@ public class Game {
 
         String fpsText = "frames per second: " + fps;
         canvas.drawText(fpsText, 0, fpsText.length()-1, (canvas.getWidth()/10) * 9, canvas.getHeight()/10, textP);
+    }
+
+    public void playBgm() {
+        soundManager.setBgm();
+        soundManager.startBgm();
+    }
+
+    public void stopBgm() {
+        soundManager.stopBgm();
+    }
+
+    public void destroyBgm() {
+        soundManager.releaseBgm();
     }
 }

@@ -55,9 +55,19 @@ class LevelLoader {
 
         // Use the state to create the level object
         Level levelObject = new Level(new ArrayList<>(segments));
+        segments.clear();
+        return levelObject;
+    }
 
+    /**
+     * Load resources for all levels using texture and sound manager.
+     *
+     * @return False in case of error
+     */
+    boolean loadResources() {
         // Use the texture manager to load sprites and textures
-        textureManager.loadTextures(sprites, spritesFrameCount, textures);
+        if (!textureManager.loadTextures(sprites, spritesFrameCount, textures))
+            return false;
 
         // Clear the state
         sprites.clear();
@@ -65,7 +75,7 @@ class LevelLoader {
         textures.clear();
         sounds.clear();
         backgroundMusic.clear();
-        return levelObject;
+        return true;
     }
 
     /**

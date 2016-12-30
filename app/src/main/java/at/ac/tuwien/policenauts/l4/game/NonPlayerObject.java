@@ -5,13 +5,13 @@ package at.ac.tuwien.policenauts.l4.game;
  *
  * @author Michael Pucher
  */
-interface NonPlayerObject extends GameObject {
+abstract class NonPlayerObject extends GameObject {
     /**
      * The object can apply a positive or negative effect on the player.
      *
      * @param player Apply the effect on this player
      */
-    void applyEffect(Player player);
+    abstract void applyEffect(Player player);
 
     /**
      * Checks, whether an object is visible or not. If this function
@@ -20,7 +20,7 @@ interface NonPlayerObject extends GameObject {
      *
      * @return True, if object is visible or possibly visible
      */
-    boolean visible();
+    abstract boolean visible();
 
     /**
      * This function is called, if a collision is being detected. It
@@ -28,5 +28,5 @@ interface NonPlayerObject extends GameObject {
      * than the player, e.g. an asteroid splitting up on collision or
      * a power up being consumed.
      */
-    void collisionEffect();
+    abstract void collisionEffect();
 }

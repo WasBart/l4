@@ -65,8 +65,8 @@ public class GameLoop implements Runnable {
                     holder.unlockCanvasAndPost(canvas);
             }
         }
-        game.stopBgm();
-        game.destroyBgm();
+        game.pauseBgm();
+       // game.destroyBgm();
     }
 
     /**

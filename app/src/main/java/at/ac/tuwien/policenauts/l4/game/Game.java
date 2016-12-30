@@ -43,6 +43,7 @@ public class Game {
         textureManager = new TextureManager(context);
         soundManager = new SoundManager(context);
         levelLoader = new LevelLoader(context, textureManager);
+        setBgm();
     }
 
     /**
@@ -77,9 +78,16 @@ public class Game {
         canvas.drawText(fpsText, 0, fpsText.length()-1, (canvas.getWidth()/10) * 9, canvas.getHeight()/10, textP);
     }
 
-    public void playBgm() {
+    public void setBgm() {
         soundManager.setBgm();
+    }
+
+    public void playBgm() {
         soundManager.startBgm();
+    }
+
+    public void pauseBgm() {
+        soundManager.pauseBgm();
     }
 
     public void stopBgm() {

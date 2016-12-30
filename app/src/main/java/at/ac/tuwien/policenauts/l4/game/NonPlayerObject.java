@@ -6,12 +6,7 @@ package at.ac.tuwien.policenauts.l4.game;
  * @author Michael Pucher
  */
 abstract class NonPlayerObject extends GameObject {
-    /**
-     * The object can apply a positive or negative effect on the player.
-     *
-     * @param player Apply the effect on this player
-     */
-    abstract void applyEffect(Player player);
+    private boolean visible = true;
 
     /**
      * Checks, whether an object is visible or not. If this function
@@ -20,7 +15,35 @@ abstract class NonPlayerObject extends GameObject {
      *
      * @return True, if object is visible or possibly visible
      */
-    abstract boolean visible();
+    public boolean isVisible() {
+        return visible;
+    }
+
+    /**
+     * Change the visibility of an object, from inside the object.
+     *
+     * @param visible The visibility of the object.
+     */
+    void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    /**
+     * Update the game logic and frame of the game object.
+     *
+     * @param tpf Time per frame as calculated in the game loop
+     */
+    @Override
+    public void update(float tpf) {
+        currentSprite().update(tpf);
+    }
+
+    /**
+     * The object can apply a positive or negative effect on the player.
+     *
+     * @param player Apply the effect on this player
+     */
+    abstract void applyEffect(Player player);
 
     /**
      * This function is called, if a collision is being detected. It

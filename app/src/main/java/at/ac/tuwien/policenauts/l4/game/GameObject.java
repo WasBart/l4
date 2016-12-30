@@ -33,10 +33,22 @@ abstract class GameObject {
     }
 
     /**
+     * Retrieve the current position where to draw the sprite.
+     *
+     * @return Current position as rect
+     */
+    Rect currentPosition() {
+        return null;
+    }
+
+    /**
      * Change the current sprite/spritesheet to a new spritesheet.
      *
      * @param sprite The spritesheet to change to
      */
+    protected void setCurrentSprite(int sprite) {
+        currentSprite = sprite;
+    }
 
     /**
      * Update the game logic and frame of the game object.
@@ -44,11 +56,4 @@ abstract class GameObject {
      * @param tpf Time per frame as calculated in the game loop
      */
     abstract void update(float tpf);
-
-    /**
-     * Retrieve the current position where to draw the sprite.
-     *
-     * @return Current position as rect
-     */
-    abstract Rect currentPosition();
 }

@@ -55,7 +55,13 @@ class LevelLoader {
 
         // Use the state to create the level object
         Level levelObject = new Level(new ArrayList<>(segments));
+
+        // Add offsets for loaded resources
         segments.clear();
+        spriteOffset = sprites.size();
+        textureOffset = textures.size();
+        soundOffset = sounds.size();
+        backgroundMusicOffset = backgroundMusic.size();
         return levelObject;
     }
 
@@ -72,9 +78,16 @@ class LevelLoader {
         // Clear the state
         sprites.clear();
         spritesFrameCount.clear();
+        spritesDuration.clear();
         textures.clear();
         sounds.clear();
         backgroundMusic.clear();
+
+        // Add offsets for loaded resources
+        spriteOffset = sprites.size();
+        textureOffset = textures.size();
+        soundOffset = sounds.size();
+        backgroundMusicOffset = backgroundMusic.size();
         return true;
     }
 
@@ -173,7 +186,7 @@ class LevelLoader {
 
         // Find the type of the asteroid
         String type = parser.getAttributeValue(null, "type");
-        int spriteId = 0;
+        List<Sprite> spriteIds = new ArrayList<>(1);
         int collisionSound = 0;
         int xPosition = 0;
         int yPosition = 0;
@@ -187,7 +200,10 @@ class LevelLoader {
             switch (parser.getName()) {
                 case "sprite":
                     try {
-                        spriteId = Integer.parseInt(parser.getAttributeValue(null, "id"));
+                        int spriteId = Integer.parseInt(parser.getAttributeValue(null, "id")) +
+                                        spriteOffset;
+                        spriteIds.add(new Sprite(spriteId, spritesFrameCount.get(spriteId),
+                                spritesDuration.get(spriteId)));
                         parser.next();
                     } catch (NumberFormatException ex) {
                         throw new IOException("Could not parse sprite-id");
@@ -195,7 +211,8 @@ class LevelLoader {
                     break;
                 case "collision":
                     try {
-                        collisionSound = Integer.parseInt(parser.getAttributeValue(null, "sound"));
+                        collisionSound = Integer.parseInt(parser.getAttributeValue(null, "sound") +
+                                soundOffset);
                         parser.next();
                     } catch (NumberFormatException ex) {
                         throw new IOException("Could not parse collision sound");
@@ -216,7 +233,21 @@ class LevelLoader {
         }
 
         // Build object from the given information
-        return null;
+        NonPlayerObject asteroid;
+        switch (type) {
+            case "simple":
+                asteroid = new Oxygen();
+                break;
+            case "indestructible":
+                asteroid = new Oxygen();
+                break;
+            case "splitting":
+            default:
+                asteroid = new Oxygen();
+                break;
+        }
+        asteroid.addSprites(spriteIds);
+        return asteroid;
     }
 
     /**
@@ -233,7 +264,7 @@ class LevelLoader {
 
         // Find the type of the asteroid
         String type = parser.getAttributeValue(null, "type");
-        int spriteId = 0;
+        List<Sprite> spriteIds = new ArrayList<>();
         int collisionSound = 0;
         int xPosition = 0;
         int yPosition = 0;
@@ -247,7 +278,10 @@ class LevelLoader {
             switch (parser.getName()) {
                 case "sprite":
                     try {
-                        spriteId = Integer.parseInt(parser.getAttributeValue(null, "id"));
+                        int spriteId = Integer.parseInt(parser.getAttributeValue(null, "id")) +
+                                spriteOffset;
+                        spriteIds.add(new Sprite(spriteId, spritesFrameCount.get(spriteId),
+                                spritesDuration.get(spriteId)));
                         parser.next();
                     } catch (NumberFormatException ex) {
                         throw new IOException("Could not parse sprite-id");
@@ -255,7 +289,8 @@ class LevelLoader {
                     break;
                 case "collision":
                     try {
-                        collisionSound = Integer.parseInt(parser.getAttributeValue(null, "sound"));
+                        collisionSound = Integer.parseInt(parser.getAttributeValue(null, "sound") +
+                                soundOffset);
                         parser.next();
                     } catch (NumberFormatException ex) {
                         throw new IOException("Could not parse collision sound");
@@ -276,7 +311,21 @@ class LevelLoader {
         }
 
         // Build object from the given information
-        return null;
+        NonPlayerObject collectible;
+        switch (type) {
+            case "invincibility":
+                collectible = new Invincibility();
+                break;
+            case "ammo":
+                collectible = new RailgunAmmo();
+                break;
+            case "oxygen":
+            default:
+                collectible = new Oxygen();
+                break;
+        }
+        collectible.addSprites(spriteIds);
+        return collectible;
     }
 
     /**
@@ -415,8 +464,15 @@ class LevelLoader {
     // State needed for parsing
     private final List<String> sprites = new ArrayList<>();
     private final List<Integer> spritesFrameCount = new ArrayList<>();
+    private final List<Integer> spritesDuration = new ArrayList<>();
     private final List<String> textures = new ArrayList<>();
     private final List<String> sounds = new ArrayList<>();
     private final List<String> backgroundMusic = new ArrayList<>();
     private final List<Segment> segments = new ArrayList<>();
+
+    // Offsets for resource parsing
+    private int spriteOffset = 0;
+    private int textureOffset = 0;
+    private int soundOffset = 0;
+    private int backgroundMusicOffset = 0;
 }

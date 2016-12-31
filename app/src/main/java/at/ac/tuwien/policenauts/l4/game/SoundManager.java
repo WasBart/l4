@@ -31,9 +31,9 @@ public class SoundManager {
         mP = MediaPlayer.create(context, R.raw.bgm);
         mP.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(MediaPlayer mp) {
-                mp.start();
             }
         });
+        mP.setLooping(true);
     }
 
     public void startBgm() {
@@ -42,11 +42,17 @@ public class SoundManager {
 
     public void pauseBgm() { mP.pause(); }
 
+    public void forwardBgm(int ms) { mP.seekTo(ms); };
+
     public void stopBgm() {
         mP.stop();
     }
 
     public void releaseBgm() {
         mP.release();
+    }
+
+    public int getBgmPos() {
+        return mP.getCurrentPosition();
     }
 }

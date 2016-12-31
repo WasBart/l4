@@ -90,6 +90,8 @@ public class Game {
         soundManager.pauseBgm();
     }
 
+    public void forwardBgm(int ms) { soundManager.forwardBgm(ms); }
+
     public void stopBgm() {
         soundManager.stopBgm();
     }
@@ -97,4 +99,6 @@ public class Game {
     public void destroyBgm() {
         soundManager.releaseBgm();
     }
+
+    public int getBgmPos() { return soundManager.getBgmPos(); }
 }

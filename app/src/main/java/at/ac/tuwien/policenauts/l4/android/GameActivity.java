@@ -16,7 +16,6 @@ import at.ac.tuwien.policenauts.l4.game.Game;
 public class GameActivity extends AppCompatActivity {
 
     private Game game;
-    private int bgmPos = 0;
 
     /**
      * Invoked when an instance of the class is created.
@@ -40,9 +39,6 @@ public class GameActivity extends AppCompatActivity {
         // Initialize game
         game = ((GameApplication) getApplicationContext()).getGame();
         game.initialize();
-
-        game.forwardBgm(bgmPos);
-        game.playBgm();
     }
 
     /**
@@ -52,28 +48,25 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        game.pauseBgm();
-        bgmPos = game.getBgmPos();
+        game.pause();
     }
 
     /**
      * Invoked when the Activity is active again after being inactive.
-     *
      */
     @Override
     protected void onResume() {
         super.onResume();
-        game.forwardBgm(bgmPos);
-        game.playBgm();
+        game.resume();
 
     }
 
+    /**
+     * Invoked when the Activity is being removed from memory.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        game.pauseBgm();
-        bgmPos = game.getBgmPos();
-        //game.stopBgm();
-        //game.destroyBgm();
+        game.pause();
     }
 }

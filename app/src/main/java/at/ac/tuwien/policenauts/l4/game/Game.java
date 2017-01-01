@@ -5,12 +5,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.media.AudioManager;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import at.ac.tuwien.policenauts.l4.android.GameActivity;
 import at.ac.tuwien.policenauts.l4.android.GameSurfaceView;
 
 /**
@@ -20,11 +22,16 @@ import at.ac.tuwien.policenauts.l4.android.GameSurfaceView;
  * @author Wassily Bartuska
  */
 public class Game {
+    // Resource management
     private final Context context;
     private TextureManager textureManager = null;
     private SoundManager soundManager = null;
     private LevelLoader levelLoader = null;
+    private boolean resourcesLoaded = false;
+
+    // Game state
     private float fps;
+    private int bgmPos = 0;
 
     /**
      * Initialize game object with application context.
@@ -40,9 +47,27 @@ public class Game {
      */
     public void initialize() {
         // Initialize resource managers
-        textureManager = new TextureManager(context);
-        soundManager = new SoundManager(context);
-        levelLoader = new LevelLoader(context, textureManager);
+        if (!resourcesLoaded) {
+            textureManager = new TextureManager(context);
+            soundManager = new SoundManager(context);
+            levelLoader = new LevelLoader(context, textureManager);
+            soundManager.setBgm();
+            resourcesLoaded = true;
+        }
+        resume();
+    }
+
+    /**
+     * Remove all loaded resources from memory, but keep game logic state.
+     */
+    public void freeResources() {
+        textureManager.unloadTextures();
+        soundManager.releaseBgm();
+
+        // Reset managers
+        textureManager = null;
+        soundManager = null;
+        resourcesLoaded = false;
     }
 
     /**
@@ -77,16 +102,20 @@ public class Game {
         canvas.drawText(fpsText, 0, fpsText.length()-1, (canvas.getWidth()/10) * 9, canvas.getHeight()/10, textP);
     }
 
-    public void playBgm() {
-        soundManager.setBgm();
+    /**
+     * Pause the game, save the state and release unnecessary resources.
+     */
+    public void pause() {
+        soundManager.pauseBgm();
+        bgmPos = soundManager.getBgmPos();
+    }
+
+    /**
+     * Resume a previously paused game.
+     */
+    public void resume() {
+        soundManager.forwardBgm(bgmPos);
         soundManager.startBgm();
     }
 
-    public void stopBgm() {
-        soundManager.stopBgm();
-    }
-
-    public void destroyBgm() {
-        soundManager.releaseBgm();
-    }
 }

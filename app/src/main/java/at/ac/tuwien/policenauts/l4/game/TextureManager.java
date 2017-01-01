@@ -123,6 +123,12 @@ class TextureManager {
      * Remove all textures from memory and reset texture counter.
      */
     void unloadTextures() {
+        // Free all sprite sheets and textures
+        for (Bitmap bm : spriteSheets)
+                bm.recycle();
+        for (Bitmap tex : textures)
+                tex.recycle();
+        
         // Reset all arrays
         spriteSheets = null;
         spriteFrameWidth = null;

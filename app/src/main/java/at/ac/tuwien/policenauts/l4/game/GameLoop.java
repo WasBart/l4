@@ -41,8 +41,6 @@ public class GameLoop implements Runnable {
         float cur_time;
         float delta_time;
 
-        game.playBgm();
-
         while (running) {
 
             //Calculate delta_time
@@ -65,8 +63,6 @@ public class GameLoop implements Runnable {
                     holder.unlockCanvasAndPost(canvas);
             }
         }
-        game.stopBgm();
-        game.destroyBgm();
     }
 
     /**

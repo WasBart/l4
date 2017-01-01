@@ -66,6 +66,7 @@ public class Game {
 
         // Reset managers
         textureManager = null;
+        levelLoader = null;
         soundManager = null;
         resourcesLoaded = false;
     }

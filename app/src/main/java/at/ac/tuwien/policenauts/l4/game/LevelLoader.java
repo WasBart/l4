@@ -27,22 +27,32 @@ class LevelLoader {
     LevelLoader(Context context, TextureManager textureManager) {
         this.context = context;
         this.textureManager = textureManager;
+        loadResources();
+    }
+
+    /**
+     * Return a loaded level by its id
+     *
+     * @param levelId Id of the level to be returned
+     * @return Level corresponding to the passed id
+     */
+    Level getLevel(int levelId) {
+        return levels.get(levelId);
     }
 
     /**
      * Load a level, identified by a name.
      *
      * @param level The name/identifier of a level
-     * @return A level object with complete information about the level
      */
-    Level loadLevel(String level) {
+    private void loadLevel(String level) {
         // Get the level resource ID
         int resId;
         try {
             resId = res.getField(level).getInt(null);
         } catch (Exception ex) {
             Log.e(TAG, "Could not get resource ID of " + level, ex);
-            return null;
+            return;
         }
 
         // Open the xml file and parse the level
@@ -50,11 +60,11 @@ class LevelLoader {
             readLevel(context.getResources().getXml(resId));
         } catch (Exception ex) {
             Log.e(TAG, "Could not load the level " + level, ex);
-            return null;
+            return;
         }
 
         // Use the state to create the level object
-        Level levelObject = new Level(new ArrayList<>(segments));
+        levels.add(new Level(new ArrayList<>(segments)));
 
         // Add offsets for loaded resources
         segments.clear();
@@ -62,7 +72,6 @@ class LevelLoader {
         textureOffset = textures.size();
         soundOffset = sounds.size();
         backgroundMusicOffset = backgroundMusic.size();
-        return levelObject;
     }
 
     /**
@@ -475,4 +484,7 @@ class LevelLoader {
     private int textureOffset = 0;
     private int soundOffset = 0;
     private int backgroundMusicOffset = 0;
+
+    // State as needed for game logic
+    private final List<Level> levels = new ArrayList<>(2);
 }

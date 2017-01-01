@@ -33,12 +33,10 @@ class Sprite {
      */
     void update(float tpf) {
         delta += tpf;
-        if (delta > frameDuration) {
-            delta = 0.0f;
 
-            // Update frame
-            currentFrame = (currentFrame + 1) % frameCount;
-        }
+        // Pick next frame
+        currentFrame = (currentFrame + (int) (delta / frameDuration)) % frameCount;
+        delta %= frameDuration;
     }
 
     /**

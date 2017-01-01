@@ -13,6 +13,6 @@ class Oxygen extends Collectible {
      */
     @Override
     void applyEffect(Player player) {
-
+        player.changeOxygen(0.3f);
     }
 }

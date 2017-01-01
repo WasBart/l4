@@ -13,6 +13,6 @@ class RailgunAmmo extends Collectible {
      */
     @Override
     void applyEffect(Player player) {
-
+        player.changeRailgunAmmo(5);
     }
 }

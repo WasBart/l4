@@ -1,7 +1,5 @@
 package at.ac.tuwien.policenauts.l4.game;
 
-import android.graphics.Rect;
-
 /**
  * An object which can be picked up by a player, having a
  * positive effect in most cases.

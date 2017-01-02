@@ -12,6 +12,7 @@ public class ResolutionConverter {
     private static final int HEIGHT = 1000;
     private int actualWidth;
     private int actualHeight;
+    private float densityFactor;
 
     /**
      * Set the actual width and height of the drawing canvas.
@@ -22,6 +23,16 @@ public class ResolutionConverter {
     public void setDimensions(int width, int height) {
         actualWidth = width;
         actualHeight = height;
+    }
+
+    /**
+     * Set density factor for density independent pixel calculations.
+     *
+     * @param scale Density scale as optained from the context
+     */
+    public void setDensity(float scale) {
+        final float GESTURE_THRESHOLD_DIP = 16.0f;
+        this.densityFactor = (GESTURE_THRESHOLD_DIP * scale + 0.5f) / 30.0f;
     }
 
     /**
@@ -36,5 +47,14 @@ public class ResolutionConverter {
         int right = source.right * actualWidth / WIDTH;
         int bottom = source.bottom * actualHeight / HEIGHT;
         target.set(left, top, right, bottom);
+    }
+
+    /**
+     * Get the density factor for one pixel.
+     *
+     * @return 1px in pixel independent scaling
+     */
+    float density() {
+        return densityFactor;
     }
 }

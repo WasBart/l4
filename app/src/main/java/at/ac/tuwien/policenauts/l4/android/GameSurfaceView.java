@@ -9,6 +9,7 @@ import android.view.SurfaceHolder;
 
 import at.ac.tuwien.policenauts.l4.game.Game;
 import at.ac.tuwien.policenauts.l4.game.GameLoop;
+import at.ac.tuwien.policenauts.l4.game.ResolutionConverter;
 
 /**
  * The surface view located on the game activity,
@@ -63,7 +64,9 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         GameApplication applicationContext = (GameApplication) getContext().getApplicationContext();
-        applicationContext.getGame().resolution.setDimensions(w, h);
+        ResolutionConverter resolution = applicationContext.getGame().resolution;
+        resolution.setDimensions(w, h);
+        resolution.setDensity(applicationContext.getResources().getDisplayMetrics().density);
     }
 
 

@@ -105,18 +105,13 @@ public class Game {
     public void render(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
 
-        // Density independent pixels, move to resolution
-        final float GESTURE_THRESHOLD_DIP = 16.0f;
-        final float scale = context.getResources().getDisplayMetrics().density;
-        final int gestureThreshold = (int) (GESTURE_THRESHOLD_DIP * scale + 0.5f);
-
         // Draw fps counter
         Paint textP = new Paint();
         Rect src = new Rect(1600, 50, 1600, 50);
         resolution.toScreenRect(src, src);
         textP.setColor(Color.GREEN);
         textP.setTextAlign(Paint.Align.RIGHT);
-        textP.setTextSize(gestureThreshold / 1.5f);
+        textP.setTextSize(30 * resolution.density());
         String fpsText = fps + " FPS";
         canvas.drawText(fpsText, src.left, src.top, textP);
 

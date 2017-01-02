@@ -10,7 +10,7 @@ class Sprite {
     int currentFrame = 0;
 
     private final int frameCount;
-    private final float frameDuration;
+    private final int frameDuration;
     private float delta = 0.0f;
 
     /**
@@ -18,12 +18,12 @@ class Sprite {
      *
      * @param textureId Id in the texture manager
      * @param frameCount The number of frames on the spritesheet
-     * @param duration Duration of one cycle in millisecond
+     * @param duration Duration of a frame in milliseconds
      */
     Sprite(int textureId, int frameCount, int duration) {
         this.textureId = textureId;
         this.frameCount = frameCount;
-        this.frameDuration = duration / (float) frameCount;
+        this.frameDuration = duration;
     }
 
     /**

@@ -27,6 +27,11 @@ class TextureManager {
     TextureManager(Context context, ResolutionConverter resolution) {
         this.context = context;
         this.resolution = resolution;
+
+        // Set paint for pixel art
+        defaultPaint = new Paint();
+        defaultPaint.setFilterBitmap(false);
+        defaultPaint.setAntiAlias(false);
     }
 
     /**
@@ -158,7 +163,7 @@ class TextureManager {
     private Rect[] textureSrcRect = null;
 
     // Information needed for drawing
-    private final Paint defaultPaint = new Paint();
+    private final Paint defaultPaint;
     private Canvas canvas = null;
     private final Rect targetRect = new Rect();
     private final ResolutionConverter resolution;

@@ -62,7 +62,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        game.resolution.setDimensions(w, h);
+        GameApplication applicationContext = (GameApplication) getContext().getApplicationContext();
+        applicationContext.getGame().resolution.setDimensions(w, h);
     }
 
 

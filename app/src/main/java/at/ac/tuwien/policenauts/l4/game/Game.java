@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +31,8 @@ public class Game {
     private int reachedLevel = 0;
     private int currentlyActiveLevel = -1;
 
+    Sprite testSprite = new Sprite(0, 5, 150);
+
     /**
      * Initialize game object with application context.
      *
@@ -44,11 +48,17 @@ public class Game {
     public void initialize() {
         // Initialize resource managers
         if (!resourcesLoaded) {
-            textureManager = new TextureManager(context);
+            textureManager = new TextureManager(context, resolution);
             soundManager = new SoundManager(context);
             levelLoader = new LevelLoader(context, textureManager);
             soundManager.setBgm();
             resourcesLoaded = true;
+
+            List<String> sprites = new ArrayList<>();
+            sprites.add("o2_5");
+            List<Integer> frameCounts = new ArrayList<>();
+            frameCounts.add(5);
+            textureManager.loadTextures(sprites, frameCounts, null);
         }
         resume();
     }
@@ -80,10 +90,11 @@ public class Game {
      * @param tpf Time per frame in milliseconds
      */
     void updateLogic(float tpf) {
-        if (currentlyActiveLevel != reachedLevel)
-            return;
+        //if (currentlyActiveLevel != reachedLevel)
+        //    return;
 
         fps = 1 / tpf * 1000;
+        testSprite.update(tpf);
     }
 
     /**
@@ -94,26 +105,28 @@ public class Game {
     public void render(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
 
+        // Density independent pixels, move to resolution
+        final float GESTURE_THRESHOLD_DIP = 16.0f;
+        final float scale = context.getResources().getDisplayMetrics().density;
+        final int gestureThreshold = (int) (GESTURE_THRESHOLD_DIP * scale + 0.5f);
+
         // Draw fps counter
         Paint textP = new Paint();
+        Rect src = new Rect(1600, 50, 1600, 50);
+        resolution.toScreenRect(src, src);
         textP.setColor(Color.GREEN);
         textP.setTextAlign(Paint.Align.RIGHT);
-        String fpsText = "frames per second: " + fps;
-        canvas.drawText(fpsText, 0, fpsText.length()-1, (canvas.getWidth()/10) * 9,
-                canvas.getHeight()/10, textP);
+        textP.setTextSize(gestureThreshold / 1.5f);
+        String fpsText = fps + " FPS";
+        canvas.drawText(fpsText, src.left, src.top, textP);
 
         // Quit here if level hasn't started yet
-        if (currentlyActiveLevel != reachedLevel)
-            return;
+        //if (currentlyActiveLevel != reachedLevel)
+        //    return;
 
         // Pass canvas to texture manager
         textureManager.setCanvas(canvas);
-
-        Paint paint = new Paint();
-        paint.setColor(Color.RED);
-
-        canvas.drawRect(canvas.getWidth()/2-40, canvas.getHeight()/2-40,
-                canvas.getWidth()/2+40, canvas.getHeight()/2+40, paint);
+        textureManager.drawSprite(testSprite, new Rect(750, 450, 850, 550));
     }
 
     /**

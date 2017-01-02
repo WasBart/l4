@@ -31,8 +31,6 @@ public class Game {
     private int reachedLevel = 0;
     private int currentlyActiveLevel = -1;
 
-    Sprite testSprite = new Sprite(0, 5, 150);
-
     /**
      * Initialize game object with application context.
      *
@@ -54,11 +52,7 @@ public class Game {
             soundManager.setBgm();
             resourcesLoaded = true;
 
-            List<String> sprites = new ArrayList<>();
-            sprites.add("o2_5");
-            List<Integer> frameCounts = new ArrayList<>();
-            frameCounts.add(5);
-            textureManager.loadTextures(sprites, frameCounts, null);
+            startGame();
         }
         resume();
     }
@@ -80,8 +74,9 @@ public class Game {
     /**
      * Start the next level, based on the reached level.
      */
-    private void startGame() {
-
+    void startGame() {
+        currentlyActiveLevel = reachedLevel;
+        levelLoader.getLevel(0).startLevel();
     }
 
     /**
@@ -90,11 +85,13 @@ public class Game {
      * @param tpf Time per frame in milliseconds
      */
     void updateLogic(float tpf) {
-        //if (currentlyActiveLevel != reachedLevel)
-        //    return;
+        if (currentlyActiveLevel != reachedLevel)
+            return;
 
         fps = 1 / tpf * 1000;
-        testSprite.update(tpf);
+
+        // Update all objects in the level
+        levelLoader.getLevel(0).updateLevel(tpf);
     }
 
     /**
@@ -116,12 +113,12 @@ public class Game {
         canvas.drawText(fpsText, src.left, src.top, textP);
 
         // Quit here if level hasn't started yet
-        //if (currentlyActiveLevel != reachedLevel)
-        //    return;
+        if (currentlyActiveLevel != reachedLevel)
+            return;
 
         // Pass canvas to texture manager
         textureManager.setCanvas(canvas);
-        textureManager.drawSprite(testSprite, new Rect(750, 450, 850, 550));
+        levelLoader.getLevel(currentlyActiveLevel).renderLevel(textureManager);
     }
 
     /**

@@ -40,7 +40,7 @@ public class GameLoop implements Runnable {
         float old_time = (float) System.nanoTime() / 1000000;
         float cur_time;
         float delta_time;
-
+        
         while (running) {
 
             //Calculate delta_time

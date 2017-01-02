@@ -27,6 +27,9 @@ class LevelLoader {
     LevelLoader(Context context, TextureManager textureManager) {
         this.context = context;
         this.textureManager = textureManager;
+
+        // Load the resources we want to load
+        loadLevel("level01");
         loadResources();
     }
 
@@ -108,6 +111,10 @@ class LevelLoader {
      * @throws IOException if there was an exception while reading the resource file
      */
     private void readLevel(XmlPullParser parser) throws XmlPullParserException, IOException {
+        // Skip the first two tags
+        parser.next();
+        parser.next();
+
         // Make sure the xml file starts with a level tag
         parser.require(XmlPullParser.START_TAG, null, "level");
 
@@ -132,6 +139,7 @@ class LevelLoader {
                     break;
                 case "sounds":
                     sounds(parser);
+                    break;
                 case "segment":
                     segment(parser);
                     break;
@@ -173,7 +181,7 @@ class LevelLoader {
                     segment.getObjects().add(readAsteroid(parser));
                     break;
                 case "collectible":
-                    segment.getObjects().add(readAsteroid(parser));
+                    segment.getObjects().add(readCollectible(parser));
                     break;
                 default:
                     skipTag(parser);
@@ -280,10 +288,8 @@ class LevelLoader {
 
         // Loop till end tag
         while (parser.next() != XmlPullParser.END_TAG) {
-            if (parser.getEventType() != XmlPullParser.START_TAG)
-                continue;
-
             // Check if keyword is any of the top level words
+            Log.e(TAG, parser.getName());
             switch (parser.getName()) {
                 case "sprite":
                     try {
@@ -333,6 +339,10 @@ class LevelLoader {
                 collectible = new Oxygen();
                 break;
         }
+
+        // Add position to object
+        collectible.currentPosition().set(xPosition - 50, yPosition - 50, xPosition + 50,
+                yPosition + 50);
         collectible.addSprites(spriteIds);
         return collectible;
     }
@@ -416,9 +426,6 @@ class LevelLoader {
 
         // Loop till end tag
         while (parser.next() != XmlPullParser.END_TAG) {
-            if (parser.getEventType() != XmlPullParser.START_TAG)
-                continue;
-
             // Skip invalid elements
             if (!parser.getName().equals("sheet"))
                 continue;
@@ -434,6 +441,17 @@ class LevelLoader {
             } catch (NumberFormatException ex) {
                 throw new XmlPullParserException("Could not parse frame count: " + name);
             }
+
+            // Get sprite frame duration
+            String duration = parser.getAttributeValue(null, "duration");
+            try {
+                spritesDuration.add(Integer.parseInt(duration));
+            } catch (NumberFormatException ex) {
+                throw new XmlPullParserException("Could not parse frame duration: " + name);
+            }
+
+            // Consume ending tag
+            parser.next();
         }
     }
 

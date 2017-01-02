@@ -12,6 +12,7 @@ import java.util.List;
  */
 abstract class GameObject {
     private final List<Sprite> sprites = new ArrayList<>(1);
+    private final Rect position = new Rect();
     private int currentSprite = 0;
 
     /**
@@ -38,7 +39,7 @@ abstract class GameObject {
      * @return Current position as rect
      */
     Rect currentPosition() {
-        return null;
+        return position;
     }
 
     /**

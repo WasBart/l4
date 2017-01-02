@@ -1,4 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <level>
-    
+    <player>
+        <start x="12" y="34" segment="0" />
+    </player>
+    <background-images>
+    </background-images>
+    <sprites>
+        <sheet src="ammo_5" duration="150" />
+        <sheet src="invincibility_5" duration="150" />
+        <sheet src="o2_5" duration="150" />
+    </sprites>
+    <background-music>
+    </background-music>
+    <sounds>
+    </sounds>
+    <segment image-id="0">
+        <collectible type="oxygen">
+            <sprite id="2" />
+            <collision sound="0" />
+            <position x="800" y="500" />
+        </collectible>
+        <collectible type="ammo">
+            <sprite id="0" />
+            <collision sound="0" />
+            <position x="100" y="100" />
+        </collectible>
+        <collectible type="invincibility">
+            <sprite id="1" />
+            <collision sound="0" />
+            <position x="1200" y="800" />
+        </collectible>
+    </segment>
+    <segment image-id="0">
+    </segment>
 </level>

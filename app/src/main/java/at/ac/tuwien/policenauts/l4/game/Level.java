@@ -35,9 +35,26 @@ class Level {
     }
 
     /**
-     * Scroll the level by a specific amount.
+     * Update all (visible) level objects.
+     *
+     * @param tpf Time per frame in millseconds
      */
-    void scrollLevel() {
+    void updateLevel(float tpf) {
+        for (NonPlayerObject obj : currentObjects)
+            obj.update(tpf);
+        for (NonPlayerObject obj : nextObjects)
+            obj.update(tpf);
+    }
 
+    /**
+     * Render a level, using the texture manager.
+     *
+     * @param textureManager Texture manager, needs to have the canvas aquired already
+     */
+    void renderLevel(TextureManager textureManager) {
+        for (NonPlayerObject obj : currentObjects)
+            textureManager.drawSprite(obj.currentSprite(), obj.currentPosition());
+        for (NonPlayerObject obj : nextObjects)
+            textureManager.drawSprite(obj.currentSprite(), obj.currentPosition());
     }
 }

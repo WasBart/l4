@@ -52,6 +52,21 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     }
 
     /**
+     * Update the size of the surface view in the resolution manager of Game
+     *
+     * @param w Width
+     * @param h Height
+     * @param oldw Old width
+     * @param oldh Old height
+     */
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        game.resolution.setDimensions(w, h);
+    }
+
+
+    /**
      * Invoked when an instance of this class is changed.
      *
      * @param surfaceHolder holder of the surface object

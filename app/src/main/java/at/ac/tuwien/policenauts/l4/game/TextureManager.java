@@ -22,9 +22,11 @@ class TextureManager {
      * Initialize the texture manager with a context.
      *
      * @param context The application context
+     * @param resolution The resolution converter from Game
      */
-    TextureManager(Context context) {
+    TextureManager(Context context, ResolutionConverter resolution) {
         this.context = context;
+        this.resolution = resolution;
     }
 
     /**
@@ -106,7 +108,8 @@ class TextureManager {
     void drawSprite(Sprite sprite, Rect rect) {
         Rect src = spriteFrameRects[sprite.textureId];
         src.offsetTo(sprite.currentFrame * spriteFrameWidth[sprite.textureId], 0);
-        canvas.drawBitmap(spriteSheets[sprite.textureId], src, rect, defaultPaint);
+        resolution.toScreenRect(rect, targetRect);
+        canvas.drawBitmap(spriteSheets[sprite.textureId], src, targetRect, defaultPaint);
     }
 
     /**
@@ -116,7 +119,8 @@ class TextureManager {
      * @param rect Target rectangle for bitmap drawing
      */
     void drawTexture(int index, Rect rect) {
-        canvas.drawBitmap(textures[index], textureSrcRect[index], rect, defaultPaint);
+        resolution.toScreenRect(rect, targetRect);
+        canvas.drawBitmap(textures[index], textureSrcRect[index], targetRect, defaultPaint);
     }
 
     /**
@@ -156,4 +160,6 @@ class TextureManager {
     // Information needed for drawing
     private final Paint defaultPaint = new Paint();
     private Canvas canvas = null;
+    private final Rect targetRect = new Rect();
+    private final ResolutionConverter resolution;
 }

@@ -4,16 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.media.AudioManager;
-import android.util.Log;
-import android.view.SurfaceHolder;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import at.ac.tuwien.policenauts.l4.android.GameActivity;
-import at.ac.tuwien.policenauts.l4.android.GameSurfaceView;
 
 /**
  * The main game object, used for loading resources and rendering.
@@ -22,6 +14,8 @@ import at.ac.tuwien.policenauts.l4.android.GameSurfaceView;
  * @author Wassily Bartuska
  */
 public class Game {
+    public final ResolutionConverter resolution = new ResolutionConverter();
+
     // Resource management
     private final Context context;
     private TextureManager textureManager = null;
@@ -30,8 +24,10 @@ public class Game {
     private boolean resourcesLoaded = false;
 
     // Game state
-    private float fps;
+    private float fps = 60.0f;
     private int bgmPos = 0;
+    private int reachedLevel = 0;
+    private int currentlyActiveLevel = -1;
 
     /**
      * Initialize game object with application context.
@@ -72,11 +68,21 @@ public class Game {
     }
 
     /**
+     * Start the next level, based on the reached level.
+     */
+    private void startGame() {
+
+    }
+
+    /**
      * Update the game logic.
      *
      * @param tpf Time per frame in milliseconds
      */
     void updateLogic(float tpf) {
+        if (currentlyActiveLevel != reachedLevel)
+            return;
+
         fps = 1 / tpf * 1000;
     }
 
@@ -86,21 +92,28 @@ public class Game {
      * @param canvas Drawing canvas
      */
     public void render(Canvas canvas) {
-        textureManager.setCanvas(canvas);
         canvas.drawColor(Color.BLACK);
+
+        // Draw fps counter
+        Paint textP = new Paint();
+        textP.setColor(Color.GREEN);
+        textP.setTextAlign(Paint.Align.RIGHT);
+        String fpsText = "frames per second: " + fps;
+        canvas.drawText(fpsText, 0, fpsText.length()-1, (canvas.getWidth()/10) * 9,
+                canvas.getHeight()/10, textP);
+
+        // Quit here if level hasn't started yet
+        if (currentlyActiveLevel != reachedLevel)
+            return;
+
+        // Pass canvas to texture manager
+        textureManager.setCanvas(canvas);
 
         Paint paint = new Paint();
         paint.setColor(Color.RED);
 
         canvas.drawRect(canvas.getWidth()/2-40, canvas.getHeight()/2-40,
                 canvas.getWidth()/2+40, canvas.getHeight()/2+40, paint);
-
-        Paint textP = new Paint();
-        textP.setColor(Color.GREEN);
-        textP.setTextAlign(Paint.Align.RIGHT);
-
-        String fpsText = "frames per second: " + fps;
-        canvas.drawText(fpsText, 0, fpsText.length()-1, (canvas.getWidth()/10) * 9, canvas.getHeight()/10, textP);
     }
 
     /**

@@ -32,6 +32,7 @@ public class Game {
     // Game state
     private float fps;
     private int bgmPos = 0;
+    private float timer = 0.0f;
 
     /**
      * Initialize game object with application context.
@@ -58,7 +59,6 @@ public class Game {
             resourcesLoaded = true;
         }
         resume();
-        soundManager.playWorld();
     }
 
     /**
@@ -82,6 +82,10 @@ public class Game {
      */
     void updateLogic(float tpf) {
         fps = 1 / tpf * 1000;
+        timer += tpf;
+        if (timer > 5000.0f)
+            soundManager.playWorld();
+        timer %= 5000.0f;
     }
 
     /**

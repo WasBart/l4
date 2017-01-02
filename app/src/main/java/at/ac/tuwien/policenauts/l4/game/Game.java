@@ -52,9 +52,13 @@ public class Game {
             soundManager = new SoundManager(context);
             levelLoader = new LevelLoader(context, textureManager);
             soundManager.setBgm();
+            soundManager.initSp(5);
+            soundManager.loadWorld(context);
+
             resourcesLoaded = true;
         }
         resume();
+        soundManager.playWorld();
     }
 
     /**
@@ -63,6 +67,7 @@ public class Game {
     public void freeResources() {
         textureManager.unloadTextures();
         soundManager.releaseBgm();
+        soundManager.releaseSounds();
 
         // Reset managers
         textureManager = null;
@@ -108,6 +113,8 @@ public class Game {
     public void pause() {
         soundManager.pauseBgm();
         bgmPos = soundManager.getBgmPos();
+
+        soundManager.pauseSounds();
     }
 
     /**
@@ -116,6 +123,8 @@ public class Game {
     public void resume() {
         soundManager.forwardBgm(bgmPos);
         soundManager.startBgm();
+
+        soundManager.resumeSounds();
     }
 
 }

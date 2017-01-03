@@ -13,8 +13,9 @@ import java.util.List;
 class Segment {
     private final int backgroundTexture;
     private final List<NonPlayerObject> levelObjects = new ArrayList<>();
-    private final static Rect basePosition = new Rect(0, 0, 1600, 1000);
-    private final Rect originalPosition = new Rect(0, 0, 1600, 1000);
+    private final static Rect basePosition = new Rect(0, 0, ResolutionConverter.WIDTH,
+            ResolutionConverter.HEIGHT);
+    private final Rect position = new Rect(basePosition);
 
     /**
      * Initialize a segment of a level.
@@ -41,5 +42,21 @@ class Segment {
      */
     int getBackgroundTexture() {
         return backgroundTexture;
+    }
+
+    /**
+     * Reset the position to the base position.
+     */
+    void resetPosition() {
+        position.set(basePosition);
+    }
+
+    /**
+     * Get the current segment position on the screen.
+     *
+     * @return Current segment (rendering) position
+     */
+    Rect currentPosition() {
+        return position;
     }
 }

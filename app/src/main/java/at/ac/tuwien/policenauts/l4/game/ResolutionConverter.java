@@ -8,8 +8,8 @@ import android.graphics.Rect;
  * @author Michael Pucher
  */
 public class ResolutionConverter {
-    private static final int WIDTH = 1600;
-    private static final int HEIGHT = 1000;
+    static final int WIDTH = 1600;
+    static final int HEIGHT = 1000;
     private int actualWidth;
     private int actualHeight;
     private float densityFactor;

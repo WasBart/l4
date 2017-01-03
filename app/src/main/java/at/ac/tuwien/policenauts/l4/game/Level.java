@@ -30,9 +30,17 @@ class Level {
     void startLevel() {
         currentSegment = 0;
 
+        // Initialize position of next segment
+        Segment next = segments.get(currentSegment + 1);
+        next.currentPosition().offset(ResolutionConverter.WIDTH, 0);
+
         // Initialize objects for rendering/collision detection
         currentObjects.addAll(segments.get(currentSegment).getObjects());
-        nextObjects.addAll(segments.get(currentSegment + 1).getObjects());
+        nextObjects.addAll(next.getObjects());
+
+        // Add offset to objects of next segment
+        for (NonPlayerObject obj : nextObjects)
+            obj.currentPosition().offset(ResolutionConverter.WIDTH, 0);
     }
 
     /**
@@ -41,10 +49,17 @@ class Level {
      * @param tpf Time per frame in millseconds
      */
     void updateLevel(float tpf) {
+        float independentMovement = tpf * currentMovementSpeed;
+
+        // Move objects
         for (NonPlayerObject obj : currentObjects)
-            obj.update(tpf, tpf * currentMovementSpeed);
+            obj.update(tpf, independentMovement);
         for (NonPlayerObject obj : nextObjects)
-            obj.update(tpf, 0);
+            obj.update(tpf, independentMovement);
+
+        // Move segments
+        segments.get(currentSegment).currentPosition().offset(- (int) independentMovement, 0);
+        segments.get(currentSegment + 1).currentPosition().offset(- (int) independentMovement, 0);
     }
 
     /**

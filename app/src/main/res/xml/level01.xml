@@ -32,5 +32,20 @@
         </collectible>
     </segment>
     <segment image-id="0">
+        <collectible type="oxygen">
+            <sprite id="2" />
+            <collision sound="0" />
+            <position x="800" y="500" />
+        </collectible>
+        <collectible type="ammo">
+            <sprite id="0" />
+            <collision sound="0" />
+            <position x="100" y="100" />
+        </collectible>
+        <collectible type="invincibility">
+            <sprite id="1" />
+            <collision sound="0" />
+            <position x="1200" y="800" />
+        </collectible>
     </segment>
 </level>

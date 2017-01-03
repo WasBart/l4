@@ -1,5 +1,7 @@
 package at.ac.tuwien.policenauts.l4.game;
 
+import android.graphics.Rect;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,8 @@ import java.util.List;
 class Segment {
     private final int backgroundTexture;
     private final List<NonPlayerObject> levelObjects = new ArrayList<>();
+    private final static Rect basePosition = new Rect(0, 0, 1600, 1000);
+    private final Rect originalPosition = new Rect(0, 0, 1600, 1000);
 
     /**
      * Initialize a segment of a level.

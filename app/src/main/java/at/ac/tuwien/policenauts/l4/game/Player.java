@@ -1,5 +1,7 @@
 package at.ac.tuwien.policenauts.l4.game;
 
+import android.graphics.Rect;
+
 /**
  * Main class for controlling the player and interaction of the player
  * with the surrounding objects.
@@ -13,12 +15,23 @@ class Player extends GameObject {
     private float invincibilityTime = 0.0f;
 
     /**
+     * The size of this object in indepdentent pixels
+     *
+     * @return The sizes of the object stored as Rect
+     */
+    @Override
+    Rect size() {
+        return null;
+    }
+
+    /**
      * Update the game logic and frame of the game object.
      *
      * @param tpf Time per frame as calculated in the game loop
+     * @param baseMovement Basic level movement amount, frame independent
      */
     @Override
-    void update(float tpf) {
+    void update(float tpf, float baseMovement) {
         invincibilityTime = Math.min(0.0f, invincibilityTime - tpf);
     }
 

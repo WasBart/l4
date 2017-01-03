@@ -12,8 +12,9 @@ import java.util.List;
  */
 abstract class GameObject {
     private final List<Sprite> sprites = new ArrayList<>(1);
-    private final Rect position = new Rect();
     private int currentSprite = 0;
+    private final Rect originalPosition = new Rect();
+    final Rect position = new Rect();
 
     /**
      * Add a list of sprites to this game object.
@@ -31,6 +32,19 @@ abstract class GameObject {
      */
     Sprite currentSprite() {
         return sprites.get(currentSprite);
+    }
+
+    /**
+     * Set the original position
+     *
+     * @param x x-Coordinate in independent pixels
+     * @param y y-Coordinate in independent pixels
+     */
+    void setOriginalPosition(int x, int y) {
+        Rect size = size();
+        originalPosition.set(x - size.left / 2, y - size.top / 2,
+                x + size.left / 2, y + size.left / 2);
+        position.set(originalPosition);
     }
 
     /**
@@ -55,6 +69,14 @@ abstract class GameObject {
      * Update the game logic and frame of the game object.
      *
      * @param tpf Time per frame as calculated in the game loop
+     * @param baseMovement Basic level movement amount, frame independent
      */
-    abstract void update(float tpf);
+    abstract void update(float tpf, float baseMovement);
+
+    /**
+     * The size of this object in indepdentent pixels
+     *
+     * @return The sizes of the object stored as Rect
+     */
+    abstract Rect size();
 }

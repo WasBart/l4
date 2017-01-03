@@ -341,8 +341,7 @@ class LevelLoader {
         }
 
         // Add position to object
-        collectible.currentPosition().set(xPosition - 50, yPosition - 50, xPosition + 50,
-                yPosition + 50);
+        collectible.setOriginalPosition(xPosition, yPosition);
         collectible.addSprites(spriteIds);
         return collectible;
     }

@@ -1,5 +1,7 @@
 package at.ac.tuwien.policenauts.l4.game;
 
+import android.util.Log;
+
 /**
  * Interface for all GameObjects on the screen which are not the player.
  *
@@ -32,10 +34,12 @@ abstract class NonPlayerObject extends GameObject {
      * Update the game logic and frame of the game object.
      *
      * @param tpf Time per frame as calculated in the game loop
+     * @param baseMovement Basic level movement amount, frame indepedent
      */
     @Override
-    public void update(float tpf) {
+    public void update(float tpf, float baseMovement) {
         currentSprite().update(tpf);
+        position.offset(- (int) baseMovement, 0);
     }
 
     /**

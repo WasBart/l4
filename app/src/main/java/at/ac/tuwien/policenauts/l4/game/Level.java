@@ -13,6 +13,7 @@ class Level {
     private List<NonPlayerObject> currentObjects = new ArrayList<>(10);
     private List<NonPlayerObject> nextObjects = new ArrayList<>(10);
     private int currentSegment = 0;
+    private float currentMovementSpeed = 0.1f;
 
     /**
      * Initialize a level.
@@ -41,9 +42,9 @@ class Level {
      */
     void updateLevel(float tpf) {
         for (NonPlayerObject obj : currentObjects)
-            obj.update(tpf);
+            obj.update(tpf, tpf * currentMovementSpeed);
         for (NonPlayerObject obj : nextObjects)
-            obj.update(tpf);
+            obj.update(tpf, 0);
     }
 
     /**

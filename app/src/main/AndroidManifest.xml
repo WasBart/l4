@@ -19,6 +19,12 @@
         <activity android:name=".android.IntroActivity" />
         <activity android:name=".android.MenuActivity" />
         <activity android:name=".android.ScoreActivity" />
+
+        <provider
+            android:name=".game.ScoreProvider"
+            android:authorities="package at.ac.tuwien.policenauts.l4.game;"
+            android:exported="false" >
+        </provider>
     </application>
 
 </manifest>

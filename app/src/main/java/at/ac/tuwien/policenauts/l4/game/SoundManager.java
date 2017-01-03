@@ -7,6 +7,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
+import android.util.Log;
 
 import at.ac.tuwien.policenauts.l4.R;
 import at.ac.tuwien.policenauts.l4.android.GameActivity;
@@ -22,7 +23,6 @@ public class SoundManager {
     private MediaPlayer mP;
     private SoundPool soundPool;
     private boolean soundLoad = false;
-    private int worldSoundID;
 
     /**
      * Create and pass the current context to the SoundManager.
@@ -86,18 +86,27 @@ public class SoundManager {
 
     }
 
-    public void loadWorld(Context context) {
+    public int loadSound(Context context, String name) {
         soundLoad = false;
-        worldSoundID = soundPool.load(context, R.raw.world, 1);
+        int soundID = 0;
+
+        try {
+            soundID = soundPool.load(context, R.raw.class.getField(name).getInt(null), 1);
+        } catch(NoSuchFieldException nsfe) {
+            Log.e("Loading failed: ", "Could not load soundfile with specified name.");
+        } catch(IllegalAccessException iae) {
+            Log.e("Loading failed: ", "Could not load soundfile with specified name.");
+        }
+        return soundID;
     }
 
-    public void playWorld() {
+    public void playSound(int id, int leftCh, int rightCh, int prior, int loop, float speed) {
         if(Build.VERSION.SDK_INT < 21) {
-            soundPool.play(worldSoundID, 1, 1, 1, 0, 1.0f);
+            soundPool.play(id, leftCh, rightCh, prior, loop, speed);
         }
         else {
             if (soundLoad) {
-                soundPool.play(worldSoundID, 1, 1, 1, 0, 1.0f);
+                soundPool.play(id, leftCh, rightCh, prior, loop, speed);
             }
         }
     }

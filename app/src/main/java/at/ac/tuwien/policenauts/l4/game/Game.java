@@ -34,6 +34,9 @@ public class Game {
     private int bgmPos = 0;
     private float timer = 0.0f;
 
+    // Sound handles
+    int worldID;
+
     /**
      * Initialize game object with application context.
      *
@@ -54,7 +57,7 @@ public class Game {
             levelLoader = new LevelLoader(context, textureManager);
             soundManager.setBgm();
             soundManager.initSp(5);
-            soundManager.loadWorld(context);
+            worldID = soundManager.loadSound(context, "world");
 
             resourcesLoaded = true;
         }
@@ -84,7 +87,8 @@ public class Game {
         fps = 1 / tpf * 1000;
         timer += tpf;
         if (timer > 5000.0f)
-            soundManager.playWorld();
+            if(worldID != 0)
+            soundManager.playSound(worldID,1,1,1,0,1.0f);
         timer %= 5000.0f;
     }
 

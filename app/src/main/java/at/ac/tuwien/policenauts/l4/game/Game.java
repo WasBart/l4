@@ -100,7 +100,9 @@ public class Game {
      * @param canvas Drawing canvas
      */
     public void render(Canvas canvas) {
-        canvas.drawColor(Color.BLACK);
+        // Pass canvas to texture manager
+        textureManager.setCanvas(canvas);
+        levelLoader.getLevel(currentlyActiveLevel).renderLevel(textureManager);
 
         // Draw fps counter
         Paint textP = new Paint();
@@ -115,10 +117,6 @@ public class Game {
         // Quit here if level hasn't started yet
         if (currentlyActiveLevel != reachedLevel)
             return;
-
-        // Pass canvas to texture manager
-        textureManager.setCanvas(canvas);
-        levelLoader.getLevel(currentlyActiveLevel).renderLevel(textureManager);
     }
 
     /**

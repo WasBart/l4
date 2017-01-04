@@ -22,7 +22,7 @@
 
         <provider
             android:name=".game.ScoreProvider"
-            android:authorities="package at.ac.tuwien.policenauts.l4.game;"
+            android:authorities="at.ac.tuwien.policenauts.l4.game"
             android:exported="false" >
         </provider>
     </application>

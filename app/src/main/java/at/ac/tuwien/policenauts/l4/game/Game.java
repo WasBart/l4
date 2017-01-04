@@ -28,15 +28,12 @@ public class Game {
     // Game state
     private float fps = 60.0f;
     private int bgmPos = 0;
-<<<<<<< HEAD
     private int reachedLevel = 0;
     private int currentlyActiveLevel = -1;
-=======
     private float timer = 0.0f;
 
     // Sound handles
-    int worldID;
->>>>>>> sound
+    private int worldID;
 
     /**
      * Initialize game object with application context.
@@ -121,7 +118,7 @@ public class Game {
         // Quit here if level hasn't started yet
         if (currentlyActiveLevel != reachedLevel)
             return;
-        
+
         // Pass canvas to texture manager
         textureManager.setCanvas(canvas);
         levelLoader.getLevel(currentlyActiveLevel).renderLevel(textureManager);

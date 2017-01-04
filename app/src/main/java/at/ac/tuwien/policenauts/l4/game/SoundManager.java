@@ -43,7 +43,7 @@ public class SoundManager {
     }
 
     public void startBgm() {
-        //mP.start();
+        mP.start();
     }
 
     public void pauseBgm() { mP.pause(); }

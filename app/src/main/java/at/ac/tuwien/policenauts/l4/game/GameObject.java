@@ -48,6 +48,13 @@ abstract class GameObject {
     }
 
     /**
+     * Reset the position to the original position.
+     */
+    void resetPosition() {
+        position.set(originalPosition);
+    }
+
+    /**
      * Retrieve the current position where to draw the sprite.
      *
      * @return Current position as rect
@@ -61,7 +68,7 @@ abstract class GameObject {
      *
      * @param sprite The spritesheet to change to
      */
-    protected void setCurrentSprite(int sprite) {
+    void setCurrentSprite(int sprite) {
         currentSprite = sprite;
     }
 

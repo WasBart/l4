@@ -164,7 +164,7 @@ class LevelLoader {
         Segment segment;
         String imageId = parser.getAttributeValue(null, "image-id");
         try {
-            segment = new Segment(Integer.parseInt(imageId));
+            segment = new Segment(Integer.parseInt(imageId) + textureOffset);
         } catch (NumberFormatException ex) {
             throw new XmlPullParserException("Invalid image-id in segment: " + imageId);
         }
@@ -289,7 +289,6 @@ class LevelLoader {
         // Loop till end tag
         while (parser.next() != XmlPullParser.END_TAG) {
             // Check if keyword is any of the top level words
-            Log.e(TAG, parser.getName());
             switch (parser.getName()) {
                 case "sprite":
                     try {
@@ -365,6 +364,9 @@ class LevelLoader {
             if (!parser.getName().equals("image"))
                 continue;
             textures.add(parser.getAttributeValue(null, "src"));
+
+            // Skip closing tag
+            parser.next();
         }
     }
 

@@ -28,8 +28,15 @@ public class Game {
     // Game state
     private float fps = 60.0f;
     private int bgmPos = 0;
+<<<<<<< HEAD
     private int reachedLevel = 0;
     private int currentlyActiveLevel = -1;
+=======
+    private float timer = 0.0f;
+
+    // Sound handles
+    int worldID;
+>>>>>>> sound
 
     /**
      * Initialize game object with application context.
@@ -50,6 +57,9 @@ public class Game {
             soundManager = new SoundManager(context);
             levelLoader = new LevelLoader(context, textureManager);
             soundManager.setBgm();
+            soundManager.initSp(5);
+            worldID = soundManager.loadSound(context, "world");
+
             resourcesLoaded = true;
 
             startGame();
@@ -63,6 +73,7 @@ public class Game {
     public void freeResources() {
         textureManager.unloadTextures();
         soundManager.releaseBgm();
+        soundManager.releaseSounds();
 
         // Reset managers
         textureManager = null;
@@ -92,6 +103,13 @@ public class Game {
 
         // Update all objects in the level
         levelLoader.getLevel(0).updateLevel(tpf);
+
+        // Play sound
+        timer += tpf;
+        if (timer > 5000.0f)
+            if(worldID != 0)
+            soundManager.playSound(worldID,1,1,1,0,1.0f);
+        timer %= 5000.0f;
     }
 
     /**
@@ -100,6 +118,10 @@ public class Game {
      * @param canvas Drawing canvas
      */
     public void render(Canvas canvas) {
+        // Quit here if level hasn't started yet
+        if (currentlyActiveLevel != reachedLevel)
+            return;
+        
         // Pass canvas to texture manager
         textureManager.setCanvas(canvas);
         levelLoader.getLevel(currentlyActiveLevel).renderLevel(textureManager);
@@ -113,10 +135,6 @@ public class Game {
         textP.setTextSize(30 * resolution.density());
         String fpsText = fps + " FPS";
         canvas.drawText(fpsText, src.left, src.top, textP);
-
-        // Quit here if level hasn't started yet
-        if (currentlyActiveLevel != reachedLevel)
-            return;
     }
 
     /**
@@ -125,6 +143,8 @@ public class Game {
     public void pause() {
         soundManager.pauseBgm();
         bgmPos = soundManager.getBgmPos();
+
+        soundManager.pauseSounds();
     }
 
     /**
@@ -133,6 +153,8 @@ public class Game {
     public void resume() {
         soundManager.forwardBgm(bgmPos);
         soundManager.startBgm();
+
+        soundManager.resumeSounds();
     }
 
 }

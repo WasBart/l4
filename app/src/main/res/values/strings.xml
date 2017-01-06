@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">L4</string>
+
+    <string name="button_newgame">New Game</string>
+    <string name="button_instructions">Help</string>
+    <string name="button_scoreboard">Scoreboard</string>
+    <string name="button_intro">Play Intro</string>
 </resources>

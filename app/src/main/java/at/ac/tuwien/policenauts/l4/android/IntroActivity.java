@@ -24,13 +24,14 @@ public class IntroActivity extends AppCompatActivity implements MediaPlayer.OnCo
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_intro);
-
-        //fullscreen:
+        // Set window flags to fullscreen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        // Initialize act
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_intro);
 
         //initialize VideoView:
         VideoView view = (VideoView)findViewById(R.id.videoView);

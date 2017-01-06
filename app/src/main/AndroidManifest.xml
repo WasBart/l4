@@ -10,13 +10,15 @@
         android:theme="@style/AppTheme"
         android:name=".android.GameApplication">
         <activity android:name=".android.GameActivity" android:configChanges="orientation|screenSize">
+
+        </activity>
+        <activity android:name=".android.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".android.IntroActivity" />
         <activity android:name=".android.MenuActivity" />
         <activity android:name=".android.ScoreActivity" />
 

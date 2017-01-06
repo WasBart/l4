@@ -1,5 +1,6 @@
 package at.ac.tuwien.policenauts.l4.android;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.media.AudioManager;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +36,11 @@ public class GameActivity extends AppCompatActivity {
         //Set volume for AM
         aM.setStreamVolume(AudioManager.STREAM_MUSIC,
                 aM.getStreamVolume(AudioManager.STREAM_MUSIC), 0);
+
+
+        //Play intro
+        //startActivity(new Intent(this, IntroActivity.class));
+
 
         // Initialize game
         game = ((GameApplication) getApplicationContext()).getGame();

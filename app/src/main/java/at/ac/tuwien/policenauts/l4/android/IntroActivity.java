@@ -1,5 +1,6 @@
 package at.ac.tuwien.policenauts.l4.android;
 
+import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,7 @@ public class IntroActivity extends AppCompatActivity implements MediaPlayer.OnCo
         // Initialize act
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         //initialize VideoView:
         VideoView view = (VideoView)findViewById(R.id.videoView);

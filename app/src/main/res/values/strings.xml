@@ -5,6 +5,7 @@
     <string name="button_instructions">Help</string>
     <string name="button_scoreboard">Scoreboard</string>
     <string name="button_intro">Play Intro</string>
+<<<<<<< HEAD
 
 
     <string name="title_activity_score">ScoreActivity</string>
@@ -19,4 +20,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_create_high_score">CreateHighScoreActivity</string>
     <string name="readScore">Read score</string>
+=======
+    <string name="button_continue">Continue</string>
+    <string name="button_quit">Quit to Main Menu</string>
+>>>>>>> origin/pause
 </resources>

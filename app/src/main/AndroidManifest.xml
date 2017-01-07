@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".android.GameActivity"
+
             android:configChanges="orientation|screenSize">
         </activity>
         <activity android:name=".android.IntroActivity">
@@ -31,9 +32,14 @@
             android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".android.PauseMenuActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/FullScreenTranslucent" />
     </application>
 
 </manifest>

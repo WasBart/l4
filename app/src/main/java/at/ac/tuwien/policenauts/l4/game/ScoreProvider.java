@@ -27,7 +27,7 @@ public class ScoreProvider extends ContentProvider {
     private static final int SCORE = 10;
     private static final int SCORE_ID = 20;
 
-    private static final String AUTHORITY = "package at.ac.tuwien.policenauts.l4.game;";
+    private static final String AUTHORITY = "at.ac.tuwien.policenauts.l4.game;";
 
     private static final String BASE_PATH = ScoreContract.ScoreEntry.TABLE_NAME;
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY

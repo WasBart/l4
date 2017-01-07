@@ -37,6 +37,9 @@ public class Game {
     private Intent pauseIntent;
     private boolean paused = false;
 
+    // Enable/disable audio
+    private int audioIcon = 1;
+
     // Game state
     private float fps = 60.0f;
     private int bgmPos = 0;
@@ -149,8 +152,8 @@ public class Game {
      */
     private void renderUI(Canvas canvas) {
         // Render icons
-        textureManager.drawTexture(0, audioIconPosition);
-        textureManager.drawTexture(1, pauseIconPosition);
+        textureManager.drawTexture(audioIcon, audioIconPosition);
+        textureManager.drawTexture(2, pauseIconPosition);
 
         // Draw fps counter
         Paint textP = new Paint();
@@ -199,6 +202,16 @@ public class Game {
         switch(event.getAction()) {
             case MotionEvent.ACTION_UP:
                 resolution.toScreenRect(audioIconPosition, positionCalc);
+                if (positionCalc.contains(x, y)) {
+                    if (audioIcon == 1) {
+                        soundManager.muteSounds();
+                        audioIcon = 0;
+                    } else {
+                        soundManager.unmuteSounds();
+                        audioIcon = 1;
+                    }
+                    return true;
+                }
 
                 // Killer queen has already touched that pause icon
                 resolution.toScreenRect(pauseIconPosition, positionCalc);

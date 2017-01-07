@@ -29,6 +29,7 @@ class LevelLoader {
         this.textureManager = textureManager;
 
         // Resources that stay the same across all levels
+        textures.add("noaudio_icon");
         textures.add("audio_icon");
         textures.add("pause_icon");
         textureOffset = textures.size();

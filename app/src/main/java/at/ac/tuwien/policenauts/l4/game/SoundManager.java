@@ -17,7 +17,7 @@ import at.ac.tuwien.policenauts.l4.android.GameActivity;
  *
  * @author Wassily Bartuska
  */
-public class SoundManager {
+class SoundManager {
 
     private final Context context;
     private MediaPlayer mP;
@@ -33,7 +33,7 @@ public class SoundManager {
         this.context = context;
     }
 
-    public void setBgm() {
+    void setBgm() {
         mP = MediaPlayer.create(context, R.raw.bgm);
         mP.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(MediaPlayer mp) {
@@ -42,27 +42,23 @@ public class SoundManager {
         mP.setLooping(true);
     }
 
-    public void startBgm() {
+    void startBgm() {
         mP.start();
     }
 
-    public void pauseBgm() { mP.pause(); }
+    void pauseBgm() { mP.pause(); }
 
-    public void forwardBgm(int ms) { mP.seekTo(ms); };
+    void forwardBgm(int ms) { mP.seekTo(ms); };
 
-    public void stopBgm() {
-        mP.stop();
-    }
-
-    public void releaseBgm() {
+    void releaseBgm() {
         mP.release();
     }
 
-    public int getBgmPos() {
+    int getBgmPos() {
         return mP.getCurrentPosition();
     }
 
-    public void initSp(int streams) {
+    void initSp(int streams) {
 
         if(Build.VERSION.SDK_INT < 21) {
             soundPool = new SoundPool(streams, AudioManager.STREAM_MUSIC, 0);
@@ -86,7 +82,7 @@ public class SoundManager {
 
     }
 
-    public int loadSound(Context context, String name) {
+    int loadSound(Context context, String name) {
         soundLoad = false;
         int soundID = 0;
 
@@ -100,7 +96,7 @@ public class SoundManager {
         return soundID;
     }
 
-    public void playSound(int id, int leftCh, int rightCh, int prior, int loop, float speed) {
+    void playSound(int id, int leftCh, int rightCh, int prior, int loop, float speed) {
         if(Build.VERSION.SDK_INT < 21) {
             soundPool.play(id, leftCh, rightCh, prior, loop, speed);
         }
@@ -111,15 +107,23 @@ public class SoundManager {
         }
     }
 
-    public void pauseSounds() {
+    void pauseSounds() {
         soundPool.autoPause();
     }
 
-    public void resumeSounds() {
+    void resumeSounds() {
         soundPool.autoResume();
     }
 
-    public void releaseSounds() {
+    void releaseSounds() {
         soundPool.release();
+    }
+
+    void muteSounds() {
+        mP.setVolume(0, 0);
+    }
+
+    void unmuteSounds() {
+        mP.setVolume(1, 1);
     }
 }

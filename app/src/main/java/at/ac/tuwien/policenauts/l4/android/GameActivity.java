@@ -43,7 +43,7 @@ public class GameActivity extends AppCompatActivity {
 
         // Initialize game
         game = ((GameApplication) getApplicationContext()).getGame();
-        game.initialize();
+        game.initialize(this);
     }
 
     /**

@@ -28,6 +28,11 @@ class LevelLoader {
         this.context = context;
         this.textureManager = textureManager;
 
+        // Resources that stay the same across all levels
+        textures.add("audio_icon");
+        textures.add("pause_icon");
+        textureOffset = textures.size();
+
         // Load the resources we want to load
         loadLevel("level01");
         loadResources();

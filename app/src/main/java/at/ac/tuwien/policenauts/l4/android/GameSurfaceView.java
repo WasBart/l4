@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 
@@ -106,5 +107,16 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     @Override
     public void onDraw(Canvas canvas) {
         game.render(canvas);
+    }
+
+    /**
+     * Handle an incoming motion event.
+     *
+     * @param e The occurred event.
+     * @return True, if event has been handled
+     */
+    @Override
+    public boolean onTouchEvent(MotionEvent e) {
+        return game.handleTouch(e);
     }
 }

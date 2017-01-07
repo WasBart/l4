@@ -37,7 +37,7 @@ public class MenuActivity extends AppCompatActivity {
         scoreboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MenuActivity.this, ScoreAccess.class);
+                Intent intent = new Intent(MenuActivity.this, ScoreActivity.class);
                 startActivity(intent);
             }
         });

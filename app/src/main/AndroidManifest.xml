@@ -11,9 +11,15 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".android.GameActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity android:name=".android.IntroActivity" />
-        <activity android:name=".android.ScoreActivity" />
+
+            android:configChanges="orientation|screenSize">
+        </activity>
+        <activity android:name=".android.IntroActivity">
+        </activity>
+        <activity android:name=".android.ScoreActivity">
+        </activity>
+        <activity android:name=".android.CreateHighScoreActivity">
+        </activity>
 
         <provider
             android:name=".game.ScoreProvider"

@@ -13,6 +13,8 @@ class Player extends GameObject {
     private int railgunAmmo = 5;
     private float oxygen = 1.0f;
     private float invincibilityTime = 0.0f;
+    int touchX;
+    int touchY;
 
     /**
      * The size of this object in indepdentent pixels
@@ -33,6 +35,23 @@ class Player extends GameObject {
     @Override
     void update(float tpf, float baseMovement) {
         invincibilityTime = Math.min(0.0f, invincibilityTime - tpf);
+
+        int posX = position.centerX();
+        int posY = position.centerY();
+        if(touchX > posX) {
+            position.offset((int) (posX + baseMovement * tpf), posY);
+        }
+        else if(touchX < posX) {
+            position.offset((int) (posX - baseMovement * tpf), posY);
+        }
+
+        if(touchY > posY) {
+            position.offset(posX, (int) (posY + baseMovement * tpf));
+        }
+        else if(touchY < posY) {
+            position.offset(posX, (int) (posY - baseMovement * tpf));
+        }
+
     }
 
     /**
@@ -87,5 +106,23 @@ class Player extends GameObject {
      */
     void changeOxygen(float deltaOxygen) {
         oxygen = Math.min(Math.max(oxygen + deltaOxygen, 0), 1.0f);
+    }
+
+    /**
+     * Set the x-coordinate where the screen was touched.
+     *
+     * @param x x-coordinate of point where screen was touched.
+     */
+    public void setTouchX(int x) {
+        touchX = x;
+    }
+
+    /**
+     * Set the y-coordinate where the screen was touched.
+     *
+     * @param y y-coordinate of point where screen was touched.
+     */
+    public void setTouchY(int y) {
+        touchY = y;
     }
 }

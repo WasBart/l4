@@ -43,6 +43,7 @@ public class Game {
     private int reachedLevel = 0;
     private int currentlyActiveLevel = -1;
     private float timer = 0.0f;
+    private Player player;
 
     // Sound handles
     private int worldID;
@@ -204,6 +205,9 @@ public class Game {
                 if (positionCalc.contains(x, y)) {
                     pause();
                     activityContext.startActivity(pauseIntent);
+                } else {
+                    player.setTouchX(x);
+                    player.setTouchY(y);
                 }
                 break;
             default:

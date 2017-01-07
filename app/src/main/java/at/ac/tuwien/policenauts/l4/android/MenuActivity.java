@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import at.ac.tuwien.policenauts.l4.R;
-import at.ac.tuwien.policenauts.l4.game.ScoreAccess;
 
 /**
  * The main menu of L4.
@@ -37,7 +36,8 @@ public class MenuActivity extends AppCompatActivity {
         scoreboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MenuActivity.this, ScoreActivity.class);
+                //ScoreAccess.class
+                Intent intent = new Intent(MenuActivity.this, CreateHighScoreActivity.class);
                 startActivity(intent);
             }
         });

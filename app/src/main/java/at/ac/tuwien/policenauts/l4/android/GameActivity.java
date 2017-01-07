@@ -1,5 +1,6 @@
 package at.ac.tuwien.policenauts.l4.android;
 
+import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.media.AudioManager;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +15,7 @@ import at.ac.tuwien.policenauts.l4.game.Game;
  * @author Wassily Bartuska
  */
 public class GameActivity extends AppCompatActivity {
-
+    public static Activity gameAct;
     private Game game;
 
     /**
@@ -27,6 +28,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        gameAct = this;
 
         //Initialize Audio Manager
         AudioManager aM =

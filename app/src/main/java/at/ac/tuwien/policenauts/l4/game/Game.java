@@ -35,6 +35,7 @@ public class Game {
     // Intents and transition handling
     private Context activityContext;
     private Intent pauseIntent;
+    private boolean paused = false;
 
     // Game state
     private float fps = 60.0f;
@@ -58,11 +59,11 @@ public class Game {
     /**
      * Initialize all important resource managers.
      *
-     * @param context Activity context of the GameActivity
+     * @param activityContext Activity context of the GameActivity
      */
-    public void initialize(Context context) {
+    public void initialize(Context activityContext) {
         // Initialize the pause intent
-        activityContext = context;
+        this.activityContext = activityContext;
         pauseIntent = new Intent(context, PauseMenuActivity.class);
 
         // Initialize resource managers
@@ -108,7 +109,7 @@ public class Game {
      * @param tpf Time per frame in milliseconds
      */
     void updateLogic(float tpf) {
-        if (currentlyActiveLevel != reachedLevel)
+        if (paused || currentlyActiveLevel != reachedLevel)
             return;
 
         fps = 1 / tpf * 1000;
@@ -165,9 +166,10 @@ public class Game {
      * Pause the game, save the state and release unnecessary resources.
      */
     public void pause() {
+        paused = true;
+
         soundManager.pauseBgm();
         bgmPos = soundManager.getBgmPos();
-
         soundManager.pauseSounds();
     }
 
@@ -175,9 +177,10 @@ public class Game {
      * Resume a previously paused game.
      */
     public void resume() {
+        paused = false;
+
         soundManager.forwardBgm(bgmPos);
         soundManager.startBgm();
-
         soundManager.resumeSounds();
     }
 
@@ -195,9 +198,13 @@ public class Game {
         switch(event.getAction()) {
             case MotionEvent.ACTION_UP:
                 resolution.toScreenRect(audioIconPosition, positionCalc);
+
+                // Killer queen has already touched that pause icon
                 resolution.toScreenRect(pauseIconPosition, positionCalc);
-                if (positionCalc.contains(x, y))
+                if (positionCalc.contains(x, y)) {
+                    pause();
                     activityContext.startActivity(pauseIntent);
+                }
                 break;
             default:
                 break;

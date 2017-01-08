@@ -21,6 +21,11 @@ import at.ac.tuwien.policenauts.l4.game.ScoreContract;
 import at.ac.tuwien.policenauts.l4.game.ScoreProvider;
 
 
+/**
+ * Activity handling Score View. Paraphrased from the lecture.
+ *
+ * @author Wassily Bartuska
+ */
 public class ScoreActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private ListView scoreListView;
@@ -29,6 +34,11 @@ public class ScoreActivity extends AppCompatActivity implements LoaderManager.Lo
 
     private static final int DELETE_ID = Menu.FIRST + 1;
 
+    /**
+     * Invoked when an instance of the class is created.
+     *
+     * @param savedInstanceState Bundle object passed to this method.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,11 +52,19 @@ public class ScoreActivity extends AppCompatActivity implements LoaderManager.Lo
         registerForContextMenu(scoreListView);
     }
 
+    /**
+     * Displays the progress.
+     *
+     * @param progress current progress.
+     */
     private void showProgress(boolean progress) {
         scoreListView.setVisibility(progress ? View.GONE : View.VISIBLE);
         progressView.setVisibility(progress ? View.VISIBLE : View.GONE);
     }
 
+    /**
+     * Fills the data in.
+     */
     private void fillData() {
 
         showProgress(true);
@@ -64,6 +82,13 @@ public class ScoreActivity extends AppCompatActivity implements LoaderManager.Lo
         scoreListView.setAdapter(cursorAdapter);
     }
 
+    /**
+     * Invoked when context menu is created.
+     *
+     * @param menu menu created.
+     * @param v view.
+     * @param menuInfo info for the menu.
+     */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
@@ -71,6 +96,12 @@ public class ScoreActivity extends AppCompatActivity implements LoaderManager.Lo
         menu.add(0, DELETE_ID, 0, R.string.Delete);
     }
 
+    /**
+     * Invoked when an item is selected.
+     *
+     * @param item selected item.
+     * @return boolean flag.
+     */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -86,6 +117,12 @@ public class ScoreActivity extends AppCompatActivity implements LoaderManager.Lo
         return super.onContextItemSelected(item);
     }
 
+    /**
+     * Invoked when options menu is created.
+     *
+     * @param menu menu created.
+     * @return boolean flag.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -93,6 +130,12 @@ public class ScoreActivity extends AppCompatActivity implements LoaderManager.Lo
         return true;
     }
 
+    /**
+     * Invoked when an item is selected.
+     *
+     * @param item selected item.
+     * @return boolean flag.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -108,6 +151,13 @@ public class ScoreActivity extends AppCompatActivity implements LoaderManager.Lo
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Invoked when a loader is created.
+     *
+     * @param id id of the loader.
+     * @param args arguments used.
+     * @return loader.
+     */
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String[] projection = { ScoreContract.ScoreEntry._ID, ScoreContract.ScoreEntry.COLUMN_NAME_PLAYERNAME, ScoreContract.ScoreEntry.COLUMN_NAME_SCORE};
@@ -116,12 +166,23 @@ public class ScoreActivity extends AppCompatActivity implements LoaderManager.Lo
         return cursorLoader;
     }
 
+    /**
+     * Invoked when loading has finished.
+     *
+     * @param loader loader used for loading.
+     * @param data data used.
+     */
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         cursorAdapter.swapCursor(data);//notifies the SimpleCursorAdapter about new data
         showProgress(false);
     }
 
+    /**
+     * Invoked when the loader is reset.
+     *
+     * @param loader loader that is reset.
+     */
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         // data is not available anymore, delete reference

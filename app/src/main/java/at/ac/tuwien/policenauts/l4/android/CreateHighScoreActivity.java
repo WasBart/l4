@@ -16,11 +16,21 @@ import at.ac.tuwien.policenauts.l4.game.ScoreContract;
 import at.ac.tuwien.policenauts.l4.game.ScoreProvider;
 
 
+/**
+ * Activity for creating a new HighScoreEntry. Taken from the lecture.
+ *
+ * @author Wassily Bartuska
+ */
 public class CreateHighScoreActivity extends AppCompatActivity {
 
     private Button addButton, readScore;
     private EditText nameEditText, scoreEditText;
 
+    /**
+     * Invoked when an instance of the class is created.
+     *
+     * @param savedInstanceState Bundle object passed to this method.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +58,9 @@ public class CreateHighScoreActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Saving a score entry with the name and score.
+     */
     private void saveScore() {
         String username = nameEditText.getText().toString();
         String scoreStr = scoreEditText.getText().toString();
@@ -60,11 +73,20 @@ public class CreateHighScoreActivity extends AppCompatActivity {
         getContentResolver().insert(ScoreProvider.CONTENT_URI, values);
     }
 
+    /**
+     * Starts the score activity to read the scores.
+     */
     private void readScores() {
         Intent intent = new Intent(this, ScoreActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Invoked when the optionsmenu is created.
+     *
+     * @param menu menu created
+     * @return boolean flag
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -72,6 +94,12 @@ public class CreateHighScoreActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Invoked when an item is selected.
+     *
+     * @param item selected item
+     * @return boolean flag
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

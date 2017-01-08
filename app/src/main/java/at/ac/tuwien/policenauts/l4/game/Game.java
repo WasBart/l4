@@ -140,6 +140,8 @@ public class Game {
         textureManager.setCanvas(canvas);
         levelLoader.getLevel(currentlyActiveLevel).renderLevel(textureManager);
         renderUI(canvas);
+
+        textureManager.drawSprite(player.currentSprite(), player.currentPosition());
     }
 
     /**

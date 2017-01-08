@@ -46,7 +46,9 @@ class SoundManager {
         mP.start();
     }
 
-    void pauseBgm() { mP.pause(); }
+    void pauseBgm() {
+        mP.pause();
+    }
 
     void forwardBgm(int ms) { mP.seekTo(ms); };
 

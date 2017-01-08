@@ -53,17 +53,16 @@ public class GameActivity extends AppCompatActivity {
 
         // Initialize game
         game = ((GameApplication) getApplicationContext()).getGame();
-        game.initialize(this);
+        game.initialize(this, (GameSurfaceView)findViewById(R.id.drawing_area));
     }
 
     /**
-     *Invoked when the Activity is in the background.
-     *
+     * Invoked when the Activity is in the background.
      */
     @Override
     protected void onPause() {
-        super.onPause();
         game.pause();
+        super.onPause();
     }
 
     /**
@@ -71,9 +70,8 @@ public class GameActivity extends AppCompatActivity {
      */
     @Override
     protected void onResume() {
-        super.onResume();
         game.resume();
-
+        super.onResume();
     }
 
     /**
@@ -81,8 +79,8 @@ public class GameActivity extends AppCompatActivity {
      */
     @Override
     protected void onDestroy() {
+        //game.pause();
         super.onDestroy();
-        game.pause();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(pauseReceiver);
     }
 
@@ -91,7 +89,6 @@ public class GameActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-        game.pause();
         Intent pauseIntent = new Intent(GameActivity.this, PauseMenuActivity.class);
         startActivity(pauseIntent);
     }

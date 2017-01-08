@@ -49,8 +49,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
         // Initialize game and start the gameloop in a separate thread
         gameLoop = new GameLoop(surfaceHolder, applicationContext.getGame());
-        gameThread = new Thread(gameLoop);
-        gameThread.start();
+        if (!game.isPaused())
+            resume();
     }
 
     /**
@@ -81,7 +81,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
      */
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
     }
 
     /**
@@ -91,12 +90,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
      */
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-        gameLoop.setRunning(false);
-        try {
-            gameThread.join();
-        } catch (InterruptedException ex) {
-            Log.e("Error", ex.getMessage());
-        }
+        pause();
     }
 
     /**
@@ -118,5 +112,27 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         return game.handleTouch(e);
+    }
+
+    /**
+     * Stop the gameloop.
+     */
+    public void pause() {
+        gameLoop.setRunning(false);
+        try {
+            gameThread.join();
+        } catch (InterruptedException ex) {
+            Log.e("Error", ex.getMessage());
+        }
+    }
+
+    /**
+     * Start the gameloop.
+     */
+    public void resume() {
+        if (gameThread != null && gameThread.isAlive())
+            return;
+        gameThread = new Thread(gameLoop);
+        gameThread.start();
     }
 }

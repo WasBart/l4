@@ -49,6 +49,8 @@ class Segment {
      */
     void resetPosition() {
         position.set(basePosition);
+        for (NonPlayerObject object : levelObjects)
+            object.resetPosition();
     }
 
     /**

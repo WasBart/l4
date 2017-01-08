@@ -1,6 +1,7 @@
 package at.ac.tuwien.policenauts.l4.game;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -18,20 +19,35 @@ import at.ac.tuwien.policenauts.l4.R;
  * @author Michael Pucher
  */
 class LevelLoader {
+    private final Player player;
+
     /**
      * Initialize the level loader with the application context.
      *
      * @param context Application context
      * @param textureManager Texture manager of this application
+     * @param player The player
      */
-    LevelLoader(Context context, TextureManager textureManager) {
+    LevelLoader(Context context, TextureManager textureManager, Player player) {
         this.context = context;
         this.textureManager = textureManager;
+        this.player = player;
 
         // Resources that stay the same across all levels
         textures.add("audio_icon");
         textures.add("pause_icon");
         textureOffset = textures.size();
+
+        // Hardcoded player sprites are the first sprites to load
+        sprites.add("player_1");
+        spritesFrameCount.add(1);
+        spritesDuration.add(150);
+        spriteOffset = sprites.size();
+
+        // Add sprites to player
+        final List<Sprite> playerSprites = new ArrayList<>(spriteOffset);
+        playerSprites.add(new Sprite(0, spritesFrameCount.get(0), spritesDuration.get(0)));
+        player.addSprites(playerSprites);
 
         // Load the resources we want to load
         loadLevel("level01");
@@ -72,7 +88,7 @@ class LevelLoader {
         }
 
         // Use the state to create the level object
-        levels.add(new Level(new ArrayList<>(segments)));
+        levels.add(new Level(new ArrayList<>(segments), player, playerPosition));
 
         // Add offsets for loaded resources
         segments.clear();
@@ -131,7 +147,7 @@ class LevelLoader {
             // Check if keyword is any of the top level words
             switch (parser.getName()) {
                 case "player":
-                    skipTag(parser);
+                    readPlayer(parser);
                     break;
                 case "background-images":
                     backgroundImages(parser);
@@ -462,6 +478,36 @@ class LevelLoader {
     }
 
     /**
+     * Read the player tag from the level XML.
+     *
+     * @param parser The parser with the input level stream
+     * @throws XmlPullParserException if there was an exception during parsing
+     * @throws IOException if there was an exception while reading the resource file
+     */
+    private void readPlayer(XmlPullParser parser) throws XmlPullParserException, IOException {
+        parser.require(XmlPullParser.START_TAG, null, "player");
+
+        // Loop till end tag
+        while (parser.next() != XmlPullParser.END_TAG) {
+            // Skip invalid elements
+            if (!parser.getName().equals("start"))
+                continue;
+
+            // Get sprite name and deduce frame count
+            String xPosition = parser.getAttributeValue(null, "x");
+            String yPosition = parser.getAttributeValue(null, "y");
+            try {
+                playerPosition.set(Integer.parseInt(xPosition), Integer.parseInt(yPosition), 0, 0);
+            } catch (NumberFormatException ex) {
+                throw new XmlPullParserException("Could not parse player start position");
+            }
+
+            // Consume ending tag
+            parser.next();
+        }
+    }
+
+    /**
      * Skip unwanted tags.
      *
      * @param parser The parser with the input level stream
@@ -502,6 +548,7 @@ class LevelLoader {
     private final List<String> sounds = new ArrayList<>();
     private final List<String> backgroundMusic = new ArrayList<>();
     private final List<Segment> segments = new ArrayList<>();
+    private final Rect playerPosition = new Rect(0,0,0,0);
 
     // Offsets for resource parsing
     private int spriteOffset = 0;

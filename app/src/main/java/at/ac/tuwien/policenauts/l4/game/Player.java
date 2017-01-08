@@ -9,12 +9,13 @@ import android.graphics.Rect;
  * @author Wassily Bartuska
  */
 class Player extends GameObject {
+    private static final Rect SIZE = new Rect(100, 200, 0, 0);
     private static final int RAILGUN_AMMO_MAX = 5;
     private int railgunAmmo = 5;
     private float oxygen = 1.0f;
     private float invincibilityTime = 0.0f;
-    int touchX;
-    int touchY;
+    private int touchX;
+    private int touchY;
 
     /**
      * The size of this object in indepdentent pixels
@@ -23,7 +24,7 @@ class Player extends GameObject {
      */
     @Override
     Rect size() {
-        return null;
+        return SIZE;
     }
 
     /**
@@ -35,23 +36,7 @@ class Player extends GameObject {
     @Override
     void update(float tpf, float baseMovement) {
         invincibilityTime = Math.min(0.0f, invincibilityTime - tpf);
-
-        int posX = position.centerX();
-        int posY = position.centerY();
-        if(touchX > posX) {
-            position.offset((int) (posX + baseMovement * tpf), posY);
-        }
-        else if(touchX < posX) {
-            position.offset((int) (posX - baseMovement * tpf), posY);
-        }
-
-        if(touchY > posY) {
-            position.offset(posX, (int) (posY + baseMovement * tpf));
-        }
-        else if(touchY < posY) {
-            position.offset(posX, (int) (posY - baseMovement * tpf));
-        }
-
+        position.offset((int) (touchX * tpf + baseMovement), (int) (touchY * tpf + baseMovement));
     }
 
     /**
@@ -113,7 +98,7 @@ class Player extends GameObject {
      *
      * @param x x-coordinate of point where screen was touched.
      */
-    public void setTouchX(int x) {
+    void setTouchX(int x) {
         touchX = x;
     }
 
@@ -122,7 +107,7 @@ class Player extends GameObject {
      *
      * @param y y-coordinate of point where screen was touched.
      */
-    public void setTouchY(int y) {
+    void setTouchY(int y) {
         touchY = y;
     }
 }

@@ -43,7 +43,7 @@ public class Game {
     private int reachedLevel = 0;
     private int currentlyActiveLevel = -1;
     private float timer = 0.0f;
-    private Player player;
+    private final Player player = new Player();
 
     // Sound handles
     private int worldID;
@@ -71,7 +71,7 @@ public class Game {
         if (!resourcesLoaded) {
             textureManager = new TextureManager(context, resolution);
             soundManager = new SoundManager(context);
-            levelLoader = new LevelLoader(context, textureManager);
+            levelLoader = new LevelLoader(context, textureManager, player);
             soundManager.setBgm();
             soundManager.initSp(5);
             worldID = soundManager.loadSound(context, "world");

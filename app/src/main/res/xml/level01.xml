@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <level>
     <player>
-        <start x="12" y="34" segment="0" />
+        <start x="200" y="500" />
     </player>
     <background-images>
         <image src="bg0_3" />

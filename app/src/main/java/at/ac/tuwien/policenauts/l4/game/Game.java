@@ -67,6 +67,10 @@ public class Game {
         this.activityContext = activityContext;
         pauseIntent = new Intent(context, PauseMenuActivity.class);
 
+        // Initialize player
+        player = new Player();
+        player.setOriginalPosition(200,500);
+
         // Initialize resource managers
         if (!resourcesLoaded) {
             textureManager = new TextureManager(context, resolution);
@@ -140,6 +144,8 @@ public class Game {
         textureManager.setCanvas(canvas);
         levelLoader.getLevel(currentlyActiveLevel).renderLevel(textureManager);
         renderUI(canvas);
+
+        textureManager.drawSprite(player.currentSprite(), player.currentPosition());
     }
 
     /**

@@ -9,7 +9,7 @@ import at.ac.tuwien.policenauts.l4.game.ScoreContract.ScoreEntry;
 
 
 /**
- * Class handling persistence layer database access.
+ * Class handling persistence layer database access. Adapted from the lecture.
  *
  * @author Wassily Bartuska
  */
@@ -24,16 +24,33 @@ public class PersistenceDb extends SQLiteOpenHelper {
 
     private final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + ScoreEntry.TABLE_NAME;
 
+    /**
+     * Constructor for the persistence database
+     *
+     * @param context context used.
+     */
     public PersistenceDb(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * Invoked when an instance is created.
+     *
+     * @param db database object used.
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d(PersistenceDb.class.getName(), "Creating tables in DB");
         db.execSQL(SQL_CREATE_ENTRIES);
     }
 
+    /**
+     * Invoked when database is upgraded.
+     *
+     * @param db database used
+     * @param oldVersion oldVersion number of db.
+     * @param newVersion newVersion number of db.
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(PersistenceDb.class.getName(), "Upgrading database from version " +

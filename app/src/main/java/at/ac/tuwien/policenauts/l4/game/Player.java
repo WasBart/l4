@@ -23,7 +23,7 @@ class Player extends GameObject {
      */
     @Override
     Rect size() {
-        return null;
+        return new Rect(100,300,0,0);
     }
 
     /**

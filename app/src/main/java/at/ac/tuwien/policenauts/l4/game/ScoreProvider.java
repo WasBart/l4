@@ -156,6 +156,11 @@ public class ScoreProvider extends ContentProvider {
         return 0;
     }
 
+    /**
+     * Checks the columns.
+     *
+     * @param projection requested Columns.
+     */
     private synchronized void checkColumns(String[] projection) {
         String[] available = { ScoreContract.ScoreEntry._ID,
                 ScoreContract.ScoreEntry.COLUMN_NAME_PLAYERNAME,

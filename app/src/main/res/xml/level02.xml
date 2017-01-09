@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level>
+    <player>
+        <start x="200" y="500" />
+    </player>
+    <background-images>
+        <image src="bg0_3" />
+        <image src="bg0_4" />
+    </background-images>
+    <sprites>
+        <sheet src="ammo_5" duration="150" />
+        <sheet src="invincibility_5" duration="150" />
+        <sheet src="o2_5" duration="150" />
+        <sheet src="asteroid_1" duration="150" />
+        <sheet src="altasteroid_1" duration="150" />
+    </sprites>
+    <background-music>
+    </background-music>
+    <sounds>
+    </sounds>
+    <segment image-id="0">
+        <collectible type="oxygen">
+            <sprite id="2" />
+            <collision sound="0" />
+            <position x="800" y="500" />
+        </collectible>
+        <collectible type="ammo">
+            <sprite id="0" />
+            <collision sound="0" />
+            <position x="100" y="100" />
+        </collectible>
+        <collectible type="invincibility">
+            <sprite id="1" />
+            <collision sound="0" />
+            <position x="1200" y="800" />
+        </collectible>
+        <asteroid type="simple">
+            <sprite id="3" />
+            <collision sound="0" />
+            <position x="1000" y="500" />
+        </asteroid>
+        <asteroid type="indestructible">
+            <sprite id="4" />
+            <collision sound="0" />
+            <position x="500" y="500" />
+        </asteroid>
+        <asteroid type="indestructible">
+            <sprite id="4" />
+            <collision sound="0" />
+            <position x="500" y="200" />
+        </asteroid>
+        <asteroid type="simple">
+            <sprite id="3" />
+            <collision sound="0" />
+            <position x="1300" y="700" />
+        </asteroid>
+        <asteroid type="simple">
+            <sprite id="3" />
+            <collision sound="0" />
+            <position x="1300" y="500" />
+        </asteroid>
+        <asteroid type="indestructible">
+            <sprite id="4" />
+            <collision sound="0" />
+            <position x="1400" y="100" />
+        </asteroid>
+    </segment>
+    <segment image-id="1">
+        <collectible type="oxygen">
+            <sprite id="2" />
+            <collision sound="0" />
+            <position x="800" y="500" />
+        </collectible>
+        <collectible type="ammo">
+            <sprite id="0" />
+            <collision sound="0" />
+            <position x="100" y="100" />
+        </collectible>
+        <collectible type="invincibility">
+            <sprite id="1" />
+            <collision sound="0" />
+            <position x="1200" y="800" />
+        </collectible>
+        <asteroid type="simple">
+            <sprite id="3" />
+            <collision sound="0" />
+            <position x="400" y="700" />
+        </asteroid>
+        <asteroid type="indestructible">
+            <sprite id="4" />
+            <collision sound="0" />
+            <position x="300" y="400" />
+        </asteroid>
+        <asteroid type="simple">
+            <sprite id="3" />
+            <collision sound="0" />
+            <position x="1400" y="500" />
+        </asteroid>
+        <asteroid type="indestructible">
+            <sprite id="4" />
+            <collision sound="0" />
+            <position x="1300" y="700" />
+        </asteroid>
+    </segment>
+</level>

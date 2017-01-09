@@ -130,7 +130,8 @@ class Level {
         // Process collision detection events
         for (NonPlayerObject obj : currentObjects) {
             if (obj.isVisible() && Rect.intersects(obj.currentPosition(),player.currentPosition())) {
-                obj.applyEffect(player);
+                if (!player.isInvincible())
+                    obj.applyEffect(player);
                 obj.collisionEffect();
             }
         }
@@ -140,7 +141,8 @@ class Level {
             // Work on the next segment
             for (NonPlayerObject obj : nextObjects) {
                 if (obj.isVisible() && Rect.intersects(obj.currentPosition(),player.currentPosition())) {
-                    obj.applyEffect(player);
+                    if (!player.isInvincible())
+                        obj.applyEffect(player);
                     obj.collisionEffect();
                 }
             }

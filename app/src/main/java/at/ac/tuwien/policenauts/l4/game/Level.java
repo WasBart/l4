@@ -21,7 +21,6 @@ class Level {
     private Segment currentSegment = null;
     private Segment nextSegment = null;
     private int nextSegmentId = 0;
-    private float currentMovementSpeed = 0.1f;
 
     /**
      * Initialize a level.
@@ -95,7 +94,9 @@ class Level {
      */
     void updateLevel(float tpf) {
         final int segmentsLeft = Math.min(1, segmentLimit - nextSegmentId);
-        final float baseMovement = tpf * currentMovementSpeed;
+        final float speedUp = (player.currentPosition().left /
+                (float) ResolutionConverter.WIDTH) * segmentsLeft;
+        final float baseMovement = tpf * (0.1f + 0.7f * speedUp);
         final float independentMovement = baseMovement * segmentsLeft;
         final float playerMovement = baseMovement * (1 - segmentsLeft);
 

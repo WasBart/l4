@@ -44,11 +44,18 @@ class Player extends GameObject {
         final float frameDeltaX = deltaTouchX * tpf / 1000.0f;
         final float frameDeltaY = deltaTouchY * tpf / 1000.0f;
 
+        // Make sure frame deltas don't exceed the borders
+        float actualDeltaX = Math.max(frameDeltaX, -position.left);
+        float actualDeltaY = Math.min(Math.max(frameDeltaY, -position.top),
+                ResolutionConverter.HEIGHT - position.bottom);
+
         // Update the player position
-        if (baseMovement > 0.0f)
-            position.offset((int) (Math.max(frameDeltaX, 0.0f) + baseMovement), (int) frameDeltaY);
-        else
-            position.offset((int) frameDeltaX, (int) frameDeltaY);
+        if (baseMovement > 0.0f) {
+            position.offset((int) (Math.max(actualDeltaX, 0.0f) + baseMovement),
+                    (int) actualDeltaY);
+        } else {
+            position.offset((int) actualDeltaX, (int) actualDeltaY);
+        }
 
         // Decrease the deltas
         deltaTouchX -= frameDeltaX;

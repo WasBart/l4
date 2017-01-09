@@ -12,7 +12,7 @@
     <string name="text_controls">Controls: \nSwipe left, right, up or down to move.
     touch a spot on the screen to shoot.</string>
     <string name="text_asteroids">Asteroids: \nWhen asteroids hit you you lose oxygen.
-        Shoot them with your railgun.</string>
+        Shoot brown asteroids with your railgun! You have to dodge blue asteroids!</string>
     <string name="text_scroll">Scrolling Level: \nThe level scrolls depending on your position.
         If you move to the far right end of the screen the level will scroll faster.</string>
     <string name="text_collectible">Pick-Ups: \nOxygen restores a part of your tank.

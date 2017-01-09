@@ -40,7 +40,7 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //ScoreAccess.class
-                Intent intent = new Intent(MenuActivity.this, CreateHighScoreActivity.class);
+                Intent intent = new Intent(MenuActivity.this, ScoreActivity.class);
                 startActivity(intent);
             }
         });

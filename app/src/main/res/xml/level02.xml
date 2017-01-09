@@ -4,8 +4,8 @@
         <start x="200" y="500" />
     </player>
     <background-images>
-        <image src="bg0_3" />
-        <image src="bg0_4" />
+        <image src="bg1_0" />
+        <image src="bg1_1" />
     </background-images>
     <sprites>
         <sheet src="ammo_5" duration="150" />

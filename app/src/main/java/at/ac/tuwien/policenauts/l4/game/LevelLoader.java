@@ -68,6 +68,7 @@ class LevelLoader {
 
         // Load the resources we want to load
         loadLevel("level01");
+        loadLevel("level02");
     }
 
     /**

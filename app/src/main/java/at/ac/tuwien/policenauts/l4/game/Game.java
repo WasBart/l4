@@ -107,6 +107,7 @@ public class Game {
      * Start the next level, based on the reached level.
      */
     public void startGame() {
+        reachedLevel = 0;
         currentlyActiveLevel = reachedLevel;
         levelLoader.getLevel(currentlyActiveLevel).restartLevel();
         startTime = (float) System.nanoTime() / 1000000000;
@@ -150,7 +151,7 @@ public class Game {
 
         // Check, whether the level has been cleared
         if (levelLoader.getLevel(currentlyActiveLevel).isOver()
-                && player.currentPosition().right > 1600) {
+                && player.currentPosition().right > ResolutionConverter.WIDTH) {
             // If this is the last level, display winning screen
             if (currentlyActiveLevel == levelLoader.numLevels() - 1) {
                 activityContext.startActivity(winIntent);

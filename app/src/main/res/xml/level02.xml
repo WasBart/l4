@@ -77,62 +77,62 @@
     </segment>
     <segment image-id="1">
         <asteroid type="indestructible">
-            <sprite id="2" />
+            <sprite id="4" />
             <collision sound="0" />
             <position x="500" y="100" />
         </asteroid>
         <asteroid type="indestructible">
-            <sprite id="2" />
+            <sprite id="4" />
             <collision sound="0" />
             <position x="500" y="300" />
         </asteroid>
         <asteroid type="indestructible">
-            <sprite id="2" />
+            <sprite id="4" />
             <collision sound="0" />
             <position x="500" y="500" />
         </asteroid>
         <asteroid type="indestructible">
-            <sprite id="2" />
+            <sprite id="4" />
             <collision sound="0" />
             <position x="500" y="700" />
         </asteroid>
         <asteroid type="indestructible">
-            <sprite id="2" />
+            <sprite id="4" />
             <collision sound="0" />
             <position x="300" y="100" />
         </asteroid>
         <asteroid type="indestructible">
-            <sprite id="2" />
+            <sprite id="4" />
             <collision sound="0" />
             <position x="300" y="300" />
         </asteroid>
         <asteroid type="indestructible">
-            <sprite id="2" />
+            <sprite id="4" />
             <collision sound="0" />
             <position x="300" y="500" />
         </asteroid>
         <asteroid type="indestructible">
-            <sprite id="2" />
+            <sprite id="4" />
             <collision sound="0" />
             <position x="300" y="700" />
         </asteroid>
         <asteroid type="simple">
-            <sprite id="2" />
+            <sprite id="3" />
             <collision sound="0" />
             <position x="100" y="100" />
         </asteroid>
         <asteroid type="simple">
-            <sprite id="2" />
+            <sprite id="3" />
             <collision sound="0" />
             <position x="100" y="300" />
         </asteroid>
         <asteroid type="simple">
-            <sprite id="2" />
+            <sprite id="3" />
             <collision sound="0" />
             <position x="100" y="500" />
         </asteroid>
         <asteroid type="simple">
-            <sprite id="2" />
+            <sprite id="3" />
             <collision sound="0" />
             <position x="100" y="700" />
         </asteroid>

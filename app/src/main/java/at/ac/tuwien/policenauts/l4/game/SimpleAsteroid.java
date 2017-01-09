@@ -34,5 +34,6 @@ class SimpleAsteroid extends Asteroid {
     @Override
     public void collisionEffect() {
         setVisible(false);
+        soundManager.playSound(soundManager.getColId(),1,1,1,0,1.0f);
     }
 }

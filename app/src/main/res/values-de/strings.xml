@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">L4</string>
+
+    <string name="button_newgame">Neues Spiel</string>
+    <string name="button_instructions">Hilfe</string>
+    <string name="button_scoreboard">Bestenliste</string>
+    <string name="button_intro">Intro</string>
+    <string name="title_activity_score">Punkte</string>
+
+    <string name="button_skip">Überspringen</string>
+
+    <string name="username">Spielername</string>
+    <string name="score">Punktzahl</string>
+    <string name="Add">Hinzufügen</string>
+    <string name="Delete">Löschen</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="title_activity_read_score">Punkte ablesen</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_create_high_score">CreateHighScoreActivity</string>
+    <string name="readScore">Read score</string>
+    <string name="button_continue">Continue</string>
+    <string name="button_quit">Quit to Main Menu</string>
+</resources>

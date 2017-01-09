@@ -42,6 +42,17 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+        // Create on click listener for help button
+        Button help = (Button) findViewById(R.id.instructions);
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //ScoreAccess.class
+                Intent intent = new Intent(MenuActivity.this, HelpActivity.class);
+                startActivity(intent);
+            }
+        });
+
         // Create on click listener for intro button
         Button intro = (Button) findViewById(R.id.intro);
         intro.setOnClickListener(new View.OnClickListener() {

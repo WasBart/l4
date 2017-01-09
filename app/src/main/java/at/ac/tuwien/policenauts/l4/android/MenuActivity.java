@@ -45,13 +45,23 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        // Create on click listener for help button
+       /* // Create on click listener for help button
         Button help = (Button) findViewById(R.id.instructions);
         help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //ScoreAccess.class
                 Intent intent = new Intent(MenuActivity.this, HelpActivity.class);
+                startActivity(intent);
+            }
+        });*/
+
+        Button help = (Button) findViewById(R.id.instructions);
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //ScoreAccess.class
+                Intent intent = new Intent(MenuActivity.this, GameWonActivity.class);
                 startActivity(intent);
             }
         });

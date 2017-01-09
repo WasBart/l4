@@ -19,6 +19,9 @@
         Invincibility makes you invincible for five seconds.
         The ammo pick-up restores the electricity of your railgun.</string>
 
+    <string name="game_over">Game Over</string>
+    <string name="game_won">Congratulations!</string>
+
     <string name="username">Username</string>
     <string name="score">Score</string>
     <string name="Add">Add</string>

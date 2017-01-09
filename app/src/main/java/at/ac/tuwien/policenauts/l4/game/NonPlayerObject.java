@@ -9,6 +9,7 @@ import android.util.Log;
  */
 abstract class NonPlayerObject extends GameObject {
     private boolean visible = true;
+    protected SoundManager soundManager;
 
     /**
      * Checks, whether an object is visible or not. If this function
@@ -61,4 +62,13 @@ abstract class NonPlayerObject extends GameObject {
      * This function is called, when the object is being hit with a railgun shot.
      */
     abstract void railgunHit();
+
+    /**
+     * Sets the soundManager.
+     *
+     * @param soundManager soundManager that is set
+     */
+    public void setSoundManager(SoundManager soundManager) {
+        this.soundManager = soundManager;
+    }
 }

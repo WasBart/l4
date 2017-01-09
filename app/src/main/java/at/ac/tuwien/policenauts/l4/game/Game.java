@@ -75,7 +75,7 @@ public class Game {
         // Start resource managers
         textureManager = new TextureManager(context, resolution);
         soundManager = new SoundManager(context);
-        levelLoader = new LevelLoader(context, textureManager, player);
+        levelLoader = new LevelLoader(context, textureManager, player, soundManager);
 
         // Initialize paint for gameplay UI
         stroke.setColor(Color.WHITE);

@@ -20,6 +20,7 @@ import at.ac.tuwien.policenauts.l4.R;
  */
 class LevelLoader {
     private final Player player;
+    private SoundManager soundManager;
 
     /**
      * Initialize the level loader with the application context.
@@ -27,11 +28,13 @@ class LevelLoader {
      * @param context Application context
      * @param textureManager Texture manager of this application
      * @param player The player
+     * @param soundManager soundManager for sfx
      */
-    LevelLoader(Context context, TextureManager textureManager, Player player) {
+    LevelLoader(Context context, TextureManager textureManager, Player player, SoundManager soundManager) {
         this.context = context;
         this.textureManager = textureManager;
         this.player = player;
+        this.soundManager = soundManager;
 
         // Resources that stay the same across all levels
         textures.add("noaudio_icon");
@@ -292,6 +295,7 @@ class LevelLoader {
         }
         asteroid.setOriginalPosition(xPosition, yPosition);
         asteroid.addSprites(spriteIds);
+        asteroid.setSoundManager(soundManager);
         return asteroid;
     }
 
@@ -370,6 +374,7 @@ class LevelLoader {
         // Add position to object
         collectible.setOriginalPosition(xPosition, yPosition);
         collectible.addSprites(spriteIds);
+        collectible.setSoundManager(soundManager);
         return collectible;
     }
 

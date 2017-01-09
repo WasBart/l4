@@ -119,6 +119,25 @@ class Level {
 
         // Update the player
         player.update(tpf, playerMovement);
+
+        // Process collision detection events
+        for (NonPlayerObject obj : currentObjects) {
+            if (obj.currentPosition().intersect(player.currentPosition())) {
+                obj.applyEffect(player);
+                obj.collisionEffect();
+            }
+        }
+
+        // Skip next segment if null
+        if (nextSegment != null) {
+            // Work on the next segment
+            for (NonPlayerObject obj : nextObjects) {
+                if (obj.currentPosition().intersect(player.currentPosition())) {
+                    obj.applyEffect(player);
+                    obj.collisionEffect();
+                }
+            }
+        }
     }
 
     /**
@@ -136,10 +155,14 @@ class Level {
         }
 
         // Draw object sprites
-        for (NonPlayerObject obj : currentObjects)
-            textureManager.drawSprite(obj.currentSprite(), obj.currentPosition());
-        for (NonPlayerObject obj : nextObjects)
-            textureManager.drawSprite(obj.currentSprite(), obj.currentPosition());
+        for (NonPlayerObject obj : currentObjects) {
+            if (obj.isVisible())
+                textureManager.drawSprite(obj.currentSprite(), obj.currentPosition());
+        }
+        for (NonPlayerObject obj : nextObjects) {
+            if (obj.isVisible())
+                textureManager.drawSprite(obj.currentSprite(), obj.currentPosition());
+        }
 
         // Draw the player
         textureManager.drawSprite(player.currentSprite(), player.currentPosition());

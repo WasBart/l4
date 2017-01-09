@@ -13,6 +13,6 @@ class Invincibility extends Collectible {
      */
     @Override
     void applyEffect(Player player) {
-        player.setInvincibilityTime(6000);
+        player.setInvincibilityTime(5000);
     }
 }

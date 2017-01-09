@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import at.ac.tuwien.policenauts.l4.R;
+import at.ac.tuwien.policenauts.l4.game.Game;
 
 /**
  * The main menu of L4.
@@ -22,12 +23,14 @@ public class MenuActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         // Create on click listener for start game button
+        final Game game = ((GameApplication) getApplicationContext()).getGame();
         Button newGame = (Button) findViewById(R.id.newgame);
         newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuActivity.this, GameActivity.class);
                 startActivity(intent);
+                game.startGame();
             }
         });
 

@@ -23,6 +23,7 @@ class SoundManager {
     private MediaPlayer mP;
     private SoundPool soundPool;
     private boolean soundLoad = false;
+    private boolean mute = false;
 
     /**
      * Create and pass the current context to the SoundManager.
@@ -44,6 +45,8 @@ class SoundManager {
 
     void startBgm() {
         mP.start();
+        if (mute)
+            mP.setVolume(0, 0);
     }
 
     void pauseBgm() {
@@ -99,6 +102,8 @@ class SoundManager {
     }
 
     void playSound(int id, int leftCh, int rightCh, int prior, int loop, float speed) {
+        if (mute)
+            return;
         if(Build.VERSION.SDK_INT < 21) {
             soundPool.play(id, leftCh, rightCh, prior, loop, speed);
         }
@@ -122,10 +127,12 @@ class SoundManager {
     }
 
     void muteSounds() {
+        mute = true;
         mP.setVolume(0, 0);
     }
 
     void unmuteSounds() {
+        mute = false;
         mP.setVolume(1, 1);
     }
 }

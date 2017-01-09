@@ -36,7 +36,6 @@ public class Game {
 
     // Intents and transition handling
     private Context activityContext;
-    private GameSurfaceView surfaceView;
     private Intent pauseIntent;
     private boolean paused = false;
 
@@ -71,32 +70,17 @@ public class Game {
      * Initialize all important resource managers.
      *
      * @param activityContext Activity context of the GameActivity
-     * @param surfaceView The rendering surface
      */
-    public void initialize(Context activityContext, GameSurfaceView surfaceView) {
+    public void initialize(Context activityContext) {
         // Initialize the pause intent
         this.activityContext = activityContext;
-        this.surfaceView = surfaceView;
         pauseIntent = new Intent(context, PauseMenuActivity.class);
-
-        // Only "start" game if it's not paused
-        if (!paused)
-            startGame();
-    }
-
-    /**
-     * Check whether the game is paused or not.
-     *
-     * @return True, if the game has been paused
-     */
-    public boolean isPaused() {
-        return paused;
     }
 
     /**
      * Start the next level, based on the reached level.
      */
-    void startGame() {
+    public void startGame() {
         currentlyActiveLevel = reachedLevel;
         levelLoader.getLevel(0).startLevel();
     }
@@ -157,9 +141,6 @@ public class Game {
             return;
         paused = true;
 
-        // Stop game loop for now
-        surfaceView.pause();
-
         // Pause sounds
         soundManager.pauseBgm();
         bgmPos = soundManager.getBgmPos();
@@ -173,6 +154,7 @@ public class Game {
 
     /**
      * Resume a previously paused game.
+     *
      */
     public void resume() {
         paused = false;
@@ -187,9 +169,6 @@ public class Game {
         soundManager.forwardBgm(bgmPos);
         soundManager.startBgm();
         soundManager.resumeSounds();
-
-        // Resume the game surface view
-        surfaceView.resume();
     }
 
     /**

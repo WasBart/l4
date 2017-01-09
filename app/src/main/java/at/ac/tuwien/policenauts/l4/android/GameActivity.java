@@ -19,7 +19,6 @@ import at.ac.tuwien.policenauts.l4.game.Game;
  * @author Wassily Bartuska
  */
 public class GameActivity extends AppCompatActivity {
-    private Game game;
     private BroadcastReceiver pauseReceiver;
 
     /**
@@ -52,8 +51,8 @@ public class GameActivity extends AppCompatActivity {
                 new IntentFilter("game-paused"));
 
         // Initialize game
-        game = ((GameApplication) getApplicationContext()).getGame();
-        game.initialize(this, (GameSurfaceView)findViewById(R.id.drawing_area));
+        Game game = ((GameApplication) getApplicationContext()).getGame();
+        game.initialize(this);
     }
 
     /**
@@ -61,8 +60,8 @@ public class GameActivity extends AppCompatActivity {
      */
     @Override
     protected void onPause() {
-        game.pause();
         super.onPause();
+        findViewById(R.id.drawing_area).setVisibility(GameSurfaceView.GONE);
     }
 
     /**
@@ -70,7 +69,7 @@ public class GameActivity extends AppCompatActivity {
      */
     @Override
     protected void onResume() {
-        game.resume();
+        findViewById(R.id.drawing_area).setVisibility(GameSurfaceView.VISIBLE);
         super.onResume();
     }
 
@@ -79,7 +78,6 @@ public class GameActivity extends AppCompatActivity {
      */
     @Override
     protected void onDestroy() {
-        //game.pause();
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(pauseReceiver);
     }

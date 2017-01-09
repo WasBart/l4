@@ -22,6 +22,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     private Game game;
     private GameLoop gameLoop;
     private Thread gameThread;
+    private boolean paused = false;
 
     /**
      * Initialize gameSurfaceView object with context and attributeSet.
@@ -49,8 +50,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
         // Initialize game and start the gameloop in a separate thread
         gameLoop = new GameLoop(surfaceHolder, applicationContext.getGame());
-        if (!game.isPaused())
-            resume();
+        paused = true;
+        resume();
     }
 
     /**
@@ -118,21 +119,31 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
      * Stop the gameloop.
      */
     public void pause() {
+        // Exit gameloop
         gameLoop.setRunning(false);
         try {
             gameThread.join();
         } catch (InterruptedException ex) {
             Log.e("Error", ex.getMessage());
         }
+
+        // Free resources
+        game.pause();
+        paused = true;
     }
 
     /**
      * Start the gameloop.
      */
     public void resume() {
-        if (gameThread != null && gameThread.isAlive())
+        // Allocate resources
+        if (!paused)
             return;
+        game.resume();
+
+        // Restart game loop
         gameThread = new Thread(gameLoop);
         gameThread.start();
+        paused = false;
     }
 }

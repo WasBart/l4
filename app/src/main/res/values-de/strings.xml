@@ -12,7 +12,7 @@
     <string name="text_controls">Steuerung: \nWische nach links, rechts, oben oder unten um dich zu bewegen.
     Berühre den Bildschirm um zu schießen.</string>
     <string name="text_asteroids">Asteroiden: \nWenn dich Asteroiden treffen, verlierst du Sauerstoff.
-    Schieße sei mit deiner Railgun ab.</string>
+    Schieße braune Asteroiden mit deiner Railgun ab! Blauen Asteroiden musst du ausweichen!</string>
     <string name="text_scroll">Bewegender Level: \nDer Level bewegt sich abhängig von deiner Position.
     Wenn du dich an den rechten Rand des Bildschirms bewegt, bewegt sich der Level schneller.</string>
     <string name="text_collectible">Gegenstände: \nSauerstoff füllt deinen Tank auf.

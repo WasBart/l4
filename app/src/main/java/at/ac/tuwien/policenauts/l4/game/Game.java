@@ -49,6 +49,12 @@ public class Game {
     private float timer = 0.0f;
     private final Player player = new Player();
 
+    // Paints for gameplay UI
+    private final Rect oxygenOuter = new Rect(100, 900, 1000, 980);
+    private final Rect oxygenInner = new Rect(105, 905, 995, 975);
+    private final Paint stroke = new Paint();
+    private final Paint fill = new Paint();
+
     // Sound handles
     private int worldID;
 
@@ -64,6 +70,12 @@ public class Game {
         textureManager = new TextureManager(context, resolution);
         soundManager = new SoundManager(context);
         levelLoader = new LevelLoader(context, textureManager, player);
+
+        // Initialize paint for gameplay UI
+        stroke.setColor(Color.WHITE);
+        stroke.setStyle(Paint.Style.STROKE);
+        fill.setColor(Color.WHITE);
+        fill.setStyle(Paint.Style.FILL);
     }
 
     /**
@@ -132,6 +144,22 @@ public class Game {
         // Render icons
         textureManager.drawTexture(audioIcon, audioIconPosition);
         textureManager.drawTexture(2, pauseIconPosition);
+
+        // Check player health
+        if (player.getOxygen() <= 0.4) {
+            stroke.setColor(Color.RED);
+            fill.setColor(Color.RED);
+        } else {
+            stroke.setColor(Color.WHITE);
+            fill.setColor(Color.WHITE);
+        }
+
+        // Draw oxygen bars
+        resolution.toScreenRect(oxygenOuter, positionCalc);
+        canvas.drawRect(positionCalc, stroke);
+        oxygenInner.right = (int) (oxygenInner.left + 890.0f * player.getOxygen());
+        resolution.toScreenRect(oxygenInner, positionCalc);
+        canvas.drawRect(positionCalc, fill);
     }
 
     /**

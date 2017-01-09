@@ -123,7 +123,8 @@ class Player extends GameObject {
      * @param deltaOxygen Change the amount of oxygen by this value
      */
     void changeOxygen(float deltaOxygen) {
-        oxygen = Math.min(Math.max(oxygen + deltaOxygen, 0), 1.0f);
+        oxygen = Math.min(Math.max(oxygen + deltaOxygen, 0.0f), 1.0f);
+        Log.e("oxygen", oxygen + "");
     }
 
     /**

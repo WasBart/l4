@@ -130,7 +130,7 @@ class Level {
 
         // Process collision detection events
         for (NonPlayerObject obj : currentObjects) {
-            if (obj.currentPosition().intersect(player.currentPosition())) {
+            if (obj.isVisible() && obj.currentPosition().intersect(player.currentPosition())) {
                 obj.applyEffect(player);
                 obj.collisionEffect();
             }
@@ -140,7 +140,7 @@ class Level {
         if (nextSegment != null) {
             // Work on the next segment
             for (NonPlayerObject obj : nextObjects) {
-                if (obj.currentPosition().intersect(player.currentPosition())) {
+                if (obj.isVisible() && obj.currentPosition().intersect(player.currentPosition())) {
                     obj.applyEffect(player);
                     obj.collisionEffect();
                 }

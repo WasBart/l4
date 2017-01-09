@@ -6,11 +6,14 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.VideoView;
+
+import java.util.Locale;
 
 import at.ac.tuwien.policenauts.l4.R;
 
@@ -38,18 +41,27 @@ public class IntroActivity extends AppCompatActivity implements MediaPlayer.OnCo
         setContentView(R.layout.activity_intro);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-        //initialize VideoView:
+        // Initialize VideoView:
         VideoView view = (VideoView)findViewById(R.id.videoView);
         view.setOnCompletionListener(this);
 
-        //Set Video URI:
-        Uri video = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.intro);
+        // Get System Language
+        String lang = Locale.getDefault().getDisplayLanguage();
+
+        // Set Video URI:
+        Uri video;
+        if(lang.equals("Deutsch")) {
+            video = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.intro_g);
+        }
+        else {
+            video = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.intro);
+        }
         view.setVideoURI(video);
 
-        //Start the intro:
+        // Start the intro:
         view.start();
 
-        //Skip Button:
+        // Skip Button:
         Button skip = (Button) findViewById(R.id.skip);
         skip.setOnClickListener(new View.OnClickListener() {
             @Override

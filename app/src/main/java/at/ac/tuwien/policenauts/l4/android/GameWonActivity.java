@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import at.ac.tuwien.policenauts.l4.R;
+import at.ac.tuwien.policenauts.l4.game.Game;
+import at.ac.tuwien.policenauts.l4.game.GameLoop;
 
 /**
  * Activity displayed when the player reaches the end of the game.
@@ -32,5 +34,13 @@ public class GameWonActivity extends AppCompatActivity {
         AnimatorSet animatorSet= (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.wonpropertyanimation);
         animatorSet.setTarget(textView);
         animatorSet.start();
+
+        Game game = ((GameApplication) getApplicationContext()).getGame();
+        float elapsedTime = game.getElapsedTime();
+
+        TextView scoreView = (TextView) findViewById(R.id.score_view);
+        scoreView.setText(getString(R.string.text_score) + " " + elapsedTime + " " + getString(R.string.sec_score));
+
+        
     }
 }

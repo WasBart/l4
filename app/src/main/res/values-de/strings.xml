@@ -22,6 +22,9 @@
     <string name="game_over">Leider verloren</string>
     <string name="game_won">Glückwunsch!</string>
 
+    <string name="text_score">Gebrauchte Zeit:</string>
+    <string name="sec_score">sekunden</string>
+
     <string name="username">Spielername</string>
     <string name="score">Punktzahl</string>
     <string name="Add">Hinzufügen</string>

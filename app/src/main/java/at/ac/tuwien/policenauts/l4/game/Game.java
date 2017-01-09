@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -204,11 +205,10 @@ public class Game {
 
                 // Killer queen has already touched that pause icon
                 resolution.toScreenRect(pauseIconPosition, positionCalc);
-                if (positionCalc.contains((int)x, (int)y)) {
+                if (positionCalc.contains((int)x, (int)y))
                     pause();
-                    return true;
-                }
-
+                break;
+            case MotionEvent.ACTION_DOWN:
                 // Set initial player touch position
                 player.setTouchX(x * resolution.factorX());
                 player.setTouchY(y * resolution.factorY());

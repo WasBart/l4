@@ -1,6 +1,7 @@
 package at.ac.tuwien.policenauts.l4.game;
 
 import android.graphics.Rect;
+import android.util.Log;
 
 /**
  * Main class for controlling the player and interaction of the player
@@ -38,7 +39,20 @@ class Player extends GameObject {
     @Override
     void update(float tpf, float baseMovement) {
         invincibilityTime = Math.min(0.0f, invincibilityTime - tpf);
-        position.offset((int) (deltaTouchX + baseMovement), (int) (deltaTouchY + baseMovement));
+
+        // Make deltas frame independent
+        final float frameDeltaX = deltaTouchX * tpf / 1000.0f;
+        final float frameDeltaY = deltaTouchY * tpf / 1000.0f;
+
+        // Update the player position
+        if (baseMovement > 0.0f)
+            position.offset((int) (Math.max(frameDeltaX, 0.0f) + baseMovement), (int) frameDeltaY);
+        else
+            position.offset((int) frameDeltaX, (int) frameDeltaY);
+
+        // Decrease the deltas
+        deltaTouchX -= frameDeltaX;
+        deltaTouchY -= frameDeltaY;
     }
 
     /**
@@ -112,7 +126,8 @@ class Player extends GameObject {
      * @param y The new y-Coordinate
      */
     void applyDeltaTransformation(float x, float y) {
-        position.offset((int) (x - oldTouchX), (int) (y - oldTouchY));
+        deltaTouchX += x - oldTouchX;
+        deltaTouchY += y - oldTouchY;
         oldTouchX = x;
         oldTouchY = y;
     }

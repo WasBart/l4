@@ -64,7 +64,7 @@ public class ResolutionConverter {
      * @return Factor for x coordinate conversion
      */
     float factorX() {
-        return WIDTH / actualWidth;
+        return WIDTH / (float)actualWidth;
     }
 
     /**
@@ -73,6 +73,6 @@ public class ResolutionConverter {
      * @return Factor for y coordinate conversion
      */
     float factorY() {
-        return HEIGHT / actualHeight;
+        return HEIGHT / (float)actualHeight;
     }
 }

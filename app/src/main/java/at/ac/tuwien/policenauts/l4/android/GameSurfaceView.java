@@ -22,6 +22,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     private Game game;
     private GameLoop gameLoop;
     private Thread gameThread;
+    private boolean paused = false;
 
     /**
      * Initialize gameSurfaceView object with context and attributeSet.
@@ -49,8 +50,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
         // Initialize game and start the gameloop in a separate thread
         gameLoop = new GameLoop(surfaceHolder, applicationContext.getGame());
-        gameThread = new Thread(gameLoop);
-        gameThread.start();
+        paused = true;
+        resume();
     }
 
     /**
@@ -81,7 +82,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
      */
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
     }
 
     /**
@@ -91,12 +91,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
      */
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-        gameLoop.setRunning(false);
-        try {
-            gameThread.join();
-        } catch (InterruptedException ex) {
-            Log.e("Error", ex.getMessage());
-        }
+        pause();
     }
 
     /**
@@ -118,5 +113,37 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         return game.handleTouch(e);
+    }
+
+    /**
+     * Stop the gameloop.
+     */
+    public void pause() {
+        // Exit gameloop
+        gameLoop.setRunning(false);
+        try {
+            gameThread.join();
+        } catch (InterruptedException ex) {
+            Log.e("Error", ex.getMessage());
+        }
+
+        // Free resources
+        game.pause();
+        paused = true;
+    }
+
+    /**
+     * Start the gameloop.
+     */
+    public void resume() {
+        // Allocate resources
+        if (!paused)
+            return;
+        game.resume();
+
+        // Restart game loop
+        gameThread = new Thread(gameLoop);
+        gameThread.start();
+        paused = false;
     }
 }

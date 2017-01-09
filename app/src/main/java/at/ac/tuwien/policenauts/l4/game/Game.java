@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import at.ac.tuwien.policenauts.l4.android.GameSurfaceView;
 import at.ac.tuwien.policenauts.l4.android.PauseMenuActivity;
 
 /**
@@ -38,8 +39,10 @@ public class Game {
     private Intent pauseIntent;
     private boolean paused = false;
 
+    // Enable/disable audio
+    private int audioIcon = 1;
+
     // Game state
-    private float fps = 60.0f;
     private int bgmPos = 0;
     private int reachedLevel = 0;
     private int currentlyActiveLevel = -1;
@@ -56,6 +59,11 @@ public class Game {
      */
     public Game(Context context) {
         this.context = context;
+
+        // Start resource managers
+        textureManager = new TextureManager(context, resolution);
+        soundManager = new SoundManager(context);
+        levelLoader = new LevelLoader(context, textureManager, player);
     }
 
     /**
@@ -66,41 +74,13 @@ public class Game {
     public void initialize(Context activityContext) {
         // Initialize the pause intent
         this.activityContext = activityContext;
-        pauseIntent = new Intent(context, PauseMenuActivity.class);
-
-        // Initialize resource managers
-        if (!resourcesLoaded) {
-            textureManager = new TextureManager(context, resolution);
-            soundManager = new SoundManager(context);
-            levelLoader = new LevelLoader(context, textureManager, player);
-            soundManager.setBgm();
-            soundManager.initSp(5);
-            worldID = soundManager.loadSound(context, "world");
-            resourcesLoaded = true;
-            startGame();
-        }
-        resume();
-    }
-
-    /**
-     * Remove all loaded resources from memory, but keep game logic state.
-     */
-    public void freeResources() {
-        textureManager.unloadTextures();
-        soundManager.releaseBgm();
-        soundManager.releaseSounds();
-
-        // Reset managers
-        textureManager = null;
-        levelLoader = null;
-        soundManager = null;
-        resourcesLoaded = false;
+        pauseIntent = new Intent(activityContext, PauseMenuActivity.class);
     }
 
     /**
      * Start the next level, based on the reached level.
      */
-    void startGame() {
+    public void startGame() {
         currentlyActiveLevel = reachedLevel;
         levelLoader.getLevel(0).startLevel();
     }
@@ -114,8 +94,6 @@ public class Game {
         if (paused || currentlyActiveLevel != reachedLevel)
             return;
 
-        fps = 1 / tpf * 1000;
-
         // Update all objects in the level
         levelLoader.getLevel(0).updateLevel(tpf);
 
@@ -123,7 +101,7 @@ public class Game {
         timer += tpf;
         if (timer > 5000.0f)
             if(worldID != 0)
-            soundManager.playSound(worldID,1,1,1,0,1.0f);
+                soundManager.playSound(worldID,1,1,1,0,1.0f);
         timer %= 5000.0f;
     }
 
@@ -134,7 +112,7 @@ public class Game {
      */
     public void render(Canvas canvas) {
         // Quit here if level hasn't started yet
-        if (currentlyActiveLevel != reachedLevel)
+        if (paused || currentlyActiveLevel != reachedLevel)
             return;
 
         // Pass canvas to texture manager
@@ -152,37 +130,44 @@ public class Game {
      */
     private void renderUI(Canvas canvas) {
         // Render icons
-        textureManager.drawTexture(0, audioIconPosition);
-        textureManager.drawTexture(1, pauseIconPosition);
-
-        // Draw fps counter
-        Paint textP = new Paint();
-        Rect src = new Rect(1600, 1000, 1600, 1000);
-        resolution.toScreenRect(src, src);
-        textP.setColor(Color.WHITE);
-        textP.setTextAlign(Paint.Align.RIGHT);
-        textP.setTextSize(30 * resolution.density());
-        String fpsText = fps + " FPS";
-        canvas.drawText(fpsText, src.left, src.top, textP);
+        textureManager.drawTexture(audioIcon, audioIconPosition);
+        textureManager.drawTexture(2, pauseIconPosition);
     }
 
     /**
      * Pause the game, save the state and release unnecessary resources.
      */
     public void pause() {
+        // Set the pause state
+        if (paused)
+            return;
         paused = true;
 
+        // Pause sounds
         soundManager.pauseBgm();
         bgmPos = soundManager.getBgmPos();
         soundManager.pauseSounds();
+
+        // Release the loaded resources
+        textureManager.unloadTextures();
+        soundManager.releaseBgm();
+        soundManager.releaseSounds();
     }
 
     /**
      * Resume a previously paused game.
+     *
      */
     public void resume() {
         paused = false;
 
+        // Initialize sounds and textures
+        levelLoader.loadResources();
+        soundManager.setBgm();
+        soundManager.initSp(5);
+        worldID = soundManager.loadSound(context, "world");
+
+        // Start playing sounds
         soundManager.forwardBgm(bgmPos);
         soundManager.startBgm();
         soundManager.resumeSounds();
@@ -202,11 +187,21 @@ public class Game {
         switch(event.getAction()) {
             case MotionEvent.ACTION_UP:
                 resolution.toScreenRect(audioIconPosition, positionCalc);
+                if (positionCalc.contains((int)x, (int)y)) {
+                    if (audioIcon == 1) {
+                        soundManager.muteSounds();
+                        audioIcon = 0;
+                    } else {
+                        soundManager.unmuteSounds();
+                        audioIcon = 1;
+                    }
+                    return true;
+                }
 
                 // Killer queen has already touched that pause icon
                 resolution.toScreenRect(pauseIconPosition, positionCalc);
                 if (positionCalc.contains((int)x, (int)y))
-                    pause();
+                    activityContext.startActivity(pauseIntent);
                 break;
             case MotionEvent.ACTION_DOWN:
                 // Set initial player touch position

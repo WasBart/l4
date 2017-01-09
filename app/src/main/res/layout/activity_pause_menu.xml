@@ -8,7 +8,7 @@
     android:gravity="center"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:background="#CC000000" >
+    android:background="@drawable/menu_bg" >
 
     <ImageView
         android:id="@+id/imageView"

@@ -17,12 +17,13 @@ import at.ac.tuwien.policenauts.l4.android.GameActivity;
  *
  * @author Wassily Bartuska
  */
-public class SoundManager {
+class SoundManager {
 
     private final Context context;
     private MediaPlayer mP;
     private SoundPool soundPool;
     private boolean soundLoad = false;
+    private boolean mute = false;
 
     /**
      * Create and pass the current context to the SoundManager.
@@ -37,7 +38,7 @@ public class SoundManager {
      * Sets the backgroundmusic to the soundfile bgm located in the raw folder.
      *
      */
-    public void setBgm() {
+    void setBgm() {
         mP = MediaPlayer.create(context, R.raw.bgm);
         mP.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(MediaPlayer mp) {
@@ -50,36 +51,30 @@ public class SoundManager {
      * Starts the backgroundmusic.
      *
      */
-    public void startBgm() {
+    void startBgm() {
         mP.start();
+        if (mute)
+            mP.setVolume(0, 0);
     }
 
     /**
      * Pauses the backgroundmusic.
      *
      */
-    public void pauseBgm() { mP.pause(); }
+    void pauseBgm() { mP.pause(); }
 
     /**
      * Forwards the backgroundmusic to a timestamp.
      *
      * @param ms specified timestamp.
      */
-    public void forwardBgm(int ms) { mP.seekTo(ms); };
-
-    /**
-     * Stops the backgroundmusic.
-     *
-     */
-    public void stopBgm() {
-        mP.stop();
-    }
+    void forwardBgm(int ms) { mP.seekTo(ms); };
 
     /**
      * Releases the resources of the backgroundmusic.
      *
      */
-    public void releaseBgm() {
+    void releaseBgm() {
         mP.release();
     }
 
@@ -88,7 +83,7 @@ public class SoundManager {
      *
      * @return current timestamp.
      */
-    public int getBgmPos() {
+    int getBgmPos() {
         return mP.getCurrentPosition();
     }
 
@@ -97,8 +92,7 @@ public class SoundManager {
      *
      * @param streams number of sound streams that can be active.
      */
-    public void initSp(int streams) {
-
+    void initSp(int streams) {
         if(Build.VERSION.SDK_INT < 21) {
             soundPool = new SoundPool(streams, AudioManager.STREAM_MUSIC, 0);
         }
@@ -128,7 +122,7 @@ public class SoundManager {
      * @param name name of the soundfile.
      * @return handle of the loaded sound.
      */
-    public int loadSound(Context context, String name) {
+    int loadSound(Context context, String name) {
         soundLoad = false;
         int soundID = 0;
 
@@ -152,7 +146,9 @@ public class SoundManager {
      * @param loop specifier for looping.
      * @param speed speed of playback.
      */
-    public void playSound(int id, int leftCh, int rightCh, int prior, int loop, float speed) {
+    void playSound(int id, int leftCh, int rightCh, int prior, int loop, float speed) {
+        if (mute)
+            return;
         if(Build.VERSION.SDK_INT < 21) {
             soundPool.play(id, leftCh, rightCh, prior, loop, speed);
         }
@@ -167,7 +163,7 @@ public class SoundManager {
      * Pause all soundpool sound.
      *
      */
-    public void pauseSounds() {
+    void pauseSounds() {
         soundPool.autoPause();
     }
 
@@ -175,7 +171,7 @@ public class SoundManager {
      * Resume all soundpool sounds.
      *
      */
-    public void resumeSounds() {
+    void resumeSounds() {
         soundPool.autoResume();
     }
 
@@ -183,7 +179,23 @@ public class SoundManager {
      * Release the reseources of the soundpool.
      *
      */
-    public void releaseSounds() {
+    void releaseSounds() {
         soundPool.release();
+    }
+
+    /**
+     * Mute all sounds.
+     */
+    void muteSounds() {
+        mute = true;
+        mP.setVolume(0, 0);
+    }
+
+    /**
+     * Unmute all sounds.
+     */
+    void unmuteSounds() {
+        mute = false;
+        mP.setVolume(1, 1);
     }
 }

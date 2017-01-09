@@ -34,6 +34,7 @@ class LevelLoader {
         this.player = player;
 
         // Resources that stay the same across all levels
+        textures.add("noaudio_icon");
         textures.add("audio_icon");
         textures.add("pause_icon");
         textureOffset = textures.size();
@@ -51,7 +52,6 @@ class LevelLoader {
 
         // Load the resources we want to load
         loadLevel("level01");
-        loadResources();
     }
 
     /**
@@ -105,23 +105,7 @@ class LevelLoader {
      */
     boolean loadResources() {
         // Use the texture manager to load sprites and textures
-        if (!textureManager.loadTextures(sprites, spritesFrameCount, textures))
-            return false;
-
-        // Clear the state
-        sprites.clear();
-        spritesFrameCount.clear();
-        spritesDuration.clear();
-        textures.clear();
-        sounds.clear();
-        backgroundMusic.clear();
-
-        // Add offsets for loaded resources
-        spriteOffset = sprites.size();
-        textureOffset = textures.size();
-        soundOffset = sounds.size();
-        backgroundMusicOffset = backgroundMusic.size();
-        return true;
+        return textureManager.loadTextures(sprites, spritesFrameCount, textures);
     }
 
     /**

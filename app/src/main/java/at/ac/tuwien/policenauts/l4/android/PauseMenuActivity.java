@@ -1,5 +1,7 @@
 package at.ac.tuwien.policenauts.l4.android;
 
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,9 +31,11 @@ public class PauseMenuActivity extends AppCompatActivity {
 
         // Create on click listener for start game button
         Button quit = (Button) findViewById(R.id.pause_quit);
+        final LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
         quit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                broadcastManager.sendBroadcast(new Intent("game-paused"));
                 finish();
             }
         });

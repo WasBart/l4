@@ -1,7 +1,6 @@
 package at.ac.tuwien.policenauts.l4.game;
 
 import android.graphics.Rect;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +40,7 @@ class Level {
      */
     void startLevel() {
         // Initialize segments
+        resetLevel();
         nextSegmentId = 0;
         loadSegment(0, true);
         loadSegment(1, false);
@@ -48,6 +48,14 @@ class Level {
         // Initialize player
         player.setOriginalPosition(playerStart.left, playerStart.top);
         player.resetPosition();
+    }
+
+    /**
+     * Reset all level logic stats.
+     */
+    void resetLevel() {
+        for (Segment segment : segments)
+            segment.resetPosition();
     }
 
     /**

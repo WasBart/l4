@@ -70,7 +70,7 @@
             <position x="1500" y="850" />
         </asteroid>
         <collectible type="invincibility">
-            <sprite id="2" />
+            <sprite id="1" />
             <collision sound="0" />
             <position x="1350" y="850" />
         </collectible>

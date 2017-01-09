@@ -145,7 +145,6 @@ class Player extends GameObject {
      */
     void changeOxygen(float deltaOxygen) {
         oxygen = Math.min(Math.max(oxygen + deltaOxygen, 0.0f), 1.0f);
-        Log.e("oxygen", oxygen + "");
     }
 
     /**

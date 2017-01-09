@@ -108,6 +108,9 @@ class Level {
         final float independentMovement = baseMovement * segmentsLeft;
         final float playerMovement = baseMovement * (1 - segmentsLeft);
 
+        // Update player oxygen
+        player.changeOxygen(-(baseMovement / ResolutionConverter.WIDTH) * 0.1f);
+
         // Work on the current segment
         for (NonPlayerObject obj : currentObjects)
             obj.update(tpf, independentMovement);
@@ -197,7 +200,6 @@ class Level {
         }
 
         // Draw the player
-        Log.e("TEST", player.currentSprite().textureId + " " + player.currentSprite().currentFrame);
         textureManager.drawSprite(player.currentSprite(), player.currentPosition());
 
         // Draw the railgun shot

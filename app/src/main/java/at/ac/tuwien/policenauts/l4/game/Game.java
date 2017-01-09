@@ -9,6 +9,8 @@ import android.graphics.Rect;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
+import at.ac.tuwien.policenauts.l4.android.GameOverActivity;
+import at.ac.tuwien.policenauts.l4.android.GameWonActivity;
 import at.ac.tuwien.policenauts.l4.android.PauseMenuActivity;
 
 /**
@@ -33,6 +35,8 @@ public class Game {
     // Intents and transition handling
     private Context activityContext;
     private Intent pauseIntent;
+    private Intent gameOverIntent;
+    private Intent winIntent;
     private boolean paused = false;
 
     // Enable/disable audio
@@ -89,6 +93,8 @@ public class Game {
         // Initialize the pause intent
         this.activityContext = activityContext;
         pauseIntent = new Intent(activityContext, PauseMenuActivity.class);
+        gameOverIntent = new Intent(activityContext, GameOverActivity.class);
+        winIntent = new Intent(activityContext, GameWonActivity.class);
         detector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
@@ -102,8 +108,10 @@ public class Game {
      */
     public void startGame() {
         currentlyActiveLevel = reachedLevel;
-        levelLoader.getLevel(0).startLevel();
+        levelLoader.getLevel(currentlyActiveLevel).restartLevel();
         startTime = (float) System.nanoTime() / 1000000000;
+        player.resetStats();
+        player.resetLives();
     }
 
     /**
@@ -116,19 +124,43 @@ public class Game {
             return;
 
         // Update all objects in the level
-        levelLoader.getLevel(0).updateLevel(tpf);
+        levelLoader.getLevel(currentlyActiveLevel).updateLevel(tpf);
 
         // Play sound
-        timer += tpf;
+        /*timer += tpf;
         if (timer > 5000.0f)
             if(worldID != 0)
                 soundManager.playSound(worldID,1,1,1,0,1.0f);
-        timer %= 5000.0f;
+        timer %= 5000.0f;*/
 
         // Calculate elapsed time
         curTime = (float) System.nanoTime() / 1000000000;
         elapsedTime = (curTime - startTime);
-        Log.i("Time: ", elapsedTime + "seconds");
+
+        // Check, whether the player has been killed
+        if (player.getOxygen() < 0.01f && player.getLives() == 1) {
+            player.decreaseLives();
+            activityContext.startActivity(gameOverIntent);
+        } else if (player.getOxygen() < 0.01f) {
+            player.decreaseLives();
+            player.setRespawned(true);
+            levelLoader.getLevel(currentlyActiveLevel).restartLevel();
+            player.resetStats();
+        }
+
+        // Check, whether the level has been cleared
+        if (levelLoader.getLevel(currentlyActiveLevel).isOver()
+                && player.currentPosition().right > 1600) {
+            // If this is the last level, display winning screen
+            if (currentlyActiveLevel == levelLoader.numLevels() - 1) {
+                activityContext.startActivity(winIntent);
+            } else {
+                reachedLevel++;
+                currentlyActiveLevel = reachedLevel;
+                levelLoader.getLevel(currentlyActiveLevel).restartLevel();
+                player.resetStats();
+            }
+        }
     }
 
     /**
@@ -277,6 +309,9 @@ public class Game {
 
         // Choose appropriate action
         switch(event.getAction()) {
+            case MotionEvent.ACTION_UP:
+                player.setRespawned(false);
+                return true;
             case MotionEvent.ACTION_DOWN:
                 // Set initial player touch position
                 player.setTouchX(x * resolution.factorX());

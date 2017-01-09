@@ -70,6 +70,15 @@ class LevelLoader {
     }
 
     /**
+     * Return the number of currently loaded levels.
+     *
+     * @return Number of available levels
+     */
+    int numLevels() {
+        return levels.size();
+    }
+
+    /**
      * Load a level, identified by a name.
      *
      * @param level The name/identifier of a level

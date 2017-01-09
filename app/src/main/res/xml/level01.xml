@@ -19,16 +19,6 @@
     <sounds>
     </sounds>
     <segment image-id="0">
-        <asteroid type="simple">
-            <sprite id="3" />
-            <collision sound="0" />
-            <position x="1000" y="500" />
-        </asteroid>
-        <asteroid type="indestructible">
-            <sprite id="4" />
-            <collision sound="0" />
-            <position x="400" y="500" />
-        </asteroid>
         <collectible type="oxygen">
             <sprite id="2" />
             <collision sound="0" />
@@ -44,6 +34,36 @@
             <collision sound="0" />
             <position x="1200" y="800" />
         </collectible>
+        <asteroid type="simple">
+            <sprite id="3" />
+            <collision sound="0" />
+            <position x="1000" y="500" />
+        </asteroid>
+        <asteroid type="indestructible">
+            <sprite id="4" />
+            <collision sound="0" />
+            <position x="500" y="500" />
+        </asteroid>
+        <asteroid type="indestructible">
+            <sprite id="4" />
+            <collision sound="0" />
+            <position x="500" y="200" />
+        </asteroid>
+        <asteroid type="simple">
+            <sprite id="3" />
+            <collision sound="0" />
+            <position x="1300" y="700" />
+        </asteroid>
+        <asteroid type="simple">
+            <sprite id="3" />
+            <collision sound="0" />
+            <position x="1300" y="500" />
+        </asteroid>
+        <asteroid type="indestructible">
+            <sprite id="4" />
+            <collision sound="0" />
+            <position x="1400" y="100" />
+        </asteroid>
     </segment>
     <segment image-id="1">
         <collectible type="oxygen">
@@ -61,5 +81,25 @@
             <collision sound="0" />
             <position x="1200" y="800" />
         </collectible>
+        <asteroid type="simple">
+            <sprite id="3" />
+            <collision sound="0" />
+            <position x="400" y="700" />
+        </asteroid>
+        <asteroid type="indestructible">
+            <sprite id="4" />
+            <collision sound="0" />
+            <position x="300" y="400" />
+        </asteroid>
+        <asteroid type="simple">
+            <sprite id="3" />
+            <collision sound="0" />
+            <position x="1400" y="500" />
+        </asteroid>
+        <asteroid type="indestructible">
+            <sprite id="4" />
+            <collision sound="0" />
+            <position x="1300" y="700" />
+        </asteroid>
     </segment>
 </level>

@@ -54,6 +54,14 @@ class Segment {
     }
 
     /**
+     * Reset the state of the game objects.
+     */
+    void resetObjects() {
+        for (NonPlayerObject object : levelObjects)
+            object.setVisible(true);
+    }
+
+    /**
      * Get the current segment position on the screen.
      *
      * @return Current segment (rendering) position

@@ -23,6 +23,7 @@ class Level {
     private Segment currentSegment = null;
     private Segment nextSegment = null;
     private int nextSegmentId = 0;
+    private int segmentsLeft;
 
     /**
      * Initialize a level.
@@ -41,24 +42,17 @@ class Level {
     /**
      * Start the level, initialize starting conditions.
      */
-    void startLevel() {
+    void restartLevel() {
         // Initialize segments
-        resetLevel();
         nextSegmentId = 0;
+        segmentsLeft = Math.min(1, segmentLimit - nextSegmentId);
         loadSegment(0, true);
         loadSegment(1, false);
 
         // Initialize player
         player.setOriginalPosition(playerStart.left, playerStart.top);
         player.resetPosition();
-    }
-
-    /**
-     * Reset all level logic stats.
-     */
-    void resetLevel() {
-        for (Segment segment : segments)
-            segment.resetPosition();
+        player.resetStats();
     }
 
     /**
@@ -85,6 +79,8 @@ class Level {
 
         // Add new segment and load objects into list
         nextSegment = segments.get(segmentId);
+        nextSegment.resetPosition();
+        nextSegment.resetObjects();
         nextObjects.clear();
         nextObjects.addAll(nextSegment.getObjects());
 
@@ -104,7 +100,7 @@ class Level {
      * @param tpf Time per frame in millseconds
      */
     void updateLevel(float tpf) {
-        final int segmentsLeft = Math.min(1, segmentLimit - nextSegmentId);
+        segmentsLeft = Math.min(1, segmentLimit - nextSegmentId);
         final float speedUp = (player.currentPosition().left /
                 (float) ResolutionConverter.WIDTH) * segmentsLeft;
         final float baseMovement = tpf * (0.1f + 0.7f * speedUp);
@@ -148,12 +144,6 @@ class Level {
                     obj.collisionEffect();
                 }
             }
-        }
-
-        // Check if player is dead
-        if (player.getOxygen() < 0.01f) {
-            player.decreaseLives();
-            // Reset level potentially
         }
 
         // Update railgun
@@ -226,5 +216,14 @@ class Level {
         railgunPos.left = player.currentPosition().right + 5;
         railgunPos.top = player.currentPosition().centerY() - 18;
         railgunPos.bottom = player.currentPosition().centerY() - 8;
+    }
+
+    /**
+     * Check, whether there are any segments left in the level.
+     *
+     * @return True, if there are segments left
+     */
+    boolean isOver() {
+        return segmentsLeft == 0;
     }
 }

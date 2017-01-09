@@ -20,6 +20,7 @@ class Player extends GameObject {
     private float oldTouchY;
     private float deltaTouchX;
     private float deltaTouchY;
+    private boolean respawned = false;
 
     /**
      * The size of this object in indepdentent pixels
@@ -69,8 +70,19 @@ class Player extends GameObject {
     @Override
     void resetPosition() {
         super.resetPosition();
-        oldTouchX = position.centerX();
-        oldTouchY = position.centerY();
+        deltaTouchX = 0;
+        deltaTouchY = 0;
+        oldTouchX = 0;
+        oldTouchY = 0;
+    }
+
+    /**
+     * Reset player stats.
+     */
+    void resetStats() {
+        railgunAmmo = RAILGUN_AMMO_MAX;
+        oxygen = 1.0f;
+        invincibilityTime = 0.0f;
     }
 
     /**
@@ -135,6 +147,8 @@ class Player extends GameObject {
      * @param y The new y-Coordinate
      */
     void applyDeltaTransformation(float x, float y) {
+        if (respawned)
+            return;
         deltaTouchX += x - oldTouchX;
         deltaTouchY += y - oldTouchY;
         oldTouchX = x;
@@ -164,14 +178,31 @@ class Player extends GameObject {
      *
      * @return The current number of lives
      */
-    public int getLives() {
+    int getLives() {
         return lives;
     }
 
     /**
      * Decrease the amount of lives by 1.
      */
-    public void decreaseLives() {
+    void decreaseLives() {
         lives--;
+    }
+
+    /**
+     * Reset the lives to the original amount.
+     */
+    void resetLives() {
+        lives = 3;
+    }
+
+    /**
+     * Set the respawned flag to true, if it's true a touch input
+     * won't be received till the user stopped the input one time.
+     *
+     * @param respawned Set the respawn flag to temporarily disable input
+     */
+    void setRespawned(boolean respawned) {
+        this.respawned = respawned;
     }
 }

@@ -17,7 +17,7 @@ abstract class NonPlayerObject extends GameObject {
      *
      * @return True, if object is visible or possibly visible
      */
-    public boolean isVisible() {
+    boolean isVisible() {
         return visible;
     }
 

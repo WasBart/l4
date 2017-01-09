@@ -25,7 +25,7 @@
     <string name="text_score">Completion time:</string>
     <string name="sec_score">seconds</string>
 
-    <string name="username">Username</string>
+    <string name="username">Playername</string>
     <string name="score">Score</string>
     <string name="Add">Add</string>
     <string name="Delete">Delete</string>

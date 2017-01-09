@@ -22,6 +22,6 @@ public class ScoreContract implements BaseColumns {
         public static final String COLUMN_TYPE_PLAYERNAME = "TEXT";
 
         public static final String COLUMN_NAME_SCORE = "score";
-        public static final String COLUMN_TYPE_SCORE = "INTEGER";
+        public static final String COLUMN_TYPE_SCORE = "REAL";
     }
 }

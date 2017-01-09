@@ -29,6 +29,7 @@ abstract class Collectible extends NonPlayerObject {
     @Override
     public void collisionEffect() {
         setVisible(false);
+        soundManager.playSound(soundManager.getPickupId(),1,1,1,0,1.0f);
     }
 
     /**

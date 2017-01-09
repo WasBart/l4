@@ -24,6 +24,9 @@ class SoundManager {
     private SoundPool soundPool;
     private boolean soundLoad = false;
     private boolean mute = false;
+    private int laserId;
+    private int colId;
+    private int pickupId;
 
     /**
      * Create and pass the current context to the SoundManager.
@@ -197,5 +200,59 @@ class SoundManager {
     void unmuteSounds() {
         mute = false;
         mP.setVolume(1, 1);
+    }
+
+    /**
+     * Sets the id of laser sound.
+     *
+     * @param laserId id of laser sfx
+     */
+    public void setLaserId(int laserId) {
+        this.laserId = laserId;
+    }
+
+    /**
+     * Sets the id of collision sound.
+     *
+     * @param colId id of collision sfx
+     */
+    public void setColId(int colId) {
+        this.colId = colId;
+    }
+
+    /**
+     * Sets the id of pickup sound.
+     *
+     * @param pickupId id of pickup sfx
+     */
+    public void setPickupId(int pickupId) {
+        this.pickupId = pickupId;
+    }
+
+    /**
+     * Gets the id of laser sound.
+     *
+     * @return id of laser sfx
+     */
+    public int getLaserId() {
+        return laserId;
+    }
+
+    /**
+     * Gets the id of collision sound.
+     *
+     * @return id of collision sfx
+     */
+    public int getColId() {
+        return colId;
+    }
+
+    /**
+     * Gets the id of pickup sound.
+     *
+     * @return id of pickup sfx
+     */
+    public int getPickupId() {
+        return pickupId;
     }
 }

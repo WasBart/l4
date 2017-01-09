@@ -210,8 +210,6 @@ class Level {
      */
     void railgunShot() {
         // Decrease railgun ammo
-        if (player.getRailgunAmmo() == 0)
-            return;
         player.changeRailgunAmmo(-1);
 
         // Add railgun shot timer

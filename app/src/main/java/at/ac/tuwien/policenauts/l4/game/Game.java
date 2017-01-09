@@ -44,6 +44,9 @@ public class Game {
     private int currentlyActiveLevel = -1;
     private float timer = 0.0f;
     private final Player player = new Player();
+    private float startTime = 0f;
+    private float elapsedTime = 0f;
+    private float curTime = 0f;
 
     // Paints for gameplay UI
     private final Rect oxygenOuter = new Rect(20, 900, 920, 980);
@@ -100,6 +103,7 @@ public class Game {
     public void startGame() {
         currentlyActiveLevel = reachedLevel;
         levelLoader.getLevel(0).startLevel();
+        startTime = (float) System.nanoTime() / 1000000000;
     }
 
     /**
@@ -120,6 +124,11 @@ public class Game {
             if(worldID != 0)
                 soundManager.playSound(worldID,1,1,1,0,1.0f);
         timer %= 5000.0f;
+
+        // Calculate elapsed time
+        curTime = (float) System.nanoTime() / 1000000000;
+        elapsedTime = (curTime - startTime);
+        Log.i("Time: ", elapsedTime + "seconds");
     }
 
     /**
@@ -280,5 +289,14 @@ public class Game {
                 break;
         }
         return false;
+    }
+
+    /**
+     * Get elapsed time of the game.
+     *
+     * @return elapsed time in seconds
+     */
+    public float getElapsedTime() {
+        return elapsedTime;
     }
 }

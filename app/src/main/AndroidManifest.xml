@@ -22,6 +22,10 @@
         </activity>
         <activity android:name=".android.HelpActivity">
         </activity>
+        <activity android:name=".android.GameOverActivity">
+        </activity>
+        <activity android:name=".android.GameWonActivity">
+        </activity>
 
         <provider
             android:name=".game.ScoreProvider"

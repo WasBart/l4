@@ -72,4 +72,5 @@ public class GameLoop implements Runnable {
     public void setRunning(boolean running) {
         this.running = running;
     }
+
 }

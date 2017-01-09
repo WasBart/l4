@@ -48,11 +48,19 @@ class LevelLoader {
         sprites.add("railgunshot_6");
         spritesFrameCount.add(6);
         spritesDuration.add(50);
+        sprites.add("playerinv_2");
+        spritesFrameCount.add(2);
+        spritesDuration.add(150);
+        sprites.add("playerhit_2");
+        spritesFrameCount.add(2);
+        spritesDuration.add(100);
         spriteOffset = sprites.size();
 
         // Add sprites to player
         final List<Sprite> playerSprites = new ArrayList<>(spriteOffset);
         playerSprites.add(new Sprite(0, spritesFrameCount.get(0), spritesDuration.get(0)));
+        playerSprites.add(new Sprite(2, spritesFrameCount.get(2), spritesDuration.get(2)));
+        playerSprites.add(new Sprite(3, spritesFrameCount.get(3), spritesDuration.get(3)));
         player.addSprites(playerSprites);
 
         // Load the resources we want to load

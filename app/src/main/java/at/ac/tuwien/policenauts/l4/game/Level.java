@@ -1,6 +1,7 @@
 package at.ac.tuwien.policenauts.l4.game;
 
 import android.graphics.Rect;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -196,6 +197,7 @@ class Level {
         }
 
         // Draw the player
+        Log.e("TEST", player.currentSprite().textureId + " " + player.currentSprite().currentFrame);
         textureManager.drawSprite(player.currentSprite(), player.currentPosition());
 
         // Draw the railgun shot

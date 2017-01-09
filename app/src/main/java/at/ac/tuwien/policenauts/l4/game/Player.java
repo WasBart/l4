@@ -16,6 +16,7 @@ class Player extends GameObject {
     private int lives = 3;
     private float oxygen = 1.0f;
     private float invincibilityTime = 0.0f;
+    private float hitTime = 0.0f;
     private float oldTouchX;
     private float oldTouchY;
     private float deltaTouchX;
@@ -40,7 +41,13 @@ class Player extends GameObject {
      */
     @Override
     void update(float tpf, float baseMovement) {
-        invincibilityTime = Math.min(0.0f, invincibilityTime - tpf);
+        invincibilityTime = Math.max(0.0f, invincibilityTime - tpf);
+        hitTime = Math.max(0.0f, hitTime - tpf);
+        if (invincibilityTime < 0.01f && currentSpriteID() == 1)
+            setCurrentSprite(0);
+        if (hitTime < 0.01f && currentSpriteID() == 2)
+            setCurrentSprite(0);
+        currentSprite().update(tpf);
 
         // Make deltas frame independent
         final float frameDeltaX = deltaTouchX * tpf / 1000.0f;
@@ -101,6 +108,7 @@ class Player extends GameObject {
      */
     void setInvincibilityTime(int invincibilityTime) {
         this.invincibilityTime = invincibilityTime;
+        setCurrentSprite(1);
     }
 
     /**
@@ -194,6 +202,14 @@ class Player extends GameObject {
      */
     void resetLives() {
         lives = 3;
+    }
+
+    /**
+     * Mark the player as hit.
+     */
+    void hit() {
+        hitTime = 1000.0f;
+        setCurrentSprite(2);
     }
 
     /**

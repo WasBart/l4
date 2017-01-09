@@ -15,8 +15,10 @@ class IndestructibleAsteroid extends Asteroid {
      */
     @Override
     void applyEffect(Player player) {
-        if (!collided)
+        if (!collided) {
             player.changeOxygen(-0.3f);
+            player.hit();
+        }
     }
 
     /**

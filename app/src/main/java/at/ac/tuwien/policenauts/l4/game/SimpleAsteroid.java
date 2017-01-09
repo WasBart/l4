@@ -14,6 +14,7 @@ class SimpleAsteroid extends Asteroid {
     @Override
     void applyEffect(Player player) {
         player.changeOxygen(-0.2f);
+        player.hit();
     }
 
     /**

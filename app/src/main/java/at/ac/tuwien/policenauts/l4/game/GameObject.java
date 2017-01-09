@@ -35,6 +35,15 @@ abstract class GameObject {
     }
 
     /**
+     * Retrieve the current sprite ID.
+     *
+     * @return the current Sprite ID
+     */
+    int currentSpriteID() {
+        return currentSprite;
+    }
+
+    /**
      * Set the original position
      *
      * @param x x-Coordinate in independent pixels

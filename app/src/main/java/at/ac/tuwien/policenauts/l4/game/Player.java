@@ -13,6 +13,7 @@ class Player extends GameObject {
     private static final Rect SIZE = new Rect(100, 200, 0, 0);
     private static final int RAILGUN_AMMO_MAX = 5;
     private int railgunAmmo = 5;
+    private int lives = 3;
     private float oxygen = 1.0f;
     private float invincibilityTime = 0.0f;
     private float oldTouchX;
@@ -156,5 +157,21 @@ class Player extends GameObject {
      */
     void setTouchY(float y) {
         oldTouchY = y;
+    }
+
+    /**
+     * Get the current amount of lives.
+     *
+     * @return The current number of lives
+     */
+    public int getLives() {
+        return lives;
+    }
+
+    /**
+     * Decrease the amount of lives by 1.
+     */
+    public void decreaseLives() {
+        lives--;
     }
 }

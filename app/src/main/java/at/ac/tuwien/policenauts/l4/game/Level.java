@@ -146,6 +146,12 @@ class Level {
                 }
             }
         }
+
+        // Check if player is dead
+        if (player.getOxygen() < 0.01f) {
+            player.decreaseLives();
+            // Reset level potentially
+        }
     }
 
     /**

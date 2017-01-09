@@ -37,6 +37,8 @@ class LevelLoader {
         textures.add("noaudio_icon");
         textures.add("audio_icon");
         textures.add("pause_icon");
+        textures.add("singleammo");
+        textures.add("player_icon");
         textureOffset = textures.size();
 
         // Hardcoded player sprites are the first sprites to load

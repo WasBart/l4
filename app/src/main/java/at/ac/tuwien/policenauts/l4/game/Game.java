@@ -50,8 +50,11 @@ public class Game {
     private final Player player = new Player();
 
     // Paints for gameplay UI
-    private final Rect oxygenOuter = new Rect(100, 900, 1000, 980);
-    private final Rect oxygenInner = new Rect(105, 905, 995, 975);
+    private final Rect oxygenOuter = new Rect(20, 900, 920, 980);
+    private final Rect oxygenInner = new Rect(25, 905, 915, 975);
+    private final Rect ammoPos = new Rect(1500, 900, 1600, 980);
+    private final Rect livesPos = new Rect(20, 100, 0, 0);
+    private final Rect livesIconPos = new Rect(90, 30, 140, 100);
     private final Paint stroke = new Paint();
     private final Paint fill = new Paint();
 
@@ -145,6 +148,13 @@ public class Game {
         textureManager.drawTexture(audioIcon, audioIconPosition);
         textureManager.drawTexture(2, pauseIconPosition);
 
+        // Draw player lives
+        fill.setTextSize(60 * resolution.density());
+        fill.setColor(Color.WHITE);
+        resolution.toScreenRect(livesPos, positionCalc);
+        canvas.drawText(player.getLives() + "", positionCalc.left, positionCalc.top, fill);
+        textureManager.drawTexture(4, livesIconPos);
+
         // Check player health
         if (player.getOxygen() <= 0.4) {
             stroke.setColor(Color.RED);
@@ -160,6 +170,14 @@ public class Game {
         oxygenInner.right = (int) (oxygenInner.left + 890.0f * player.getOxygen());
         resolution.toScreenRect(oxygenInner, positionCalc);
         canvas.drawRect(positionCalc, fill);
+
+        // Draw ammo
+        int originalAmmoPos = ammoPos.left;
+        for (int i = 0; i < player.getRailgunAmmo(); i++) {
+            textureManager.drawTexture(3, ammoPos);
+            ammoPos.offset(-100, 0);
+        }
+        ammoPos.offset(originalAmmoPos - ammoPos.left, 0);
     }
 
     /**

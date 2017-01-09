@@ -8,7 +8,7 @@ import android.graphics.Rect;
  * @author Michael Pucher
  */
 abstract class Asteroid extends NonPlayerObject {
-    private static final Rect SIZE = new Rect(150, 150, 0, 0);
+    private static final Rect SIZE = new Rect(150, 169, 0, 0);
     /**
      * The size of this object in indepdentent pixels
      *

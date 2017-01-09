@@ -11,12 +11,24 @@
         <sheet src="ammo_5" duration="150" />
         <sheet src="invincibility_5" duration="150" />
         <sheet src="o2_5" duration="150" />
+        <sheet src="asteroid_1" duration="150" />
+        <sheet src="altasteroid_1" duration="150" />
     </sprites>
     <background-music>
     </background-music>
     <sounds>
     </sounds>
     <segment image-id="0">
+        <asteroid type="simple">
+            <sprite id="3" />
+            <collision sound="0" />
+            <position x="1000" y="500" />
+        </asteroid>
+        <asteroid type="indestructible">
+            <sprite id="4" />
+            <collision sound="0" />
+            <position x="400" y="500" />
+        </asteroid>
         <collectible type="oxygen">
             <sprite id="2" />
             <collision sound="0" />

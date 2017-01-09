@@ -258,16 +258,17 @@ class LevelLoader {
         NonPlayerObject asteroid;
         switch (type) {
             case "simple":
-                asteroid = new Oxygen();
+                asteroid = new SimpleAsteroid();
                 break;
             case "indestructible":
-                asteroid = new Oxygen();
+                asteroid = new IndestructibleAsteroid();
                 break;
             case "splitting":
             default:
-                asteroid = new Oxygen();
+                asteroid = new SimpleAsteroid();
                 break;
         }
+        asteroid.setOriginalPosition(xPosition, yPosition);
         asteroid.addSprites(spriteIds);
         return asteroid;
     }

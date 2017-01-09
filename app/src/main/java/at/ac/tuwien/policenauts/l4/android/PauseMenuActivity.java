@@ -1,6 +1,7 @@
 package at.ac.tuwien.policenauts.l4.android;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ public class PauseMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pause_menu);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         // Create on click listener for start game button
         Button continueGame = (Button) findViewById(R.id.pause_continue);

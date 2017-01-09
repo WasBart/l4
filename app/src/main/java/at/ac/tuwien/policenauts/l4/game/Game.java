@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 
 import at.ac.tuwien.policenauts.l4.android.PauseMenuActivity;
@@ -21,6 +22,7 @@ public class Game {
     private final Rect audioIconPosition = new Rect(1300, 0, 1450, 150);
     private final Rect pauseIconPosition = new Rect(1450, 0, 1600, 150);
     private final Rect positionCalc = new Rect(0,0,0,0);
+    private GestureDetector detector;
 
     // Resource management
     private final Context context;
@@ -84,6 +86,12 @@ public class Game {
         // Initialize the pause intent
         this.activityContext = activityContext;
         pauseIntent = new Intent(activityContext, PauseMenuActivity.class);
+        detector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+                return handleSingleTap(e);
+            }
+        });
     }
 
     /**
@@ -214,46 +222,63 @@ public class Game {
     }
 
     /**
+     * Handle a single tap event.
+     *
+     * @param event The motion event
+     */
+    private boolean handleSingleTap(MotionEvent event) {
+        final int x = (int)event.getX();
+        final int y = (int)event.getY();
+
+        // Audio icon has been clicked
+        resolution.toScreenRect(audioIconPosition, positionCalc);
+        if (positionCalc.contains(x, y)) {
+            if (audioIcon == 1) {
+                soundManager.muteSounds();
+                audioIcon = 0;
+            } else {
+                soundManager.unmuteSounds();
+                audioIcon = 1;
+            }
+            return true;
+        }
+
+        // Killer queen has already touched that pause icon
+        resolution.toScreenRect(pauseIconPosition, positionCalc);
+        if (positionCalc.contains(x, y)) {
+            activityContext.startActivity(pauseIntent);
+            return true;
+        }
+
+        // Shoot railgun
+        levelLoader.getLevel(currentlyActiveLevel).railgunShot();
+        return false;
+    }
+
+    /**
      * Handle an incoming touch event.
      *
      * @param event A motion event
      * @return True if event has been handled
      */
     public boolean handleTouch(MotionEvent event) {
+        detector.onTouchEvent(event);
         final float x = event.getX();
         final float y = event.getY();
 
         // Choose appropriate action
         switch(event.getAction()) {
-            case MotionEvent.ACTION_UP:
-                resolution.toScreenRect(audioIconPosition, positionCalc);
-                if (positionCalc.contains((int)x, (int)y)) {
-                    if (audioIcon == 1) {
-                        soundManager.muteSounds();
-                        audioIcon = 0;
-                    } else {
-                        soundManager.unmuteSounds();
-                        audioIcon = 1;
-                    }
-                    return true;
-                }
-
-                // Killer queen has already touched that pause icon
-                resolution.toScreenRect(pauseIconPosition, positionCalc);
-                if (positionCalc.contains((int)x, (int)y))
-                    activityContext.startActivity(pauseIntent);
-                break;
             case MotionEvent.ACTION_DOWN:
                 // Set initial player touch position
                 player.setTouchX(x * resolution.factorX());
                 player.setTouchY(y * resolution.factorY());
-                break;
+                return true;
             case MotionEvent.ACTION_MOVE:
                 player.applyDeltaTransformation(x * resolution.factorX(), y * resolution.factorY());
-                break;
+                return true;
             default:
                 break;
         }
-        return true;
+        return false;
     }
 }

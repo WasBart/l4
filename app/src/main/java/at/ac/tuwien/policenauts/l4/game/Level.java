@@ -15,6 +15,9 @@ class Level {
     private final int segmentLimit;
     private final Player player;
     private final Rect playerStart;
+    private final Sprite railgunSprite = new Sprite(1, 6, 50);
+    private final Rect railgunPos = new Rect(0, 0, ResolutionConverter.WIDTH, 0);
+    private float railgunTime = 0.0f;
     private List<NonPlayerObject> currentObjects = new ArrayList<>(10);
     private List<NonPlayerObject> nextObjects = new ArrayList<>(10);
     private Segment currentSegment = null;
@@ -130,7 +133,7 @@ class Level {
 
         // Process collision detection events
         for (NonPlayerObject obj : currentObjects) {
-            if (obj.isVisible() && obj.currentPosition().intersect(player.currentPosition())) {
+            if (obj.isVisible() && Rect.intersects(obj.currentPosition(),player.currentPosition())) {
                 obj.applyEffect(player);
                 obj.collisionEffect();
             }
@@ -140,7 +143,7 @@ class Level {
         if (nextSegment != null) {
             // Work on the next segment
             for (NonPlayerObject obj : nextObjects) {
-                if (obj.isVisible() && obj.currentPosition().intersect(player.currentPosition())) {
+                if (obj.isVisible() && Rect.intersects(obj.currentPosition(),player.currentPosition())) {
                     obj.applyEffect(player);
                     obj.collisionEffect();
                 }
@@ -151,6 +154,28 @@ class Level {
         if (player.getOxygen() < 0.01f) {
             player.decreaseLives();
             // Reset level potentially
+        }
+
+        // Update railgun
+        if (railgunTime > 0.0f) {
+            railgunSprite.update(tpf);
+            railgunPos.left += independentMovement;
+            railgunTime = Math.max(0.0f, railgunTime - tpf);
+
+            // Process collision detection events
+            for (NonPlayerObject obj : currentObjects) {
+                if (obj.isVisible() && Rect.intersects(obj.currentPosition(),railgunPos))
+                    obj.railgunHit();
+            }
+
+            // Skip next segment if null
+            if (nextSegment != null) {
+                // Work on the next segment
+                for (NonPlayerObject obj : nextObjects) {
+                    if (obj.isVisible() && Rect.intersects(obj.currentPosition(),railgunPos))
+                        obj.railgunHit();
+                }
+            }
         }
     }
 
@@ -180,5 +205,26 @@ class Level {
 
         // Draw the player
         textureManager.drawSprite(player.currentSprite(), player.currentPosition());
+
+        // Draw the railgun shot
+        if (railgunTime > 0.0f)
+            textureManager.drawSprite(railgunSprite, railgunPos);
+    }
+
+    /**
+     * Process a railgun shot.
+     */
+    void railgunShot() {
+        // Decrease railgun ammo
+        if (player.getRailgunAmmo() == 0)
+            return;
+        player.changeRailgunAmmo(-1);
+
+        // Add railgun shot timer
+        railgunTime = 400.0f;
+        railgunSprite.reset();
+        railgunPos.left = player.currentPosition().right + 5;
+        railgunPos.top = player.currentPosition().centerY() - 18;
+        railgunPos.bottom = player.currentPosition().centerY() - 8;
     }
 }

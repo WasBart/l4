@@ -45,6 +45,9 @@ class LevelLoader {
         sprites.add("player_1");
         spritesFrameCount.add(1);
         spritesDuration.add(150);
+        sprites.add("railgunshot_6");
+        spritesFrameCount.add(6);
+        spritesDuration.add(50);
         spriteOffset = sprites.size();
 
         // Add sprites to player

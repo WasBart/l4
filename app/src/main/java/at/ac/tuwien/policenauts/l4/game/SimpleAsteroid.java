@@ -5,7 +5,7 @@ package at.ac.tuwien.policenauts.l4.game;
  *
  * @author Michael Pucher
  */
-public class SimpleAsteroid extends Asteroid {
+class SimpleAsteroid extends Asteroid {
     /**
      * The object can apply a positive or negative effect on the player.
      *
@@ -14,5 +14,13 @@ public class SimpleAsteroid extends Asteroid {
     @Override
     void applyEffect(Player player) {
         player.changeOxygen(-0.2f);
+    }
+
+    /**
+     * This function is called, when the object is being hit with a railgun shot.
+     */
+    @Override
+    void railgunHit() {
+        setVisible(false);
     }
 }

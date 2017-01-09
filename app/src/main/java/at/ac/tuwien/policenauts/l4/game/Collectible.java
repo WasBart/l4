@@ -30,4 +30,12 @@ abstract class Collectible extends NonPlayerObject {
     public void collisionEffect() {
         setVisible(false);
     }
+
+    /**
+     * This function is called, when the object is being hit with a railgun shot.
+     */
+    @Override
+    void railgunHit() {
+        // Do nothing
+    }
 }

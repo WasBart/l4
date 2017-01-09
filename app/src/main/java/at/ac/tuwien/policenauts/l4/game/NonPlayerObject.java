@@ -56,4 +56,9 @@ abstract class NonPlayerObject extends GameObject {
      * a power up being consumed.
      */
     abstract void collisionEffect();
+
+    /**
+     * This function is called, when the object is being hit with a railgun shot.
+     */
+    abstract void railgunHit();
 }

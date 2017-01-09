@@ -7,6 +7,8 @@
     <string name="button_intro">Play Intro</string>
     <string name="title_activity_score">ScoreActivity</string>
 
+    <string name="button_skip">Skip</string>
+
     <string name="username">Username</string>
     <string name="score">Score</string>
     <string name="Add">Add</string>

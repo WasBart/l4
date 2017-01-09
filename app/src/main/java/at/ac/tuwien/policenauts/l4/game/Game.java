@@ -295,8 +295,10 @@ public class Game {
         }
 
         // Shoot railgun
-        levelLoader.getLevel(currentlyActiveLevel).railgunShot();
-        soundManager.playSound(soundManager.getLaserId(),1,1,1,0,1.0f);
+        if (player.getRailgunAmmo() > 0) {
+            levelLoader.getLevel(currentlyActiveLevel).railgunShot();
+            soundManager.playSound(soundManager.getLaserId(), 1, 1, 1, 0, 1.0f);
+        }
         return false;
     }
 

@@ -29,7 +29,8 @@ class IndestructibleAsteroid extends Asteroid {
      */
     @Override
     public void collisionEffect() {
-        soundManager.playSound(soundManager.getColId(),1,1,1,0,1.0f);
+        if (!collided)
+            soundManager.playSound(soundManager.getColId(),1,1,1,0,1.0f);
         collided = true;
     }
 

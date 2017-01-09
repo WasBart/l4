@@ -159,6 +159,7 @@ public class Game {
                 reachedLevel++;
                 currentlyActiveLevel = reachedLevel;
                 levelLoader.getLevel(currentlyActiveLevel).restartLevel();
+                soundManager.forwardBgm(0);
                 player.resetStats();
             }
         }

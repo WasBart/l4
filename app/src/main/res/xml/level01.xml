@@ -4,6 +4,7 @@
         <start x="200" y="500" />
     </player>
     <background-images>
+        <image src="bg0_2" />
         <image src="bg0_3" />
         <image src="bg0_4" />
     </background-images>
@@ -19,6 +20,53 @@
     <sounds>
     </sounds>
     <segment image-id="0">
+        <asteroid type="indestructible">
+            <sprite id="4" />
+            <collision sound="0" />
+            <position x="800" y="100" />
+        </asteroid>
+        <asteroid type="simple">
+            <sprite id="3" />
+            <collision sound="0" />
+            <position x="800" y="600" />
+        </asteroid>
+        <asteroid type="simple">
+            <sprite id="3" />
+            <collision sound="0" />
+            <position x="800" y="400" />
+        </asteroid>
+        <asteroid type="indestructible">
+            <sprite id="4" />
+            <collision sound="0" />
+            <position x="800" y="850" />
+        </asteroid>
+        <asteroid type="indestructible">
+            <sprite id="4" />
+            <collision sound="0" />
+            <position x="1200" y="700" />
+        </asteroid>
+        <asteroid type="indestructible">
+            <sprite id="4" />
+            <collision sound="0" />
+            <position x="1200" y="400" />
+        </asteroid>
+        <asteroid type="simple">
+            <sprite id="4" />
+            <collision sound="0" />
+            <position x="1400" y="100" />
+        </asteroid>
+        <collectible type="oxygen">
+            <sprite id="2" />
+            <collision sound="0" />
+            <position x="950" y="50" />
+        </collectible>
+        <collectible type="ammo">
+            <sprite id="0" />
+            <collision sound="0" />
+            <position x="950" y="900" />
+        </collectible>
+    </segment>
+    <segment image-id="1">
         <collectible type="oxygen">
             <sprite id="2" />
             <collision sound="0" />
@@ -28,11 +76,6 @@
             <sprite id="0" />
             <collision sound="0" />
             <position x="100" y="100" />
-        </collectible>
-        <collectible type="invincibility">
-            <sprite id="1" />
-            <collision sound="0" />
-            <position x="1200" y="800" />
         </collectible>
         <asteroid type="simple">
             <sprite id="3" />
@@ -65,7 +108,7 @@
             <position x="1400" y="100" />
         </asteroid>
     </segment>
-    <segment image-id="1">
+    <segment image-id="2">
         <collectible type="oxygen">
             <sprite id="2" />
             <collision sound="0" />
@@ -75,11 +118,6 @@
             <sprite id="0" />
             <collision sound="0" />
             <position x="100" y="100" />
-        </collectible>
-        <collectible type="invincibility">
-            <sprite id="1" />
-            <collision sound="0" />
-            <position x="1200" y="800" />
         </collectible>
         <asteroid type="simple">
             <sprite id="3" />

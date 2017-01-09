@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".android.CreateHighScoreActivity">
         </activity>
+        <activity android:name=".android.HelpActivity">
+        </activity>
 
         <provider
             android:name=".game.ScoreProvider"

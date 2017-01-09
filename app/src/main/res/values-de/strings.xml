@@ -9,6 +9,16 @@
 
     <string name="button_skip">Überspringen</string>
 
+    <string name="text_controls">Steuerung: \nWische nach links, rechts, oben oder unten um dich zu bewegen.
+    Berühre den Bildschirm um zu schießen.</string>
+    <string name="text_asteroids">Asteroiden: \nWenn dich Asteroiden treffen, verlierst du Sauerstoff.
+    Schieße sei mit deiner Railgun ab.</string>
+    <string name="text_scroll">Bewegender Level: \nDer Level bewegt sich abhängig von deiner Position.
+    Wenn du dich an den rechten Rand des Bildschirms bewegt, bewegt sich der Level schneller.</string>
+    <string name="text_collectible">Gegenstände: \nSauerstoff füllt deinen Tank auf.
+        Unverwundbarkeit macht dich für fünf sekunden unverwundbar.
+    Der Munitionsgegenstand lädt deine Railgun auf.</string>
+
     <string name="username">Spielername</string>
     <string name="score">Punktzahl</string>
     <string name="Add">Hinzufügen</string>
@@ -18,7 +28,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_create_high_score">CreateHighScoreActivity</string>
-    <string name="readScore">Read score</string>
-    <string name="button_continue">Continue</string>
-    <string name="button_quit">Quit to Main Menu</string>
+    <string name="readScore">Bestenliste ansehen</string>
+    <string name="button_continue">Fortsetzen</string>
+    <string name="button_quit">Zum Hauptmenü zurückkehren</string>
 </resources>

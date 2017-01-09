@@ -194,8 +194,8 @@ public class Game {
      * @return True if event has been handled
      */
     public boolean handleTouch(MotionEvent event) {
-        final int x = (int)event.getX();
-        final int y = (int)event.getY();
+        final float x = event.getX();
+        final float y = event.getY();
 
         // Choose appropriate action
         switch(event.getAction()) {
@@ -204,13 +204,17 @@ public class Game {
 
                 // Killer queen has already touched that pause icon
                 resolution.toScreenRect(pauseIconPosition, positionCalc);
-                if (positionCalc.contains(x, y)) {
+                if (positionCalc.contains((int)x, (int)y)) {
                     pause();
-                    activityContext.startActivity(pauseIntent);
-                } else {
-                    player.setTouchX(x);
-                    player.setTouchY(y);
+                    return true;
                 }
+
+                // Set initial player touch position
+                player.setTouchX(x * resolution.factorX());
+                player.setTouchY(y * resolution.factorY());
+                break;
+            case MotionEvent.ACTION_MOVE:
+                player.applyDeltaTransformation(x * resolution.factorX(), y * resolution.factorY());
                 break;
             default:
                 break;

@@ -14,8 +14,10 @@ class Player extends GameObject {
     private int railgunAmmo = 5;
     private float oxygen = 1.0f;
     private float invincibilityTime = 0.0f;
-    private int touchX;
-    private int touchY;
+    private float oldTouchX;
+    private float oldTouchY;
+    private float deltaTouchX;
+    private float deltaTouchY;
 
     /**
      * The size of this object in indepdentent pixels
@@ -36,7 +38,17 @@ class Player extends GameObject {
     @Override
     void update(float tpf, float baseMovement) {
         invincibilityTime = Math.min(0.0f, invincibilityTime - tpf);
-        position.offset((int) (touchX * tpf + baseMovement), (int) (touchY * tpf + baseMovement));
+        position.offset((int) (deltaTouchX + baseMovement), (int) (deltaTouchY + baseMovement));
+    }
+
+    /**
+     * Reset the position to the original position.
+     */
+    @Override
+    void resetPosition() {
+        super.resetPosition();
+        oldTouchX = position.centerX();
+        oldTouchY = position.centerY();
     }
 
     /**
@@ -94,12 +106,24 @@ class Player extends GameObject {
     }
 
     /**
+     * Calculate the delta position from the last touch input.
+     *
+     * @param x The new x-Coordinate
+     * @param y The new y-Coordinate
+     */
+    void applyDeltaTransformation(float x, float y) {
+        position.offset((int) (x - oldTouchX), (int) (y - oldTouchY));
+        oldTouchX = x;
+        oldTouchY = y;
+    }
+
+    /**
      * Set the x-coordinate where the screen was touched.
      *
      * @param x x-coordinate of point where screen was touched.
      */
-    void setTouchX(int x) {
-        touchX = x;
+    void setTouchX(float x) {
+        oldTouchX = x;
     }
 
     /**
@@ -107,7 +131,7 @@ class Player extends GameObject {
      *
      * @param y y-coordinate of point where screen was touched.
      */
-    void setTouchY(int y) {
-        touchY = y;
+    void setTouchY(float y) {
+        oldTouchY = y;
     }
 }

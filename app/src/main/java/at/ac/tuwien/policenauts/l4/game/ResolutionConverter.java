@@ -57,4 +57,22 @@ public class ResolutionConverter {
     float density() {
         return densityFactor;
     }
+
+    /**
+     * Factor for x coordinate conversion
+     *
+     * @return Factor for x coordinate conversion
+     */
+    float factorX() {
+        return WIDTH / actualWidth;
+    }
+
+    /**
+     * Factor for y coordinate conversion
+     *
+     * @return Factor for y coordinate conversion
+     */
+    float factorY() {
+        return HEIGHT / actualHeight;
+    }
 }

@@ -255,6 +255,9 @@ public class Game {
         soundManager.setBgm();
         soundManager.initSp(5);
         worldID = soundManager.loadSound(context, "world");
+        soundManager.setLaserId(soundManager.loadSound(context,"laser"));
+        soundManager.setColId(soundManager.loadSound(context,"impact"));
+        soundManager.setPickupId(soundManager.loadSound(context,"pickup"));
 
         // Start playing sounds
         soundManager.forwardBgm(bgmPos);
@@ -293,6 +296,7 @@ public class Game {
 
         // Shoot railgun
         levelLoader.getLevel(currentlyActiveLevel).railgunShot();
+        soundManager.playSound(soundManager.getLaserId(),1,1,1,0,1.0f);
         return false;
     }
 

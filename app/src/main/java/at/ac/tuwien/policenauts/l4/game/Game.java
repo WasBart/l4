@@ -6,13 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
 import android.view.MotionEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import at.ac.tuwien.policenauts.l4.android.GameSurfaceView;
 import at.ac.tuwien.policenauts.l4.android.PauseMenuActivity;
 
 /**
@@ -32,7 +27,6 @@ public class Game {
     private TextureManager textureManager = null;
     private SoundManager soundManager = null;
     private LevelLoader levelLoader = null;
-    private boolean resourcesLoaded = false;
 
     // Intents and transition handling
     private Context activityContext;

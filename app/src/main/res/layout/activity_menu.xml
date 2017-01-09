@@ -1,50 +1,49 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="at.ac.tuwien.policenauts.l4.android.MenuActivity"
-    android:gravity="center"
+    android:background="@drawable/menu_bg"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    android:background="@drawable/menu_bg" >
+    android:paddingTop="16dp"
+    tools:context="at.ac.tuwien.policenauts.l4.android.MenuActivity">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
         app:srcCompat="@drawable/l4_header" />
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-        <TableRow>
-            <Button
-                android:id="@+id/newgame"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/button_newgame" />
-        </TableRow>
-        <TableRow>
-            <Button
-                android:id="@+id/scoreboard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/button_scoreboard" />
-        </TableRow>
-        <TableRow>
-            <Button
-                android:id="@+id/instructions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/button_instructions" />
-        </TableRow>
-        <TableRow>
-            <Button
-                android:id="@+id/intro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/button_intro" />
-        </TableRow>
-    </TableLayout>
-</LinearLayout>
+
+    <Button
+        android:id="@+id/newgame"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView"
+        android:layout_centerHorizontal="true"
+        android:text="@string/button_newgame" />
+
+    <Button
+        android:id="@+id/scoreboard"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/newgame"
+        android:layout_centerHorizontal="true"
+        android:text="@string/button_scoreboard" />
+
+    <Button
+        android:id="@+id/instructions"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/scoreboard"
+        android:layout_centerHorizontal="true"
+        android:text="@string/button_instructions" />
+
+    <Button
+        android:id="@+id/intro"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/instructions"
+        android:layout_centerHorizontal="true"
+        android:text="@string/button_intro" />
+</RelativeLayout>

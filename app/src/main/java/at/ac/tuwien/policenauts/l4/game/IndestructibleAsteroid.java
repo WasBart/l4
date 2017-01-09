@@ -6,6 +6,8 @@ package at.ac.tuwien.policenauts.l4.game;
  * @author Michael Pucher
  */
 class IndestructibleAsteroid extends Asteroid {
+    private boolean collided = false;
+
     /**
      * The object can apply a positive or negative effect on the player.
      *
@@ -13,7 +15,19 @@ class IndestructibleAsteroid extends Asteroid {
      */
     @Override
     void applyEffect(Player player) {
-        player.changeOxygen(-0.3f);
+        if (!collided)
+            player.changeOxygen(-0.3f);
+    }
+
+    /**
+     * This function is called, if a collision is being detected. It
+     * contains effects, which are applied on the object itself rather
+     * than the player, e.g. an asteroid splitting up on collision or
+     * a power up being consumed.
+     */
+    @Override
+    public void collisionEffect() {
+        collided = true;
     }
 
     /**
@@ -22,5 +36,14 @@ class IndestructibleAsteroid extends Asteroid {
     @Override
     void railgunHit() {
         // DO NOTHING
+    }
+
+    /**
+     * Reset the position to the original position.
+     */
+    @Override
+    void resetPosition() {
+        super.resetPosition();
+        collided = false;
     }
 }

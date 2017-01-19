@@ -162,7 +162,7 @@ public class ScoreActivity extends AppCompatActivity implements LoaderManager.Lo
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String[] projection = { ScoreContract.ScoreEntry._ID, ScoreContract.ScoreEntry.COLUMN_NAME_PLAYERNAME, ScoreContract.ScoreEntry.COLUMN_NAME_SCORE};
         CursorLoader cursorLoader = new CursorLoader(this,
-                ScoreProvider.CONTENT_URI, projection, null, null, ScoreContract.ScoreEntry.COLUMN_NAME_SCORE + " DESC");
+                ScoreProvider.CONTENT_URI, projection, null, null, ScoreContract.ScoreEntry.COLUMN_NAME_SCORE + " ASC");
         return cursorLoader;
     }
 

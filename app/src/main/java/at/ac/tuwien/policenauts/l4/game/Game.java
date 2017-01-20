@@ -178,9 +178,9 @@ public class Game {
         // Pass canvas to texture manager
         textureManager.setCanvas(canvas);
         levelLoader.getLevel(currentlyActiveLevel).renderLevel(textureManager);
-        renderUI(canvas);
 
         textureManager.drawSprite(player.currentSprite(), player.currentPosition());
+        renderUI(canvas);
     }
 
     /**
